@@ -1,5 +1,7 @@
 package controllers;
 
-public class DogController
+import play.mvc.Controller;
+
+public class DogController extends Controller
 {
 }
