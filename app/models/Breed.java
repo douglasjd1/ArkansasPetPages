@@ -1,13 +1,15 @@
 package models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
 @Entity
 public class Breed
 {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int breedId;
     private String breedName;
     private int weightMin;
@@ -18,6 +20,9 @@ public class Breed
     private int lifeSpanMax;
     private int hairLengthId;
     private BigDecimal costFromBreeder;
+    private String photo1;
+    private String photo2;
+    private String photo3;
 
     public int getBreedId()
     {
@@ -112,5 +117,20 @@ public class Breed
     public void setCostFromBreeder(BigDecimal costFromBreeder)
     {
         this.costFromBreeder = costFromBreeder;
+    }
+
+    public String getPhoto1()
+    {
+        return photo1;
+    }
+
+    public String getPhoto2()
+    {
+        return photo2;
+    }
+
+    public String getPhoto3()
+    {
+        return photo3;
     }
 }

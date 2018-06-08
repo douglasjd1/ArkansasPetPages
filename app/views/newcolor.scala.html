@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+@import helper._
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Color</title>
+</head>
+<body>
+<form method="POST">
+    @CSRF.formField
+    Color name: <input type="text" name="colorName" id="colorName" maxlength="50" size="51"><br>
+    <input type="submit" value="SAVE">
+</form>
+</body>
+</html>

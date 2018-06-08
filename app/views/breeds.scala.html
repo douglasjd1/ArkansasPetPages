@@ -1,0 +1,21 @@
+@(breeds : List[Breed])
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <title>Breeds</title>
+</head>
+<body>
+<div>
+    <table class="table table-dark table-hover">
+        @for(breed <- breeds) {
+        <tr>
+            <td><a href="/breed/@breed.getBreedId"><font color="white">@breed.getBreedName</font> </a></td>
+            <td><img src="/assets/images/@breed.getBreedName/@breed.getPhoto1" height="200"></td>
+        </tr>
+        }
+    </table>
+</div>
+</body>
+</html>
