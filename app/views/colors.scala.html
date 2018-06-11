@@ -1,0 +1,22 @@
+@(colors : List[Color])
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <title>Title</title>
+</head>
+<body>
+<div>
+
+</div>
+<table class="table table-dark table-hover">
+    @for(color <- colors) {
+    <tr>
+        <td>@color.getColorId</td>
+        <td><font color="white">@color.getColorName</font></td>
+    </tr>
+    }
+</table>
+</body>
+</html>

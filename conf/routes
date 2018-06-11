@@ -17,12 +17,19 @@ POST    /newPersonality             controllers.BreedController.postNewPersonali
 POST    /newColor                   controllers.BreedController.postNewColor
 POST    /newBreedPersonality        controllers.BreedController.postNewBreedPersonality
 POST    /newBreedColor              controllers.BreedController.postNewBreedColor
-GET    /newPersonality             controllers.BreedController.getNewPersonality
-GET    /newColor                   controllers.BreedController.getNewColor
-GET    /newBreedPersonality        controllers.BreedController.getNewBreedPersonality
-GET    /newBreedColor              controllers.BreedController.getNewBreedColor
+GET     /newPersonality             controllers.BreedController.getNewPersonality
+GET     /newColor                   controllers.BreedController.getNewColor
+GET     /newBreedPersonality        controllers.BreedController.getNewBreedPersonality
+GET     /newBreedColor              controllers.BreedController.getNewBreedColor
+GET     /colors                     controllers.BreedController.getColors
 
 POST    /newDogPersonality          controllers.DogController.postNewDogPersonality
 POST    /newDogColor                controllers.DogController.postNewDogColor
-GET    /newDogPersonality          controllers.DogController.getNewDogPersonality
-GET    /newDogColor                controllers.DogController.getNewDogColor
+GET     /newDogPersonality          controllers.DogController.getNewDogPersonality
+GET     /newDogColor                controllers.DogController.getNewDogColor
+GET     /newDog                     controllers.DogController.getNewDog
+POST    /newDog                     controllers.DogController.postNewDog
+
+GET     /newLocation                controllers.LocationController.getNewLocation
+POST    /newLocation                controllers.LocationController.postNewLocation
+GET     /location/:id               controllers.LocationController.getLocation(id:Integer)

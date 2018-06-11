@@ -1,10 +1,16 @@
 <!DOCTYPE html>
+@import helper._
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>New Breed Color</title>
 </head>
 <body>
-
+<form method="POST">
+    @CSRF.formField
+    Breed id: <input type="text" name="breedId" id="breedId" maxlength="50" size="51"><br>
+    Color id: <input type="text" name="colorId" id="colorId" maxlength="50" size="51"><br>
+    <input type="submit" value="SAVE">
+</form>
 </body>
 </html>

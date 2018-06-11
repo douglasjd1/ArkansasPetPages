@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+@import helper._
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Dog</title>
+</head>
+<body>
+<form method="POST">
+    @CSRF.formField
+    Dog name: <input type="text" name="dogName" id="dogName" maxlength="50" size="51"><br>
+    Dog age: <input type="text" name="dogAge" id="dogAge" maxlength="50" size="51"><br>
+    Dog reff num: <input type="text" name="dogReffNum" id="dogReffNum" maxlength="50" size="51"><br>
+    Dog weight: <input type="text" name="weight" id="weight" maxlength="50" size="51"><br>
+    Dog hair length id: <input type="text" name="hairLengthId" id="hairLengthId" maxlength="50" size="51"><br>
+    Dog location id: <input type="text" name="locationId" id="locationId" maxlength="50" size="51"><br>
+    Color ID: <input type="text" name="colorId" id="colorId" maxlength="50" size="51"><br>
+
+    <input type="submit" value="SAVE">
+</form>
+</body>
+</html>

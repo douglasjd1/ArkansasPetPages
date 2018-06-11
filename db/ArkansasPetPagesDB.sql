@@ -39,6 +39,9 @@ CREATE TABLE Breed (
                 HairLengthId INT NOT NULL,
                 LifeSpanMin INT NOT NULL,
                 HeightMax INT NOT NULL,
+                photo1 VARCHAR(50) NOT NULL,
+                photo2 VARCHAR(50) NOT NULL,
+                photo3 VARCHAR(50) NOT NULL,
                 PRIMARY KEY (BreedId)
 );
 
@@ -63,7 +66,7 @@ CREATE TABLE Location (
                 LocationId INT AUTO_INCREMENT NOT NULL,
                 LocationName VARCHAR(50) NOT NULL,
                 City VARCHAR(50) NOT NULL,
-                BreedId INT NOT NULL,
+                BreedId INT,
                 Address VARCHAR(50) NOT NULL,
                 StateId VARCHAR(2) NOT NULL,
                 ZipCode VARCHAR(5) NOT NULL,
@@ -80,7 +83,16 @@ CREATE TABLE Dog (
                 Weight INT NOT NULL,
                 HairLengthId INT NOT NULL,
                 LocationId INT NOT NULL,
+                DogPhoto VARCHAR NOT NULL,
                 PRIMARY KEY (DogId)
+);
+
+
+CREATE TABLE DogBreed (
+                DogBreedId INT AUTO_INCREMENT NOT NULL,
+                BreedId INT NOT NULL,
+                DogId INT NOT NULL,
+                PRIMARY KEY (DogBreedId)
 );
 
 
@@ -169,6 +181,12 @@ REFERENCES Breed (BreedId)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
+ALTER TABLE DogBreed ADD CONSTRAINT breed_dogbreed_fk
+FOREIGN KEY (BreedId)
+REFERENCES Breed (BreedId)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
 ALTER TABLE Dog ADD CONSTRAINT location_dog_fk
 FOREIGN KEY (LocationId)
 REFERENCES Location (LocationId)
@@ -188,6 +206,12 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
 ALTER TABLE DogPhoto ADD CONSTRAINT dog_dogphoto_fk
+FOREIGN KEY (DogId)
+REFERENCES Dog (DogId)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE DogBreed ADD CONSTRAINT dog_dogbreed_fk
 FOREIGN KEY (DogId)
 REFERENCES Dog (DogId)
 ON DELETE NO ACTION

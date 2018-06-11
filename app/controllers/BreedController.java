@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Breed;
+import models.BreedColor;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
@@ -92,7 +93,6 @@ public class BreedController extends Controller
     public Result postNewColor()
     {
         DynamicForm form = formFactory.form().bindFromRequest();
-
         String colorName = form.get("colorName");
 
         Color color = new Color();
@@ -111,7 +111,18 @@ public class BreedController extends Controller
     @Transactional
     public Result postNewBreedColor()
     {
-        return ok(views.html.newpersonality.render());
+        DynamicForm form = formFactory.form().bindFromRequest();
+        BreedColor breedColor = new BreedColor();
+
+        int breedId = Integer.parseInt(form.get(("breedId")));
+        int colorId = Integer.parseInt(form.get(("colorId")));
+
+        breedColor.setBreedId(breedId);
+        breedColor.setColorId(colorId);
+
+        jpaApi.em().persist(breedColor);
+
+        return ok(views.html.newbreedcolor.render());
     }
 
     @Transactional
@@ -136,5 +147,15 @@ public class BreedController extends Controller
     public Result getNewBreedColor()
     {
         return ok(views.html.newbreedcolor.render());
+    }
+
+    @Transactional
+    public Result getColors()
+    {
+        String sql = "SELECT c FROM Color c ORDER BY ColorName";
+
+        List<Color> colors = jpaApi.em().createQuery(sql, Color.class).getResultList();
+
+        return ok(views.html.colors.render(colors));
     }
 }
