@@ -1,12 +1,15 @@
 package controllers;
 
-import models.Location;
+import models.*;
+import models.BreederDetail;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
+import java.util.List;
+
 
 import javax.inject.Inject;
 
@@ -62,7 +65,7 @@ public class LocationController extends Controller
     public Result getLocation(Integer locationId)
     {
         String sql = "SELECT l FROM Location l " +
-                     "WHERE locationId = :locationId";
+                "WHERE locationId = :locationId";
 
         Location location = jpaApi.em().
                 createQuery(sql, Location.class).
@@ -70,8 +73,60 @@ public class LocationController extends Controller
                 getSingleResult();
 
         if(location.getBreedId() != null)
-            return ok(views.html.breeder.render(location));
+        {
+            String breederSql = "SELECT NEW models.BreederDetail(l.locationId, l.locationName, l.city, b.breedName, l.address, s.stateName, l.zipCode, l.phoneNumber, l.websiteURL) " +
+                         "FROM Location l " +
+                         "JOIN Breed b ON b.breedId = l.breedId " +
+                         "JOIN State s ON s.stateId = l.stateId " +
+                         "WHERE locationId = :locationId";
 
-        return ok(views.html.shelter.render(location));
+            BreederDetail breeder = jpaApi.em().
+                    createQuery(breederSql, BreederDetail.class).
+                    setParameter("locationId", locationId).
+                    getSingleResult();
+
+
+            return ok(views.html.breeder.render(breeder));
+        }
+
+        else
+        {
+            String shelterSql = "SELECT NEW models.ShelterDetail(l.locationId, l.locationName, l.city, l.address, s.stateName, l.zipCode, l.phoneNumber, l.websiteURL) " +
+                    "FROM Location l " +
+                    "JOIN State s ON s.stateId = l.stateId " +
+                    "WHERE locationId = :locationId";
+
+            ShelterDetail shelter = jpaApi.em().
+                    createQuery(shelterSql, ShelterDetail.class).
+                    setParameter("locationId", locationId).
+                    getSingleResult();
+
+            String dogSql = "SELECT d " +
+                            "FROM Dog d ";
+
+            List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).getResultList();
+            return ok(views.html.shelter.render(shelter, dogs));
+        }
+
+    }
+
+    @Transactional
+    public Result getShelters()
+    {
+        String sql = "SELECT l FROM Location l WHERE l.breedId IS NULL";
+
+        List<Location> shelters = jpaApi.em().createQuery(sql, Location.class).getResultList();
+
+        return ok(views.html.shelters.render(shelters));
+    }
+
+    @Transactional
+    public Result getBreeders()
+    {
+        String sql = "SELECT l FROM Location l WHERE l.breedId IS NOT NULL";
+
+        List<Location> breeders = jpaApi.em().createQuery(sql, Location.class).getResultList();
+
+        return ok(views.html.breeders.render(breeders));
     }
 }

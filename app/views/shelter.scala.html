@@ -1,4 +1,4 @@
-@(location : Location)
+@(shelter : ShelterDetail, dogs : List[Dog])
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +6,10 @@
     <title>Shelter</title>
 </head>
 <body>
-
+    @shelter.getLocationName<br>
+    @for(dog <- dogs){
+        @dog.getDogName<br>
+        <img src="../dogDefaultPhoto/@dog.getDogId"><br>
+    }
 </body>
 </html>

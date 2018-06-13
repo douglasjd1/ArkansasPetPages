@@ -1,0 +1,17 @@
+@(dog:Dog)
+<!DOCTYPE html>
+@import helper._
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dog</title>
+</head>
+<body>
+<form method="POST" enctype="multipart/form-data">
+    @CSRF.formField
+    Update @dog.getDogName's Default Photo:
+    <input type="file" id="defaultphoto" name="defaultphoto">
+    <input type="submit" value="save">
+</form>
+</body>
+</html>

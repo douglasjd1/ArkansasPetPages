@@ -1,0 +1,22 @@
+@(personalities : List[Personality])
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <title>Personalities</title>
+</head>
+<body>
+<div>
+
+</div>
+<table class="table table-dark table-hover">
+    @for(personality <- personalities) {
+    <tr>
+        <td>@personality.getPersonalityId</td>
+        <td><font color="white">@personality.getPersonalityName</font></td>
+    </tr>
+    }
+</table>
+</body>
+</html>

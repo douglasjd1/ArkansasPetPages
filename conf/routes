@@ -12,7 +12,6 @@ GET     /breed/:id                  controllers.BreedController.getBreed(id:Inte
 GET     /breeds                     controllers.BreedController.getBreeds
 GET     /newBreed                   controllers.BreedController.getNewBreed
 POST    /newBreed                   controllers.BreedController.postNewBreed
-
 POST    /newPersonality             controllers.BreedController.postNewPersonality
 POST    /newColor                   controllers.BreedController.postNewColor
 POST    /newBreedPersonality        controllers.BreedController.postNewBreedPersonality
@@ -22,6 +21,7 @@ GET     /newColor                   controllers.BreedController.getNewColor
 GET     /newBreedPersonality        controllers.BreedController.getNewBreedPersonality
 GET     /newBreedColor              controllers.BreedController.getNewBreedColor
 GET     /colors                     controllers.BreedController.getColors
+GET     /personalities              controllers.BreedController.getPersonalities
 
 POST    /newDogPersonality          controllers.DogController.postNewDogPersonality
 POST    /newDogColor                controllers.DogController.postNewDogColor
@@ -29,7 +29,16 @@ GET     /newDogPersonality          controllers.DogController.getNewDogPersonali
 GET     /newDogColor                controllers.DogController.getNewDogColor
 GET     /newDog                     controllers.DogController.getNewDog
 POST    /newDog                     controllers.DogController.postNewDog
+GET     /newDogPhoto                controllers.DogController.getNewDogPhoto
+POST    /newDogPhoto                controllers.DogController.postNewDogPhoto
+GET     /dog/:id                    controllers.DogController.getDog(id:Integer)
+GET     /dogDefaultPhoto/:id        controllers.DogController.getDogDefaultPhoto(id:Integer)
+GET     /dogPhoto/:id               controllers.DogController.getDogPhoto(id:Integer)
+GET     /newDogDefaultPhoto/:id     controllers.DogController.getNewDogDefaultPhoto(id:Integer)
+POST    /newDogDefaultPhoto/:id     controllers.DogController.postNewDogDefaultPhoto(id:Integer)
 
 GET     /newLocation                controllers.LocationController.getNewLocation
 POST    /newLocation                controllers.LocationController.postNewLocation
 GET     /location/:id               controllers.LocationController.getLocation(id:Integer)
+GET     /shelters                   controllers.LocationController.getShelters
+GET     /breeders                   controllers.LocationController.getBreeders

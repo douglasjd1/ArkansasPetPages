@@ -18,6 +18,7 @@ public class Dog
     private int hairLengthId;
     private int locationId;
     private int colorId;
+    private byte[] defaultPhotoData;
 
     public void setDogName(String dogName)
     {
@@ -93,4 +94,16 @@ public class Dog
     {
         this.colorId = colorId;
     }
+
+    public void setDefaultPhotoData(byte[] defaultPhotoData)
+    {
+        this.defaultPhotoData = defaultPhotoData;
+    }
+
+    public byte[] getDefaultPhotoData()
+    {
+        return defaultPhotoData;
+    }
+
+
 }

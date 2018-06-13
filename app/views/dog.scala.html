@@ -1,0 +1,15 @@
+@(dog : Dog, photos : List[DogPhoto])
+<!DOCTYPE html>
+@import helper._
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dog</title>
+</head>
+<body>
+    @dog.getDogName<br>
+    @for(dogPhoto <- photos){
+        <img src="../dogPhoto/@dogPhoto.getDogPhotoId">
+    }
+</body>
+</html>

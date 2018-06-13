@@ -1,11 +1,15 @@
 <!DOCTYPE html>
+@import helper._
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>New Personality</title>
 </head>
 <body>
-    <input type="text">
+<form method="POST">
+    @CSRF.formField
+    Personality name: <input type="text" name="personalityName" id="personalityName" maxlength="50" size="51"><br>
     <input type="submit" value="SAVE">
+</form>
 </body>
 </html>

@@ -1,7 +1,6 @@
 package controllers;
 
-import models.Breed;
-import models.BreedColor;
+import models.*;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
@@ -10,7 +9,6 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Inject;
-import models.Color;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -30,10 +28,34 @@ public class BreedController extends Controller
     @Transactional(readOnly = true)
     public Result getBreed(Integer breedId)
     {
-        String sql = "SELECT b FROM Breed b WHERE breedId = :breedId";
+        String sql = "SELECT NEW models.BreedDetail(b.breedId, b.breedName, c.colorName, b.weightMin, b.weightMax, b.heightMin, b.heightMax, " +
+                     "b.lifeSpanMin, b.lifeSpanMax, hl.hairLengthName, b.costFromBreeder, b.photo1, b.photo2, b.photo3) " +
+                     "FROM Breed b " +
+                     "JOIN HairLength hl ON hl.hairLengthId = b.hairLengthId " +
+                     "JOIN BreedColor bc ON bc.breedId = b.breedId " +
+                     "JOIN Color c ON bc.colorId = c.colorId " +
+                     "WHERE b.breedId = :breedId " +
+                     "GROUP BY b.breedId";
 
-        Breed breed = jpaApi.em().createQuery(sql, Breed.class).setParameter("breedId", breedId).getSingleResult();
-        return ok(views.html.breed.render(breed));
+        BreedDetail breedDetail = jpaApi.em().createQuery(sql, BreedDetail.class).setParameter("breedId", breedId).getSingleResult();
+
+        String personalitySql = "SELECT NEW models.PersonalityByBreed(bp.breedPersonalityId, p.personalityName) " +
+                                "FROM Personality p " +
+                                "JOIN BreedPersonality bp ON bp.personalityId = p.personalityId " +
+                                "JOIN Breed b ON bp.breedId = b.breedId " +
+                                "WHERE b.breedId = :breedId";
+
+        List<PersonalityByBreed> personalities = jpaApi.em().createQuery(personalitySql, PersonalityByBreed.class).setParameter("breedId", breedId).getResultList();
+
+        String colorSql = "SELECT NEW models.ColorByBreed(bc.breedColorId, c.colorName) " +
+                          "FROM Color c " +
+                          "JOIN BreedColor bc ON bc.colorId = c.colorId " +
+                          "JOIN Breed b ON bc.breedId = b.breedId " +
+                          "WHERE b.breedId = :breedId";
+
+        List<ColorByBreed> colors = jpaApi.em().createQuery(colorSql, ColorByBreed.class).setParameter("breedId", breedId).getResultList();
+
+        return ok(views.html.breed.render(breedDetail, personalities, colors));
     }
 
     @Transactional(readOnly = true)
@@ -86,6 +108,14 @@ public class BreedController extends Controller
     @Transactional
     public Result postNewPersonality()
     {
+        DynamicForm form = formFactory.form().bindFromRequest();
+
+        String personalityName = form.get("personalityName");
+
+        Personality personality = new Personality();
+
+        jpaApi.em().persist(personality);
+
         return ok(views.html.newpersonality.render());
     }
 
@@ -157,5 +187,15 @@ public class BreedController extends Controller
         List<Color> colors = jpaApi.em().createQuery(sql, Color.class).getResultList();
 
         return ok(views.html.colors.render(colors));
+    }
+
+    @Transactional
+    public Result getPersonalities()
+    {
+        String sql = "SELECT p FROM Personality p ORDER BY PersonalityName";
+
+        List<Personality> personalities = jpaApi.em().createQuery(sql, Personality.class).getResultList();
+
+        return ok(views.html.personalities.render(personalities));
     }
 }

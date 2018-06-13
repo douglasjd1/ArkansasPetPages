@@ -1,4 +1,4 @@
-@(breed : Breed)
+@(breedDetail : BreedDetail, personalities : List[PersonalityByBreed], colors : List[ColorByBreed])
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +7,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>@breed.getBreedName</h1>
-        <p></p>
+        <h1>@breedDetail.getBreedName</h1>
+        Personality traits:
+        @for(personalityByBreed <- personalities){
+            @personalityByBreed.getPersonalityName
+        }
+        Colors:
+        @for(colorByBreed <- colors){
+            @colorByBreed.getColorName
+        }
     </div>
 </body>
 </html>

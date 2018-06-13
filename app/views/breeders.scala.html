@@ -1,4 +1,4 @@
-@(location : Location)
+@(breeders : List[Location])
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +6,8 @@
     <title>Title</title>
 </head>
 <body>
-
+    @for(breeder <- breeders){
+        @breeder.getLocationName<br>
+    }
 </body>
 </html>

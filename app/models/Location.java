@@ -17,6 +17,7 @@ public class Location
     private String stateId;
     private String zipCode;
     private String phoneNumber;
+    private String websiteURL;
 
     public String getLocationName()
     {
@@ -91,5 +92,10 @@ public class Location
     public int getLocationId()
     {
         return locationId;
+    }
+
+    public String getWebsiteURL()
+    {
+        return websiteURL;
     }
 }

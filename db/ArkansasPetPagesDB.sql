@@ -7,9 +7,9 @@ CREATE TABLE State (
 
 
 CREATE TABLE Personality (
-                Personalityd INT AUTO_INCREMENT NOT NULL,
+                PersonalityId INT AUTO_INCREMENT NOT NULL,
                 PersonalityName VARCHAR(50) NOT NULL,
-                PRIMARY KEY (Personalityd)
+                PRIMARY KEY (PersonalityId)
 );
 
 
@@ -56,7 +56,7 @@ CREATE TABLE BreedColor (
 
 CREATE TABLE BreedPersonality (
                 BreedPersonalityId INT AUTO_INCREMENT NOT NULL,
-                Personalityd INT NOT NULL,
+                PersonalityId INT NOT NULL,
                 BreedId INT NOT NULL,
                 PRIMARY KEY (BreedPersonalityId)
 );
@@ -71,6 +71,7 @@ CREATE TABLE Location (
                 StateId VARCHAR(2) NOT NULL,
                 ZipCode VARCHAR(5) NOT NULL,
                 PhoneNumber VARCHAR(10) NOT NULL,
+                WebsiteURL VARCHAR(1000) NOT NULL,
                 PRIMARY KEY (LocationId)
 );
 
@@ -84,6 +85,7 @@ CREATE TABLE Dog (
                 HairLengthId INT NOT NULL,
                 LocationId INT NOT NULL,
                 DogPhoto VARCHAR NOT NULL,
+                ColorId INT NOT NULL,
                 PRIMARY KEY (DogId)
 );
 
@@ -97,26 +99,17 @@ CREATE TABLE DogBreed (
 
 
 CREATE TABLE DogPhoto (
-                DogPhotoId INT NOT NULL,
-                DogPhotoName VARCHAR(50) NOT NULL,
+                DogPhotoId INT AUTO_INCREMENT NOT NULL,
                 DogPhotoData LONGBLOB NOT NULL,
                 DogId INT NOT NULL,
                 PRIMARY KEY (DogPhotoId)
 );
 
 
-CREATE TABLE DogColor (
-                DogColorId INT AUTO_INCREMENT NOT NULL,
-                DogId INT NOT NULL,
-                ColorId INT NOT NULL,
-                PRIMARY KEY (DogColorId)
-);
-
-
 CREATE TABLE DogPersonality (
                 DogPersonalityId INT AUTO_INCREMENT NOT NULL,
                 DogId INT NOT NULL,
-                Personalityd INT NOT NULL,
+                PersonalityId INT NOT NULL,
                 PRIMARY KEY (DogPersonalityId)
 );
 
@@ -128,14 +121,14 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
 ALTER TABLE DogPersonality ADD CONSTRAINT personality_dogpersonality_fk
-FOREIGN KEY (Personalityd)
-REFERENCES Personality (Personalityd)
+FOREIGN KEY (PersonalityId)
+REFERENCES Personality (PersonalityId)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
 ALTER TABLE BreedPersonality ADD CONSTRAINT personality_breedpersonality_fk
-FOREIGN KEY (Personalityd)
-REFERENCES Personality (Personalityd)
+FOREIGN KEY (PersonalityId)
+REFERENCES Personality (PersonalityId)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
@@ -157,7 +150,7 @@ REFERENCES Color (ColorId)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
-ALTER TABLE DogColor ADD CONSTRAINT color_dogcolor_fk
+ALTER TABLE Dog ADD CONSTRAINT color_dog_fk
 FOREIGN KEY (ColorId)
 REFERENCES Color (ColorId)
 ON DELETE NO ACTION
@@ -194,12 +187,6 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION;
 
 ALTER TABLE DogPersonality ADD CONSTRAINT dog_dogpersonality_fk
-FOREIGN KEY (DogId)
-REFERENCES Dog (DogId)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
-
-ALTER TABLE DogColor ADD CONSTRAINT dog_dogcolor_fk
 FOREIGN KEY (DogId)
 REFERENCES Dog (DogId)
 ON DELETE NO ACTION
