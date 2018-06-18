@@ -3,9 +3,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <script src="/assets/lib/popper.js/umd/popper.min.js"></script>
+    <script src="/assets/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/carousel.css">
     <title>Breed</title>
 </head>
 <body>
+    @navbar("breed")
     <div class="container">
         <h1>@breedDetail.getBreedName</h1>
         Personality traits:
@@ -17,5 +24,45 @@
             @colorByBreed.getColorName
         }
     </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="container mt-3">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ul class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ul>
+                    <!-- The slideshow -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="/assets/images/@breedDetail.getBreedName/@breedDetail.getPhoto1" height="100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/assets/images/@breedDetail.getBreedName/@breedDetail.getPhoto2" height="100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/assets/images/@breedDetail.getBreedName/@breedDetail.getPhoto3" height="100">
+                        </div>
+                    </div>
+                    <!-- Left and right controls -->
+                    <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+
+        </div>
+        <div class="col-4">
+
+        </div>
+    </div>
+
 </body>
 </html>

@@ -1,0 +1,14 @@
+@(results : TreeMap[Breed, Integer])
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dogulator Results</title>
+</head>
+<body>
+@for((breed,score) <- results){
+    @breed.getBreedName, @score<br>
+    <img src="/assets/images/@breed.getBreedName/@breed.getPhoto1" height="100"><br>
+}
+</body>
+</html>

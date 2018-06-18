@@ -4,6 +4,7 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
+GET     /practice                   controllers.HomeController.getPractice
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
@@ -22,6 +23,9 @@ GET     /newBreedPersonality        controllers.BreedController.getNewBreedPerso
 GET     /newBreedColor              controllers.BreedController.getNewBreedColor
 GET     /colors                     controllers.BreedController.getColors
 GET     /personalities              controllers.BreedController.getPersonalities
+GET     /dogulator                  controllers.BreedController.getDogulator
+POST    /dogulator                  controllers.BreedController.postDogulator
+
 
 POST    /newDogPersonality          controllers.DogController.postNewDogPersonality
 POST    /newDogColor                controllers.DogController.postNewDogColor

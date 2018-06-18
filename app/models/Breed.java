@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.math.BigDecimal;
 
 @Entity
-public class Breed
+public class Breed implements Comparable<Breed>
 {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int breedId;
@@ -132,5 +132,11 @@ public class Breed
     public String getPhoto3()
     {
         return photo3;
+    }
+
+    @Override
+    public int compareTo(Breed o)
+    {
+        return breedName.compareTo(o.breedName);
     }
 }

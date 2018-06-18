@@ -14,6 +14,7 @@ public class BreedDetail
     private String colorName;
     private int weightMin;
     private int weightMax;
+    private int weightAvg;
     private int heightMin;
     private int heightMax;
     private int lifeSpanMin;

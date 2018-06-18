@@ -3,11 +3,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <title>Breeders</title>
 </head>
 <body>
+<div class="container text-center">
+    @navbar("breeders")
     @for(breeder <- breeders){
-        @breeder.getLocationName<br>
+    @breeder.getLocationName<br>
     }
+</div>
+
 </body>
 </html>

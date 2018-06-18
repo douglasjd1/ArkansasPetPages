@@ -8,12 +8,13 @@
 </head>
 <body>
 <div>
-    <table class="table table-dark table-hover">
+    @navbar("breeds")
+    <table class="table table-dark table-hover text-center">
         @for(breed <- breeds) {
         <tr>
             <td>@breed.getBreedId</td>
             <td><a href="/breed/@breed.getBreedId"><font color="white">@breed.getBreedName</font> </a></td>
-            <!-- <td><img src="/assets/images/@breed.getBreedName/@breed.getPhoto1" height="200"></td> -->
+            <td><img src="/assets/images/@breed.getBreedName/@breed.getPhoto1" height="200"></td>
         </tr>
         }
     </table>

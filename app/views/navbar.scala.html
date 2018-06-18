@@ -1,0 +1,50 @@
+@(page : String)
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class="navbar-nav">
+        @if("breeds".equals(page) || "breed".equals(page)){
+        <li class="nav-item active">
+            } else {
+        <li class="nav-item">
+            }
+        @if("breed".equals(page)){
+            <a class="nav-link" href="../breeds">Breeds</a>
+            } else {
+            <a class="nav-link" href="breeds">Breeds</a>
+            }
+        </li>
+
+        @if("shelters".equals(page)){
+        <li class="nav-item active">
+            } else {
+        <li class="nav-item">
+            }
+        @if("breed".equals(page)){
+            <a class="nav-link" href="../shelters">Shelters</a>
+            } else {
+            <a class="nav-link" href="shelters">Shelters</a>
+            }
+
+        @if("breeders".equals(page)){
+        <li class="nav-item active">
+            } else {
+        <li class="nav-item">
+            }
+        @if("breed".equals(page)){
+            <a class="nav-link" href="../breeders">Breeders</a>
+            } else {
+            <a class="nav-link" href="breeders">Breeders</a>
+            }
+
+        @if("dogulator".equals(page)){
+        <li class="nav-item active">
+            } else {
+        <li class="nav-item">
+            }
+        @if("breed".equals(page)){
+            <a class="nav-link" href="../dogulator">Dogulator</a>
+            } else {
+            <a class="nav-link" href="dogulator">Dogulator</a>
+            }
+    </ul>
+</nav>

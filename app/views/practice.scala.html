@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <script src="/assets/lib/jquery/jquery.min.js"></script>
+    <script src="/assets/lib/popper.js/umd/popper.min.js"></script>
+    <script src="/assets/lib/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/assets/stylesheets/carousel.css">
+    <title>Practice</title>
+</head>
+<body>
+<div class="container mt-3">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ul>
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                @newdog.render
+            </div>
+            <div class="carousel-item">
+                <img src="/assets/images/kitten-carousel2.jpg">
+            </div>
+            <div class="carousel-item">
+                <img src="/assets/images/kitten-carousel3.jpg">
+            </div>
+            <div class="carousel-item">
+                <img src="/assets/images/kitten-carousel4.jpg">
+            </div>
+            <div class="carousel-item">
+                <img src="/assets/images/kitten-carousel5.jpg">
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

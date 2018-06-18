@@ -185,7 +185,7 @@ public class DogController extends Controller
     @Transactional
     public Result getDogPhoto(Integer dogPhotoId)
     {
-        String sql = "SELECT dp FROM DogPhoto WHERE dp.dogPhotoId = :dogPhotoId";
+        String sql = "SELECT dp FROM DogPhoto dp WHERE dp.dogPhotoId = :dogPhotoId";
 
         DogPhoto dogPhoto = jpaApi.em().createQuery(sql, DogPhoto.class).setParameter("dogPhotoId", dogPhotoId).getSingleResult();
 
