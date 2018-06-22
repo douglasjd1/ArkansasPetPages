@@ -1,0 +1,30 @@
+@(user : PetPagesUser)
+<!DOCTYPE html>
+@import helper._
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <title>Title</title>
+</head>
+<body>
+    @navbar("userPage")
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                Welcome, @user.getFirstName @user.getLastName!<br>
+                <img src="../userProfilePhoto/@user.getUserId">
+                <form method="POST">
+                    @CSRF.formField
+                    <a href="editUser/@user.getUserId">Edit Information</a>
+                </form>
+                <a href="newUserDog">Add a dog</a>
+                <form method="POST" action="/logOut">
+                    @CSRF.formField
+                    <input type="submit" value="Log Out">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

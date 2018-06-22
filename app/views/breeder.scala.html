@@ -3,11 +3,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
     <title>Breeder</title>
 </head>
 <body>
-    <h1>@breeder.getLocationName</h1>
-    <p>@breeder.getAddress</p>
-    <p>@breeder.getStateName</p>
+    @navbar("breeder")
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>@breeder.getLocationName</h3>
+                <p>@breeder.getAddress, @breeder.getStateName, @breeder.getZipCode</p>
+                <p>@breeder.getPhoneNumber</p>
+                <p><a href="@breeder.getWebsiteURL">Website</a></p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

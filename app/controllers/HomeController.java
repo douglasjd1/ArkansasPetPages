@@ -2,6 +2,7 @@ package controllers;
 
 import play.mvc.*;
 
+import services.Email;
 import views.html.*;
 
 /**
@@ -25,6 +26,22 @@ public class HomeController extends Controller
     public Result getPractice()
     {
         return ok(views.html.practice.render());
+    }
+
+    public Result getHome()
+    {
+        return ok(views.html.home.render());
+    }
+
+    public Result getSendEmail()
+    {
+        return ok(views.html.sendemail.render());
+    }
+
+    public Result postSendEmail()
+    {
+        Email.sendEmail("I am not happy with my service", "douglasjd09@gmail.com");
+        return ok(views.html.sendemail.render());
     }
 
 }

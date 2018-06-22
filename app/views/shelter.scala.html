@@ -3,13 +3,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
     <title>Shelter</title>
 </head>
 <body>
-    @shelter.getLocationName<br>
-    @for(dog <- dogs){
-        @dog.getDogName<br>
-        <img src="../dogDefaultPhoto/@dog.getDogId"><br>
-    }
+    @navbar("shelter")
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>@shelter.getLocationName</h3><br>
+                <p>@shelter.getAddress</p>
+                <p>@shelter.getCity, @shelter.getStateName @shelter.getZipCode</p>
+                <p>@shelter.getPhoneNumber</p>
+                <p><a href="@shelter.getWebsiteURL">Website</a></p>
+                <p>Available dogs:</p>
+
+                @for(dog <- dogs){
+                <a href="/dog/@dog.getDogId">@dog.getDogName</a><br>
+                <img src="../dogDefaultPhoto/@dog.getDogId"><br>
+                }
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -2,7 +2,10 @@ package controllers;
 
 import com.google.common.io.Files;
 import models.Dog;
+import models.Color;
 import models.DogPhoto;
+import models.Location;
+import models.Personality;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
@@ -14,6 +17,7 @@ import scala.Int;
 import views.html.dog;
 
 import javax.inject.Inject;
+import java.awt.*;
 import java.io.File;
 import java.util.List;
 
@@ -53,15 +57,24 @@ public class DogController extends Controller
     }
 
     @Transactional(readOnly = true)
-    public Result getNewDog()
+    public Result getNewUserDog()
     {
-        return ok(views.html.newdog.render());
+        String colorSql = "SELECT c FROM Color c";
+        String personalitySql = "SELECT p FROM Personality p";
+        String locationSql = "SELECT l FROM Location l";
+
+        List<Color> colors = jpaApi.em().createQuery(colorSql, Color.class).getResultList();
+        List<Personality> personalities = jpaApi.em().createQuery(personalitySql, Personality.class).getResultList();
+        List<Location> locations = jpaApi.em().createQuery(locationSql, Location.class).getResultList();
+
+        return ok(views.html.newuserdog.render(colors, personalities));
     }
 
     @Transactional
-    public Result postNewDog()
+    public Result postNewUserDog()
     {
         DynamicForm form = formFactory.form().bindFromRequest();
+
         Dog dog = new Dog();
 
         String dogName = form.get("dogName");
@@ -82,7 +95,7 @@ public class DogController extends Controller
 
         jpaApi.em().persist(dog);
 
-        return ok(views.html.newdog.render());
+        return ok("Dog saved");
     }
 
     public Result getNewDogPhoto()
@@ -132,7 +145,9 @@ public class DogController extends Controller
 
         List<DogPhoto> photos = jpaApi.em().createQuery(photoSql, DogPhoto.class).setParameter("dogId", dogId).getResultList();
 
-        return ok(views.html.dog.render(dog, photos));
+        DogPhoto firstPhoto = photos.get(0);
+        photos.remove(0);
+        return ok(views.html.dog.render(dog, photos, firstPhoto));
     }
 
     @Transactional(readOnly = true)

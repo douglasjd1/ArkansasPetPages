@@ -1,0 +1,56 @@
+@(colors : List[Color], personalities : List[Personality])
+<!DOCTYPE html>
+@import helper._
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Dog</title>
+</head>
+<body>
+@navbar("userPage")
+<form method="POST">
+    @CSRF.formField
+    <div class="form-group">
+        <label for="dogName">Dog Name</label>
+        <input type="text" class="form-control" id="dogName" name="dogName" aria-describedby="dogName" placeholder="Enter your dog's name">
+    </div>
+    <div class="form-group">
+        <label for="dogAge">Dog Age</label>
+        <input type="text" class="form-control" id="dogAge" aria-describedby="dogAge" placeholder="Enter your dog's age">
+        <small id="dogAgeEg" class="form-text text-muted">Examples: 4, 6, 2. If your dog is less than 1 year old, enter 0.</small>
+    </div>
+    <div class="form-group">
+        <label for="dogWeight">Dog Weight</label>
+        <input type="text" class="form-control" id="dogWeight" aria-describedby="dogWeight" placeholder="Enter your dog's weight in pounds">
+        <small id="dogWeightEg" class="form-text text-muted">Examples: 12, 56, 34</small>
+    </div>
+    <div class="form-group">
+        <label for="hairLength">Select your dog's hair length:</label>
+        <select class="form-control" id="hairLength" name="hairLength">
+            <option>Hairless</option>
+            <option>Short</option>
+            <option>Medium</option>
+            <option>Long</option>
+            <option>Very Long</option>
+        </select>
+    </div>
+    <div class="container">
+        <p>Select your dog's color(s):</p>
+        @for(color <- colors){
+            <label class="checkbox">
+                <input type="checkbox" value="@color.getColorId">@color.getColorName
+            </label>
+        }
+    </div>
+    <div class="container">
+        <p>Select your dog's personality traits:</p>
+        @for(personality <- personalities){
+        <label class="checkbox">
+            <input type="checkbox" value="@personality.getPersonalityName">@personality.getPersonalityName
+        </label>
+        }
+    </div>
+    <input type="submit" value="Save">
+</form>
+</body>
+</html>

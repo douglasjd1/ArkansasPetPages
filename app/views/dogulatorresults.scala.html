@@ -1,14 +1,34 @@
-@(results : TreeMap[Breed, Integer])
+@(results : List[DogulatorResult])
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
     <title>Dogulator Results</title>
 </head>
 <body>
-@for((breed,score) <- results){
-    @breed.getBreedName, @score<br>
-    <img src="/assets/images/@breed.getBreedName/@breed.getPhoto1" height="100"><br>
-}
+    @navbar("dogulatorResults")
+    <div class="container">
+        <h3>Results</h3>
+
+        @for(result <- results){
+        <div class="row">
+            <div class="col-6">
+                <a href="breed/@result.getBreedId">@result.getBreedName</a>, @result.getPercentage%<br>
+                <img src="/assets/images/@result.getBreedName/@result.getPhoto1" height="100">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="@result.getPercentage"
+                         aria-valuemin="0" aria-valuemax="100" style="width:@result.getPercentage%">
+                        <span class="sr-only">@result.getPercentage%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+            }
+    </div>
 </body>
 </html>

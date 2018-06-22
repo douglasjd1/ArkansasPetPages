@@ -101,10 +101,12 @@ public class LocationController extends Controller
                     setParameter("locationId", locationId).
                     getSingleResult();
 
-            String dogSql = "SELECT d " +
-                            "FROM Dog d ";
+            String dogSql = "SELECT d FROM Dog d  WHERE d.locationId = :locationId";
 
-            List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).getResultList();
+            List<Dog> dogs = jpaApi.em().
+                    createQuery(dogSql, Dog.class).
+                    setParameter("locationId", locationId).
+                    getResultList();
             return ok(views.html.shelter.render(shelter, dogs));
         }
 

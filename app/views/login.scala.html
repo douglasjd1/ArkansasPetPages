@@ -1,0 +1,29 @@
+@(status : String)
+<!DOCTYPE html>
+@import helper._
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <title>Log In</title>
+</head>
+<body>
+    @navbar("logIn")
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>Log In</h3>
+                <form method="POST">
+                    @CSRF.formField
+                    Email:<br>
+                    <input type="text" name="emailAddress" id="emailAddress"><br>
+                    Password:<br>
+                    <input type="password" name="password" id="password"><br>
+                    <input type="submit" value="Log In"><br>
+                    @status
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

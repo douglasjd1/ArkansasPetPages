@@ -7,12 +7,12 @@
     <title>Breeders</title>
 </head>
 <body>
-<div class="container text-center">
     @navbar("breeders")
-    @for(breeder <- breeders){
-    @breeder.getLocationName<br>
-    }
-</div>
+    <div class="container text-center">
+        @for(breeder <- breeders){
+        <a href="/location/@breeder.getLocationId">@breeder.getLocationName</a><br>
+        }
+    </div>
 
 </body>
 </html>

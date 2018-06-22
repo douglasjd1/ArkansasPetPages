@@ -5,6 +5,9 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 GET     /practice                   controllers.HomeController.getPractice
+GET     /home                       controllers.HomeController.getHome
+GET     /sendEmail                  controllers.HomeController.getSendEmail
+POST    /sendEmail                  controllers.HomeController.postSendEmail
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
@@ -31,8 +34,8 @@ POST    /newDogPersonality          controllers.DogController.postNewDogPersonal
 POST    /newDogColor                controllers.DogController.postNewDogColor
 GET     /newDogPersonality          controllers.DogController.getNewDogPersonality
 GET     /newDogColor                controllers.DogController.getNewDogColor
-GET     /newDog                     controllers.DogController.getNewDog
-POST    /newDog                     controllers.DogController.postNewDog
+GET     /newUserDog                 controllers.DogController.getNewUserDog
+POST    /newUser                    controllers.DogController.postNewUserDog
 GET     /newDogPhoto                controllers.DogController.getNewDogPhoto
 POST    /newDogPhoto                controllers.DogController.postNewDogPhoto
 GET     /dog/:id                    controllers.DogController.getDog(id:Integer)
@@ -46,3 +49,14 @@ POST    /newLocation                controllers.LocationController.postNewLocati
 GET     /location/:id               controllers.LocationController.getLocation(id:Integer)
 GET     /shelters                   controllers.LocationController.getShelters
 GET     /breeders                   controllers.LocationController.getBreeders
+
+GET     /createAccount              controllers.UserController.getCreateAccount
+POST    /createAccount              controllers.UserController.postCreateAccount
+GET     /logIn                      controllers.UserController.getLogIn
+POST    /logIn                      controllers.UserController.postLogIn
+POST    /logOut                     controllers.UserController.postLogOut
+GET     /editUser/id                controllers.UserController.getUserEdit(id:Integer)
+POST    /editUser/id                controllers.UserController.postUserEdit(id:Integer)
+GET     /userPage/id                controllers.UserController.getUserPage(id:Integer)
+GET     /userProfilePhoto/:id       controllers.UserController.getUserProfilePhoto(id:Integer)
+
