@@ -4,53 +4,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
     <title>New Dog</title>
 </head>
 <body>
-@navbar("userPage")
-<form method="POST">
-    @CSRF.formField
-    <div class="form-group">
-        <label for="dogName">Dog Name</label>
-        <input type="text" class="form-control" id="dogName" name="dogName" aria-describedby="dogName" placeholder="Enter your dog's name">
-    </div>
-    <div class="form-group">
-        <label for="dogAge">Dog Age</label>
-        <input type="text" class="form-control" id="dogAge" aria-describedby="dogAge" placeholder="Enter your dog's age">
-        <small id="dogAgeEg" class="form-text text-muted">Examples: 4, 6, 2. If your dog is less than 1 year old, enter 0.</small>
-    </div>
-    <div class="form-group">
-        <label for="dogWeight">Dog Weight</label>
-        <input type="text" class="form-control" id="dogWeight" aria-describedby="dogWeight" placeholder="Enter your dog's weight in pounds">
-        <small id="dogWeightEg" class="form-text text-muted">Examples: 12, 56, 34</small>
-    </div>
-    <div class="form-group">
-        <label for="hairLength">Select your dog's hair length:</label>
-        <select class="form-control" id="hairLength" name="hairLength">
-            <option>Hairless</option>
-            <option>Short</option>
-            <option>Medium</option>
-            <option>Long</option>
-            <option>Very Long</option>
-        </select>
-    </div>
+    @navbar("userPage")
     <div class="container">
-        <p>Select your dog's color(s):</p>
-        @for(color <- colors){
-            <label class="checkbox">
-                <input type="checkbox" value="@color.getColorId">@color.getColorName
-            </label>
-        }
+        <div class="row">
+            <div class="col-12">
+                <form method="POST">
+                    @CSRF.formField
+                    <div class="form-group">
+                        <label for="dogName">Dog Name</label>
+                        <input type="text" class="form-control" id="dogName" name="dogName" aria-describedby="dogName" placeholder="Enter your dog's name">
+                    </div>
+                    <div class="form-group">
+                        <label for="dogPhoto">Add a photo of your dog</label><br>
+                        <input type="file" name="dogPhoto" id="dogPhoto">
+                    </div>
+                    <div class="form-group">
+                        <label for="dogAge">Dog Age</label>
+                        <input type="text" class="form-control" id="dogAge" name="dogAge" aria-describedby="dogAge" placeholder="Enter your dog's age">
+                        <small id="dogAgeEg" class="form-text text-muted">Examples: 4, 6, 2. If your dog is less than 1 year old, enter 0.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="dogWeight">Dog Weight</label>
+                        <input type="text" class="form-control" id="dogWeight" name="dogWeight" aria-describedby="dogWeight" placeholder="Enter your dog's weight in pounds">
+                        <small id="dogWeightEg" class="form-text text-muted">Examples: 12, 56, 34</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="dogWeight">Dog Height</label>
+                        <input type="text" class="form-control" id="dogHeight" name="dogHeight" aria-describedby="dogHeight" placeholder="Enter your dog's height in inches">
+                        <small id="dogHeightEg" class="form-text text-muted">Examples: 12, 28, 22. If you're not sure, give it your best guess. Reference the breed page to get a better idea.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="hairLength">Select your dog's hair length:</label>
+                        <select class="form-control" id="hairLength" name="hairLength">
+                            <option>Hairless</option>
+                            <option>Short</option>
+                            <option>Medium</option>
+                            <option>Long</option>
+                            <option>Very Long</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="colorName">Select your dog's color:</label>
+                        <select class="form-control" id="colorName" name="colorName">
+                            @for(color <- colors){
+                                <option>@color.getColorName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="container">
+                        <p>Select your dog's personality traits:</p>
+                        @for(personality <- personalities){
+                            <div class="checkbox">
+                                <label><input type="checkbox" class="personality"
+                                              name="@personality.getPersonalityName"
+                                              value="@personality.getPersonalityId"
+                                              id="@personality.getPersonalityName">
+                                                @personality.getPersonalityName</label>
+                            </div>
+                        }
+                    </div>
+                    <input type="submit" value="Save">
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="container">
-        <p>Select your dog's personality traits:</p>
-        @for(personality <- personalities){
-        <label class="checkbox">
-            <input type="checkbox" value="@personality.getPersonalityName">@personality.getPersonalityName
-        </label>
-        }
-    </div>
-    <input type="submit" value="Save">
-</form>
 </body>
 </html>

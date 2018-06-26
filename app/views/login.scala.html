@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-12">
                 <h3>Log In</h3>
-                <form method="POST">
+                <form method="POST" action="@routes.UserController.postLogIn">
                     @CSRF.formField
                     Email:<br>
                     <input type="text" name="emailAddress" id="emailAddress"><br>

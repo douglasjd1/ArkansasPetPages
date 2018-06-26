@@ -9,11 +9,11 @@
 <body>
 <form method="POST" enctype="multipart/form-data">
     @CSRF.formField
-    First Name: <input type="text" name="firstName" id="firstName" value="@user.getFirstName"><br>
-    Last Name: <input type="text" name="lastName" id="lastName" value="@user.getLastName"><br>
-    Email Address: <input type="text" name="emailAddress" id="emailAddress" value="@user.getEmailAddress"><br>
-    Create a password: <input type="password" name="password" id="password" value="@user.getUserPassword"><br>
-    Tell us about yourself: <br><textarea name="bio" id="bio" value="@user.getBio"></textarea><br>
+    Edit First Name: <input type="text" name="firstName" id="firstName" value="@user.getFirstName"><br>
+    Edit Last Name: <input type="text" name="lastName" id="lastName" value="@user.getLastName"><br>
+    Edit Email Address: <input type="text" name="emailAddress" id="emailAddress" value="@user.getEmailAddress"><br>
+    Edit password: <input type="password" name="password" id="password" value="@user.getUserPassword"><br>
+    Edit bio: <br><textarea name="bio" id="bio" value="@user.getBio"></textarea><br>
     Upload a new profile photo: <input type="file" id="userProfilePhoto" name="userProfilePhoto"><br>
     <input type="submit" value="Save">
 </form>

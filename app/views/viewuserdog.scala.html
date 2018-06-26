@@ -1,4 +1,4 @@
-@(dog : Dog, photos : List[DogPhoto], firstPhoto : DogPhoto)
+@(dog : DogDetail, personalities : List[Personality], photos : List[DogPhoto], firstPhoto : DogPhoto)
 <!DOCTYPE html>
 @import helper._
 <html lang="en">
@@ -17,7 +17,8 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                @dog.getDogName<br>
+                @dog.getDogName <a href="/editUserDog/@dog.getDogId">Edit</a> <br>
+                @dog.getDogId
             </div>
         </div>
         <div class="row">

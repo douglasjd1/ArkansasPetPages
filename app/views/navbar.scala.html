@@ -2,29 +2,22 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
                 <ul class="navbar-nav">
+
                     @if("home".equals(page)){
                     <li class="nav-item active">
                         } else {
                     <li class="nav-item">
                         }
-                        @if("breed".equals(page) || "shelter".equals(page) || "breeder".equals(page) || "dog".equals(page)){
-                        <a class="nav-link" href="../home">Arkansas Pet Pages</a>
-                        } else {
-                        <a class="nav-link" href="home">Arkansas Pet Pages</a>
-                        }
+                        <a class="nav-link" href="/home">Arkansas Pet Pages</a>
 
                         @if("breeds".equals(page) || "breed".equals(page)){
                     <li class="nav-item active">
                         } else {
                     <li class="nav-item">
                         }
-                        @if("breed".equals(page) || "shelter".equals(page) || "breeder".equals(page) || "dog".equals(page)){
-                        <a class="nav-link" href="../breeds">Breeds</a>
-                        } else {
-                        <a class="nav-link" href="breeds">Breeds</a>
-                        }
+                        <a class="nav-link" href="/breeds">Breeds</a>
                     </li>
 
                     @if("shelters".equals(page) || "shelter".equals(page) || "dog".equals(page) || "dog".equals(page)){
@@ -32,60 +25,45 @@
                         } else {
                     <li class="nav-item">
                         }
-                        @if("breed".equals(page) || "shelter".equals(page) || "breeder".equals(page) || "dog".equals(page)){
-                        <a class="nav-link" href="../shelters">Shelters</a>
-                        } else {
-                        <a class="nav-link" href="shelters">Shelters</a>
-                        }
+                        <a class="nav-link" href="/shelters">Shelters</a>
 
                         @if("breeders".equals(page) || "breeder".equals(page)){
                     <li class="nav-item active">
                         } else {
                     <li class="nav-item">
                         }
-                        @if("breed".equals(page) || "shelter".equals(page) || "breeder".equals(page) || "dog".equals(page)){
-                        <a class="nav-link" href="../breeders">Breeders</a>
-                        } else {
-                        <a class="nav-link" href="breeders">Breeders</a>
-                        }
+                        <a class="nav-link" href="/breeders">Breeders</a>
 
                         @if("dogulator".equals(page) || "dogulatorResults".equals(page)){
                     <li class="nav-item active">
                         } else {
                     <li class="nav-item">
                         }
-                        @if("breed".equals(page) || "shelter".equals(page) || "breeder".equals(page) || "dog".equals(page)){
-                        <a class="nav-link" href="../dogulator">Dogulator</a>
-                        } else {
-                        <a class="nav-link" href="dogulator">Dogulator</a>
-                        }
+                        <a class="nav-link" href="/dogulator">Dogulator</a>
 
                     @if("createAccount".equals(page)){
                     <li class="nav-item active">
                         } else {
                     <li class="nav-item">
                         }
-                        @if("breed".equals(page) || "shelter".equals(page) || "breeder".equals(page) || "dog".equals(page)){
-                        <a class="nav-link" href="../createAccount">Create Account</a>
-                        } else {
-                        <a class="nav-link" href="createAccount">Create Account</a>
-                        }
+                        <a class="nav-link" href="/createAccount">Create Account</a>
 
                     @if("logIn".equals(page)){
                     <li class="nav-item active">
                         } else {
                     <li class="nav-item">
                         }
-                        @if("breed".equals(page) || "shelter".equals(page) || "breeder".equals(page) || "dog".equals(page)){
-                        <a class="nav-link" href="../logIn">Log In</a>
+                        <a class="nav-link" href="/logIn">Log In</a>
+
+                    @if("userPage".equals(page)){
+                    <li class="nav-item active">
                         } else {
-                        <a class="nav-link" href="logIn">Log In</a>
+                    <li class="nav-item">
                         }
-
-
+                        <a class="nav-link" href="/userPage">View Account</a>
                 </ul>
             </nav>
         </div>
     </div>
 </div>
-
+<br><br><br>

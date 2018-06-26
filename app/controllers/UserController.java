@@ -1,6 +1,8 @@
 package controllers;
 
 import com.google.common.io.Files;
+import models.Dog;
+import models.DogDetail;
 import models.Password;
 import models.PetPagesUser;
 import play.data.DynamicForm;
@@ -16,7 +18,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class UserController extends Controller
+public class UserController extends ApplicationController
 {
     private JPAApi jpaApi;
     private FormFactory formFactory;
@@ -30,7 +32,7 @@ public class UserController extends Controller
 
     public Result getCreateAccount()
     {
-        return ok(views.html.createaccount.render());
+        return ok(views.html.createaccount.render(""));
     }
 
     @Transactional
@@ -41,8 +43,12 @@ public class UserController extends Controller
         String firstName = form.get("firstName");
         String lastName = form.get("lastName");
         String emailAddress = form.get("emailAddress");
-        String password = form.get("password");
+        String password = form.get("userPassword");
         String bio = form.get("bio");
+
+        Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart<File> filePart = formData.getFile("profilePhoto");
+        File file = filePart.getFile();
 
         PetPagesUser petPagesUser = new PetPagesUser();
 
@@ -50,6 +56,18 @@ public class UserController extends Controller
         petPagesUser.setLastName(lastName);
         petPagesUser.setEmailAddress(emailAddress);
         petPagesUser.setBio(bio);
+
+        if(file != null)
+        {
+            try
+            {
+                petPagesUser.setProfilePhoto(Files.toByteArray(file));
+            }
+            catch(Exception e)
+            {
+
+            }
+        }
 
         try
         {
@@ -59,19 +77,28 @@ public class UserController extends Controller
             petPagesUser.setSalt(salt);
             petPagesUser.setUserPassword(hashedPassword);
         }
+
         catch(Exception e)
         {
-            return ok(views.html.createaccount.render());
+            e.printStackTrace();
+            return ok(views.html.createaccount.render("Error creating account"));
         }
 
+        System.out.println(petPagesUser.getFirstName());
         jpaApi.em().persist(petPagesUser);
 
-        return ok(views.html.userpage.render(petPagesUser));
+        int petPagesUserId = petPagesUser.getUserId();
+
+        String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :petPagesUserId";
+
+        List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("petPagesUserId", petPagesUserId).getResultList();
+
+        return ok(views.html.userpage.render(petPagesUser, dogs, "Account successfully created"));
     }
 
-    public Result getLogIn()
+    public Result getLogIn(String status)
     {
-        return ok(views.html.login.render(""));
+        return ok(views.html.login.render(status));
     }
 
     @Transactional(readOnly = true)
@@ -95,8 +122,8 @@ public class UserController extends Controller
 
             if(Arrays.equals(hashedPassword, loggedInUser.getUserPassword()))
             {
-                session().put("loggedin", "true");
-                return ok(views.html.userpage.render(loggedInUser));
+                logIn(loggedInUser.getUserId());
+                return redirect(routes.UserController.getUserPage(""));
             }
         }
         else
@@ -118,73 +145,91 @@ public class UserController extends Controller
     @Transactional(readOnly = true)
     public Result getUserEdit(Integer userId)
     {
-        String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
-
-        PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
-
-        return ok(views.html.useredit.render(petPagesUser));
-    }
-
-    @Transactional
-    public Result postUserEdit(Integer userId)
-    {
-        DynamicForm form = formFactory.form().bindFromRequest();
-
-        String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
-
-        PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
-
-        String password = form.get("password");
-
-        Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
-        Http.MultipartFormData.FilePart<File> filePart = formData.getFile("userProfilePhoto");
-        File file = filePart.getFile();
-
-        petPagesUser.setFirstName(form.get("firstName"));
-        petPagesUser.setLastName(form.get("lastName"));
-        petPagesUser.setEmailAddress(form.get("emailAddress"));
-        petPagesUser.setBio(form.get("Bio"));
-
-        if(file != null)
-        {
-            try
-            {
-                petPagesUser.setProfilePhoto(Files.toByteArray(file));
-            }
-            catch(Exception e)
-            {
-
-            }
-        }
-
-        byte salt[] = petPagesUser.getSalt();
-        byte hashedPassword[] = Password.hashPassword(password.toCharArray(), salt);
-
-        if(Arrays.equals(hashedPassword, petPagesUser.getUserPassword()))
-        {
-            return ok(views.html.userpage.render(petPagesUser));
-        }
-
-        return ok(views.html.userpage.render(petPagesUser));
-    }
-
-    @Transactional(readOnly = true)
-    public Result getUserPage(Integer userId)
-    {
-        if(session().get("loggedin"). equals("true"))
+        if(isLoggedIn() && userId == Integer.parseInt(session().get("loggedIn")))
         {
             String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
 
             PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
 
-            return ok(views.html.userpage.render(petPagesUser));
+            return ok(views.html.useredit.render(petPagesUser));
+        }
+
+        return ok(views.html.login.render("Please log in."));
+    }
+
+    @Transactional
+    public Result postUserEdit(Integer userId)
+    {
+        if(isLoggedIn() && userId == Integer.parseInt(session().get("loggedIn")))
+        {
+            DynamicForm form = formFactory.form().bindFromRequest();
+
+            String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
+
+            PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
+
+            String password = form.get("password");
+
+            Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
+            Http.MultipartFormData.FilePart<File> filePart = formData.getFile("userProfilePhoto");
+            File file = filePart.getFile();
+
+            petPagesUser.setFirstName(form.get("firstName"));
+            petPagesUser.setLastName(form.get("lastName"));
+            petPagesUser.setEmailAddress(form.get("emailAddress"));
+            petPagesUser.setBio(form.get("Bio"));
+
+            if(file != null)
+            {
+                try
+                {
+                    petPagesUser.setProfilePhoto(Files.toByteArray(file));
+                }
+                catch(Exception e)
+                {
+
+                }
+            }
+
+            byte salt[] = petPagesUser.getSalt();
+            byte hashedPassword[] = Password.hashPassword(password.toCharArray(), salt);
+
+            if(Arrays.equals(hashedPassword, petPagesUser.getUserPassword()))
+            {
+                return redirect("/userPage/" + petPagesUser.getUserId());
+            }
+
+            String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :petPagesUserId";
+
+            List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("petPagesUserId", userId).getResultList();
+
+            return ok(views.html.userpage.render(petPagesUser, dogs, "User edit successfully saved"));
+        }
+        return ok(views.html.login.render("Please log in."));
+    }
+
+    @Transactional(readOnly = true)
+    public Result getUserPage(String status)
+    {
+        if(isLoggedIn())
+        {
+            int userId = Integer.parseInt(session().get("loggedIn"));
+
+            String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
+
+            PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
+
+            String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :petPagesUserId";
+
+            List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("petPagesUserId", userId).getResultList();
+
+            return ok(views.html.userpage.render(petPagesUser, dogs, status));
         }
 
         else
         {
-            return ok(views.html.login.render("Please log in to access this page."));
+            return redirect(routes.UserController.getLogIn("Log in to view your account"));
         }
-
     }
 
     @Transactional(readOnly = true)
@@ -204,9 +249,9 @@ public class UserController extends Controller
         }
     }
 
-    public Result postLogOut()
+    public Result getLogOut()
     {
-        session().clear();
-        return ok(views.html.logout.render());
+        logOut();
+        return redirect(routes.UserController.getLogIn("Successfully logged out"));
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-public class LocationController extends Controller
+public class LocationController extends ApplicationController
 {
     private JPAApi jpaApi;
     private FormFactory formFactory;

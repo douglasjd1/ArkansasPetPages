@@ -1,4 +1,4 @@
-@(user : PetPagesUser)
+@(user : PetPagesUser, dogs : List[Dog], status : String)
 <!DOCTYPE html>
 @import helper._
 <html lang="en">
@@ -13,16 +13,18 @@
         <div class="row">
             <div class="col-12">
                 Welcome, @user.getFirstName @user.getLastName!<br>
-                <img src="../userProfilePhoto/@user.getUserId">
-                <form method="POST">
-                    @CSRF.formField
-                    <a href="editUser/@user.getUserId">Edit Information</a>
-                </form>
-                <a href="newUserDog">Add a dog</a>
-                <form method="POST" action="/logOut">
+                <img src="../userProfilePhoto/@user.getUserId" height="150"><br>
+                <a href="/editUser/@user.getUserId">Edit Information</a><br>
+                <a href="/newUserDog/@user.getUserId">Add a dog</a><br>
+                <form action="@routes.UserController.getLogOut">
                     @CSRF.formField
                     <input type="submit" value="Log Out">
                 </form>
+                Your dogs:<br>
+                @for(dog <- dogs){
+                    <a href="../viewUserDog/@dog.getDogId">@dog.getDogName</a>
+                }
+                @status
             </div>
         </div>
     </div>

@@ -13,12 +13,14 @@ public class Dog
 
     private String dogName;
     private int dogAge;
-    private int dogReffNum;
+    private Integer dogReffNum;
     private int weight;
+    private int height;
     private int hairLengthId;
-    private int locationId;
+    private Integer locationId;
     private int colorId;
     private byte[] defaultPhotoData;
+    private Integer petPagesUserId;
 
     public void setDogName(String dogName)
     {
@@ -30,7 +32,7 @@ public class Dog
         this.dogAge = dogAge;
     }
 
-    public void setDogReffNum(int dogReffNum)
+    public void setDogReffNum(Integer dogReffNum)
     {
         this.dogReffNum = dogReffNum;
     }
@@ -45,7 +47,7 @@ public class Dog
         this.hairLengthId = hairLengthId;
     }
 
-    public void setLocationId(int locationId)
+    public void setLocationId(Integer locationId)
     {
         this.locationId = locationId;
     }
@@ -65,7 +67,7 @@ public class Dog
         return dogAge;
     }
 
-    public int getDogReffNum()
+    public Integer getDogReffNum()
     {
         return dogReffNum;
     }
@@ -80,7 +82,7 @@ public class Dog
         return hairLengthId;
     }
 
-    public int getLocationId()
+    public Integer getLocationId()
     {
         return locationId;
     }
@@ -105,5 +107,23 @@ public class Dog
         return defaultPhotoData;
     }
 
+    public int getHeight()
+    {
+        return height;
+    }
 
+    public void setHeight(int height)
+    {
+        this.height = height;
+    }
+
+    public Integer getPetPagesUserId()
+    {
+        return petPagesUserId;
+    }
+
+    public void setPetPagesUserId(Integer petPagesUserId)
+    {
+        this.petPagesUserId = petPagesUserId;
+    }
 }

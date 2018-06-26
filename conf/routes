@@ -34,15 +34,17 @@ POST    /newDogPersonality          controllers.DogController.postNewDogPersonal
 POST    /newDogColor                controllers.DogController.postNewDogColor
 GET     /newDogPersonality          controllers.DogController.getNewDogPersonality
 GET     /newDogColor                controllers.DogController.getNewDogColor
-GET     /newUserDog                 controllers.DogController.getNewUserDog
-POST    /newUser                    controllers.DogController.postNewUserDog
+GET     /newUserDog/:id             controllers.DogController.getNewUserDog(id:Integer)
+POST    /newUserDog/:id             controllers.DogController.postNewUserDog(id:Integer)
 GET     /newDogPhoto                controllers.DogController.getNewDogPhoto
 POST    /newDogPhoto                controllers.DogController.postNewDogPhoto
-GET     /dog/:id                    controllers.DogController.getDog(id:Integer)
 GET     /dogDefaultPhoto/:id        controllers.DogController.getDogDefaultPhoto(id:Integer)
 GET     /dogPhoto/:id               controllers.DogController.getDogPhoto(id:Integer)
 GET     /newDogDefaultPhoto/:id     controllers.DogController.getNewDogDefaultPhoto(id:Integer)
 POST    /newDogDefaultPhoto/:id     controllers.DogController.postNewDogDefaultPhoto(id:Integer)
+GET     /viewUserDog/:id            controllers.DogController.getViewUserDog(id:Integer)
+GET     /editUserDog/:id            controllers.DogController.getEditUserDog(id:Integer)
+POST    /editUserDog/:id            controllers.DogController.postEditUserDog(id:Integer)
 
 GET     /newLocation                controllers.LocationController.getNewLocation
 POST    /newLocation                controllers.LocationController.postNewLocation
@@ -52,11 +54,12 @@ GET     /breeders                   controllers.LocationController.getBreeders
 
 GET     /createAccount              controllers.UserController.getCreateAccount
 POST    /createAccount              controllers.UserController.postCreateAccount
-GET     /logIn                      controllers.UserController.getLogIn
+GET     /logIn                      controllers.UserController.getLogIn(status:String ?= "")
 POST    /logIn                      controllers.UserController.postLogIn
-POST    /logOut                     controllers.UserController.postLogOut
-GET     /editUser/id                controllers.UserController.getUserEdit(id:Integer)
-POST    /editUser/id                controllers.UserController.postUserEdit(id:Integer)
-GET     /userPage/id                controllers.UserController.getUserPage(id:Integer)
+GET     /logOut                     controllers.UserController.getLogOut
+GET     /editUser/:id               controllers.UserController.getUserEdit(id:Integer)
+POST    /editUser/:id               controllers.UserController.postUserEdit(id:Integer)
+GET     /userPage                   controllers.UserController.getUserPage(status:String ?= "")
 GET     /userProfilePhoto/:id       controllers.UserController.getUserProfilePhoto(id:Integer)
+
 
