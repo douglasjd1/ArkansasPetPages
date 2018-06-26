@@ -22,7 +22,7 @@
                 </form>
                 Your dogs:<br>
                 @for(dog <- dogs){
-                    <a href="../viewUserDog/@dog.getDogId">@dog.getDogName</a>
+                    <a href="../viewUserDog/@user.getUserId/@dog.getDogId">@dog.getDogName</a>
                 }
                 @status
             </div>

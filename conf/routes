@@ -36,15 +36,11 @@ GET     /newDogPersonality          controllers.DogController.getNewDogPersonali
 GET     /newDogColor                controllers.DogController.getNewDogColor
 GET     /newUserDog/:id             controllers.DogController.getNewUserDog(id:Integer)
 POST    /newUserDog/:id             controllers.DogController.postNewUserDog(id:Integer)
-GET     /newDogPhoto                controllers.DogController.getNewDogPhoto
-POST    /newDogPhoto                controllers.DogController.postNewDogPhoto
 GET     /dogDefaultPhoto/:id        controllers.DogController.getDogDefaultPhoto(id:Integer)
 GET     /dogPhoto/:id               controllers.DogController.getDogPhoto(id:Integer)
-GET     /newDogDefaultPhoto/:id     controllers.DogController.getNewDogDefaultPhoto(id:Integer)
-POST    /newDogDefaultPhoto/:id     controllers.DogController.postNewDogDefaultPhoto(id:Integer)
-GET     /viewUserDog/:id            controllers.DogController.getViewUserDog(id:Integer)
-GET     /editUserDog/:id            controllers.DogController.getEditUserDog(id:Integer)
-POST    /editUserDog/:id            controllers.DogController.postEditUserDog(id:Integer)
+GET     /viewUserDog/:userId/:dogId controllers.DogController.getViewUserDog(userId:Integer, dogId:Integer)
+GET     /editUserDog/:userId/:dogId controllers.DogController.getEditUserDog(userId:Integer, dogId:Integer)
+POST    /editUserDog/:userId/:dogId controllers.DogController.postEditUserDog(userId:Integer, dogId:Integer)
 
 GET     /newLocation                controllers.LocationController.getNewLocation
 POST    /newLocation                controllers.LocationController.postNewLocation

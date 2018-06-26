@@ -205,7 +205,7 @@ public class UserController extends ApplicationController
 
             return ok(views.html.userpage.render(petPagesUser, dogs, "User edit successfully saved"));
         }
-        return ok(views.html.login.render("Please log in."));
+        return ok(views.html.login.render("Please log in to access this page."));
     }
 
     @Transactional(readOnly = true)

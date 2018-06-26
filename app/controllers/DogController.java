@@ -7,14 +7,12 @@ import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
-import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
-import scala.Int;
 
 import javax.inject.Inject;
-import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DogController extends ApplicationController
@@ -78,6 +76,10 @@ public class DogController extends ApplicationController
         String hairLengthName = form.get("hairLength");
         String colorName = form.get("colorName");
 
+        Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart<File> filePart = formData.getFile("dogPhoto");
+        File file = filePart.getFile();
+
         String hairLengthSql = "SELECT hl FROM HairLength hl WHERE hairLengthName = :hairLengthName";
 
         HairLength hairLength = jpaApi.em().
@@ -100,7 +102,37 @@ public class DogController extends ApplicationController
         dog.setColorId(color.getColorId());
         dog.setPetPagesUserId(userId);
 
+        if(file != null)
+        {
+            try
+            {
+                dog.setDefaultPhotoData(Files.toByteArray(file));
+            }
+            catch(Exception e)
+            {
+                //do nothing
+            }
+        }
+
         jpaApi.em().persist(dog);
+
+        DogPhoto dogPhoto = new DogPhoto();
+
+        dogPhoto.setDogId(dog.getDogId());
+
+        if(file != null)
+        {
+            try
+            {
+                dogPhoto.setDogPhotoData(Files.toByteArray(file));
+            }
+            catch(Exception e)
+            {
+                //do nothing
+            }
+        }
+
+        jpaApi.em().persist(dogPhoto);
 
         String personalitySql = "SELECT p FROM Personality p";
 
@@ -121,53 +153,15 @@ public class DogController extends ApplicationController
 
         String userSql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
 
-        PetPagesUser user = jpaApi.em().createQuery(userSql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
-
         String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :userId";
 
         List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("userId", userId).getResultList();
 
-        return ok(views.html.userpage.render(user, dogs, "Dog successfully added"));
-    }
-
-    public Result getNewDogPhoto()
-    {
-        return ok(views.html.newdogphoto.render());
-    }
-
-    @Transactional
-    public Result postNewDogPhoto()
-    {
-        Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
-        Http.MultipartFormData.FilePart<File> filePart = formData.getFile("dogphoto");
-        File file = filePart.getFile();
-
-        DogPhoto dogPhoto = new DogPhoto();
-
-        DynamicForm form = formFactory.form().bindFromRequest();
-
-        int dogId = Integer.parseInt(form.get("dogid"));
-
-        dogPhoto.setDogId(dogId);
-        if(file != null)
-        {
-            try
-            {
-                dogPhoto.setDogPhotoData(Files.toByteArray(file));
-            }
-            catch(Exception e)
-            {
-                //do nothing
-            }
-        }
-
-        jpaApi.em().persist(dogPhoto);
-
-        return ok(views.html.newdogphoto.render());
+        return redirect(routes.UserController.getUserPage("Dog successfully added."));
     }
 
     @Transactional(readOnly = true)
-    public Result getViewUserDog(Integer dogId)
+    public Result getViewUserDog(int userId, int dogId)
     {
         String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
                 "FROM Dog d " +
@@ -191,6 +185,7 @@ public class DogController extends ApplicationController
 
         List<DogPhoto> photos = jpaApi.em().createQuery(photoSql, DogPhoto.class).setParameter("dogId", dogId).getResultList();
         DogPhoto firstPhoto;
+
         if(photos.size() > 0)
         {
             firstPhoto = photos.get(0);
@@ -201,7 +196,10 @@ public class DogController extends ApplicationController
             firstPhoto = new DogPhoto();
         }
 
-        return ok(views.html.viewuserdog.render(dog, personalities, photos, firstPhoto));
+        String userSql = "SELECT ppu FROM PetPagesUser ppu WHERE ppu.userId = :userId";
+        PetPagesUser user = jpaApi.em().createQuery(userSql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
+
+        return ok(views.html.viewuserdog.render(user, dog, personalities, photos, firstPhoto));
     }
 
     @Transactional(readOnly = true)
@@ -212,43 +210,6 @@ public class DogController extends ApplicationController
         Dog dog = jpaApi.em().createQuery(sql, Dog.class).setParameter("dogId", dogId).getSingleResult();
 
         return ok(dog.getDefaultPhotoData()).as("image/jpg");
-    }
-
-    @Transactional(readOnly = true)
-    public Result getNewDogDefaultPhoto(Integer dogId)
-    {
-        String sql = "SELECT d FROM Dog d WHERE d.dogId = :dogId";
-        Dog dog = jpaApi.em().createQuery(sql, Dog.class).setParameter("dogId", dogId).getSingleResult();
-
-        return ok(views.html.newdogdefaultphoto.render(dog));
-    }
-
-    @Transactional
-    public Result postNewDogDefaultPhoto(Integer dogId)
-    {
-        Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
-        Http.MultipartFormData.FilePart<File> filePart = formData.getFile("defaultphoto");
-        File file = filePart.getFile();
-
-        String sql = "SELECT d FROM Dog d WHERE d.dogId = :dogId";
-
-        Dog dog = jpaApi.em().createQuery(sql, Dog.class).setParameter("dogId", dogId).getSingleResult();
-
-        if(file != null)
-        {
-            try
-            {
-                dog.setDefaultPhotoData(Files.toByteArray(file));
-            }
-            catch(Exception e)
-            {
-                //do nothing
-            }
-        }
-
-        jpaApi.em().persist(dog);
-
-        return ok(views.html.newdogdefaultphoto.render(dog));
     }
 
     @Transactional
@@ -263,29 +224,172 @@ public class DogController extends ApplicationController
 
 
     @Transactional(readOnly = true)
-    public Result getEditUserDog(int dogId)
+    public Result getEditUserDog(int userId, int dogId)
     {
-        String dogSql = "SELECT d FROM Dog d WHERE d.dogId = :dogId";
+        if(isLoggedIn() && (userId == Integer.parseInt(session().get("loggedIn"))))
+        {
+            String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
+                    "FROM Dog d " +
+                    "JOIN HairLength hl ON d.hairLengthId = hl.hairLengthId " +
+                    "JOIN Color c ON c.colorId = d.colorId " +
+                    "WHERE d.dogId = :dogId " +
+                    "ORDER BY d.dogName";
 
-        Dog dog = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("dogId", dogId).getSingleResult();
+            DogDetail dog = jpaApi.em().createQuery(dogSql, DogDetail.class).setParameter("dogId", dogId).getSingleResult();
 
-        return ok(views.html.edituserdog.render(dog));
+            String dogColorSql = "SELECT c FROM Color c " +
+                    "JOIN Dog d ON d.colorId = c.colorId " +
+                    "WHERE d.dogId = :dogId";
+
+            Color color = jpaApi.em().createQuery(dogColorSql, Color.class).setParameter("dogId", dogId).getSingleResult();
+
+            String dogPersonalitySql = "SELECT p FROM Personality p " +
+                    "JOIN DogPersonality dp ON dp.personalityId = p.personalityId " +
+                    "JOIN Dog d ON dp.dogId = d.dogId " +
+                    "WHERE d.dogId = :dogId";
+
+            List<Personality> dogPersonalities = jpaApi.em().createQuery(dogPersonalitySql, Personality.class).setParameter("dogId", dogId).getResultList();
+            List<Integer> dogPersonalityIds = new ArrayList<>();
+
+            for(Personality personality: dogPersonalities)
+            {
+                dogPersonalityIds.add(personality.getPersonalityId());
+            }
+
+            String colorSql = "SELECT c FROM Color c ORDER BY c.colorName";
+            String personalitySql = "SELECT p FROM Personality p ORDER BY p.personalityName";
+            String userSql = "SELECT ppu FROM PetPagesUser ppu WHERE ppu.userId = :userId";
+
+            List<Color> colors = jpaApi.em().createQuery(colorSql, Color.class).getResultList();
+            List<Personality> personalities = jpaApi.em().createQuery(personalitySql, Personality.class).getResultList();
+            PetPagesUser user = jpaApi.em().createQuery(userSql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
+
+            return ok(views.html.edituserdog.render(user, dog, color, colors, dogPersonalities, personalities, dogPersonalityIds));
+        }
+        else
+        {
+            return redirect(routes.UserController.getLogIn("Please log in to access this page."));
+        }
     }
 
     @Transactional
-    public Result postEditUserDog(int dogId)
+    public Result postEditUserDog(int userId, int dogId)
     {
-        int userId = Integer.parseInt(session().get("loggedIn"));
+        DynamicForm form = formFactory.form().bindFromRequest();
 
-        String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
+        String dogSql = "SELECT d FROM Dog d WHERE dogId = :dogId";
 
-        PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
+        Dog dog = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("dogId", dogId).getSingleResult();
 
-        String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :petPagesUserId";
+        String dogName = form.get("dogName");
+        int dogAge = Integer.parseInt(form.get("dogAge"));
+        int weight = Integer.parseInt(form.get("dogWeight"));
+        int height = Integer.parseInt(form.get("dogHeight"));
+        String hairLengthName = form.get("hairLength");
+        String colorName = form.get("colorName");
 
-        List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("petPagesUserId", userId).getResultList();
+        String hairLengthSql = "SELECT hl FROM HairLength hl " +
+                               "WHERE hl.hairLengthName = :hairLengthName";
 
-        return ok(views.html.userpage.render(petPagesUser, dogs, "Dog successfully saved"));
+        HairLength hairLength = jpaApi.em().createQuery(hairLengthSql, HairLength.class).setParameter("hairLengthName", hairLengthName).getSingleResult();
+
+        String colorSql = "SELECT c FROM Color c " +
+                          "WHERE c.colorName = :colorName";
+
+        Color color = jpaApi.em().createQuery(colorSql, Color.class).setParameter("colorName", colorName).getSingleResult();
+
+        dog.setDogName(dogName);
+        dog.setDogAge(dogAge);
+        dog.setWeight(weight);
+        dog.setHeight(height);
+        dog.setHairLengthId(hairLength.getHairLengthId());
+        dog.setColorId(color.getColorId());
+
+        String deleteDogPersonalitiesSql = "SELECT dp FROM DogPersonality dp WHERE dp.dogId = :dogId";
+
+        List<DogPersonality> deletedDogPersonalities = jpaApi.em().
+                                                     createQuery(deleteDogPersonalitiesSql, DogPersonality.class).
+                                                     setParameter("dogId", dogId).getResultList();
+
+        for(DogPersonality dogPersonality : deletedDogPersonalities)
+        {
+            jpaApi.em().remove(dogPersonality);
+        }
+
+        String dogPersonalitiesSql = "SELECT p FROM Personality p";
+
+        List<Personality> personalities = jpaApi.em().createQuery(dogPersonalitiesSql, Personality.class).getResultList();
+
+        for(Personality personality : personalities)
+        {
+            if(form.get(String.valueOf(personality.getPersonalityId())) != null)
+            {
+                DogPersonality newDogPersonality = new DogPersonality();
+
+                newDogPersonality.setPersonalityId(personality.getPersonalityId());
+                newDogPersonality.setDogId(dog.getDogId());
+                jpaApi.em().persist(newDogPersonality);
+            }
+        }
+
+        jpaApi.em().persist(dog);
+
+        Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
+
+        Http.MultipartFormData.FilePart<File> filePart1 = formData.getFile("dogPhoto1");
+        File file1 = filePart1.getFile();
+
+        Http.MultipartFormData.FilePart<File> filePart2 = formData.getFile("dogPhoto2");
+        File file2 = filePart2.getFile();
+
+        Http.MultipartFormData.FilePart<File> filePart3 = formData.getFile("dogPhoto3");
+        File file3 = filePart3.getFile();
+
+        if(file1 != null)
+        {
+            try
+            {
+                DogPhoto dogPhoto = new DogPhoto();
+                dogPhoto.setDogId(dog.getDogId());
+                dogPhoto.setDogPhotoData(Files.toByteArray(file1));
+                jpaApi.em().persist(dogPhoto);
+            }
+            catch(Exception e)
+            {
+                //do nothing
+            }
+        }
+
+        if(file2 != null)
+        {
+            try
+            {
+                DogPhoto dogPhoto = new DogPhoto();
+                dogPhoto.setDogId(dog.getDogId());
+                dogPhoto.setDogPhotoData(Files.toByteArray(file2));
+                jpaApi.em().persist(dogPhoto);
+            }
+            catch(Exception e)
+            {
+                //do nothing
+            }
+        }
+
+        if(file3 != null)
+        {
+            try
+            {
+                DogPhoto dogPhoto = new DogPhoto();
+                dogPhoto.setDogId(dog.getDogId());
+                dogPhoto.setDogPhotoData(Files.toByteArray(file3));
+                jpaApi.em().persist(dogPhoto);
+            }
+            catch(Exception e)
+            {
+                //do nothing
+            }
+        }
+
+        return redirect(routes.UserController.getUserPage("Dog successfully saved."));
     }
-
 }
