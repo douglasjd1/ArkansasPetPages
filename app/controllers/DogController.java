@@ -151,12 +151,6 @@ public class DogController extends ApplicationController
             }
         }
 
-        String userSql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
-
-        String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :userId";
-
-        List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("userId", userId).getResultList();
-
         return redirect(routes.UserController.getUserPage("Dog successfully added."));
     }
 

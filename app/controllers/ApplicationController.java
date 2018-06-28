@@ -1,9 +1,17 @@
 package controllers;
 
+import models.Location;
+import models.PetPagesUser;
+import play.db.jpa.JPAApi;
+import play.db.jpa.Transactional;
 import play.mvc.Controller;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApplicationController extends Controller
 {
+
     public void logInUser(String emailAddress)
     {
         session().put("loggedIn", emailAddress);
@@ -30,4 +38,37 @@ public class ApplicationController extends Controller
 
         return loggedIn;
     }
+
+    @Transactional(readOnly = true)
+    public boolean isNewEmail(String emailAddress, JPAApi jpaApi)
+    {
+        boolean result = true;
+
+        String userSql = "SELECT ppu FROM PetPagesUser ppu";
+        String locationSql = "SELECT l FROM Location l";
+        System.out.println(userSql);
+
+        List<PetPagesUser> users = jpaApi.em().createQuery(userSql, PetPagesUser.class).getResultList();
+        List<Location> locations = jpaApi.em().createQuery(locationSql, Location.class).getResultList();
+
+        List<String> usedEmailAdresses = new ArrayList<>();
+
+        for(PetPagesUser user : users)
+        {
+            usedEmailAdresses.add(user.getEmailAddress());
+        }
+
+        for(Location location : locations)
+        {
+            usedEmailAdresses.add(location.getEmailAddress());
+        }
+
+        if(usedEmailAdresses.contains(emailAddress))
+        {
+            result = false;
+        }
+
+        return result;
+    }
+
 }

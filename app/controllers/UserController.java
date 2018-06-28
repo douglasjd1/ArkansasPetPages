@@ -6,7 +6,6 @@ import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
-import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 
@@ -27,9 +26,9 @@ public class UserController extends ApplicationController
         this.formFactory = formFactory;
     }
 
-    public Result getCreateUserAccount()
+    public Result getCreateUserAccount(String status)
     {
-        return ok(views.html.createuseraccount.render(""));
+        return ok(views.html.createuseraccount.render(status));
     }
 
     @Transactional
@@ -42,6 +41,11 @@ public class UserController extends ApplicationController
         String emailAddress = form.get("emailAddress");
         String password = form.get("userPassword");
         String bio = form.get("bio");
+
+        if(!isNewEmail(emailAddress, jpaApi))
+        {
+            return redirect(routes.UserController.getCreateUserAccount("That email is already in use"));
+        }
 
         Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> filePart = formData.getFile("profilePhoto");
@@ -136,7 +140,7 @@ public class UserController extends ApplicationController
             if(Arrays.equals(hashedPassword, loggedInUser.getLocationPassword()))
             {
                 logInLocation(loggedInUser.getEmailAddress());
-                return redirect(routes.LocationController.getBreederPage());
+                return redirect(routes.LocationController.getBreederPage(""));
             }
         }
         else if(locations.size() == 1 && locations.get(0).getBreedId() == null)
@@ -149,7 +153,7 @@ public class UserController extends ApplicationController
             if(Arrays.equals(hashedPassword, loggedInUser.getLocationPassword()))
             {
                 logInLocation(loggedInUser.getEmailAddress());
-                return redirect(routes.LocationController.getShelterPage());
+                return redirect(routes.LocationController.getShelterPage(""));
             }
         }
         else
@@ -198,9 +202,6 @@ public class UserController extends ApplicationController
             DynamicForm form = formFactory.form().bindFromRequest();
 
 
-
-            String password = form.get("password");
-
             Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
             Http.MultipartFormData.FilePart<File> filePart = formData.getFile("userProfilePhoto");
             File file = filePart.getFile();
@@ -210,7 +211,9 @@ public class UserController extends ApplicationController
             petPagesUser.setEmailAddress(form.get("emailAddress"));
             petPagesUser.setBio(form.get("Bio"));
 
-            if(file != null)
+
+
+            if(file.length() != 0)
             {
                 try
                 {
@@ -222,19 +225,15 @@ public class UserController extends ApplicationController
                 }
             }
 
+            String password = form.get("userPassword");
             byte salt[] = petPagesUser.getSalt();
             byte hashedPassword[] = Password.hashPassword(password.toCharArray(), salt);
+            petPagesUser.setUserPassword(hashedPassword);
 
             if(Arrays.equals(hashedPassword, petPagesUser.getUserPassword()))
             {
-                return redirect("/userPage/" + petPagesUser.getUserId());
+                return redirect(routes.UserController.getUserPage("Account successfully saved"));
             }
-
-            String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :petPagesUserId";
-
-            List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("petPagesUserId", userId).getResultList();
-
-            return ok(views.html.userpage.render(petPagesUser, dogs, "User edit successfully saved"));
         }
         return ok(views.html.login.render("Please log in to access this page."));
     }
@@ -308,11 +307,11 @@ public class UserController extends ApplicationController
             }
             else if(locations.size() == 1 && locations.get(0).getBreedId() != null)
             {
-                return redirect(routes.LocationController.getBreederPage());
+                return redirect(routes.LocationController.getBreederPage(""));
             }
             else if(locations.size() == 1 && locations.get(0).getBreedId() == null)
             {
-                return redirect(routes.LocationController.getShelterPage());
+                return redirect(routes.LocationController.getShelterPage(""));
             }
         }
         return redirect(routes.UserController.getLogIn("Please log in to view this page"));

@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3>@location.getLocationName</h3>
+                <h3>@location.getLocationName</h3><a
                 <p>Address:<br>
                     @location.getAddress<br>
                     @location.getCity, @location.getStateName @location.getZipCode
@@ -24,6 +24,7 @@
                     @CSRF.formField
                     <input type="submit" value="Log Out">
                 </form>
+                <a href="/editShelter">Edit</a>
             </div>
         </div>
     </div>

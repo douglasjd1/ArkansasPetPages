@@ -30,7 +30,6 @@ GET     /personalities              controllers.BreedController.getPersonalities
 GET     /dogulator                  controllers.BreedController.getDogulator
 POST    /dogulator                  controllers.BreedController.postDogulator
 
-
 POST    /newDogPersonality          controllers.DogController.postNewDogPersonality
 POST    /newDogColor                controllers.DogController.postNewDogColor
 GET     /newDogPersonality          controllers.DogController.getNewDogPersonality
@@ -44,17 +43,22 @@ GET     /editUserDog/:userId/:dogId controllers.DogController.getEditUserDog(use
 POST    /editUserDog/:userId/:dogId controllers.DogController.postEditUserDog(userId:Integer, dogId:Integer)
 GET     /deleteDog/:id              controllers.DogController.getDeleteDog(id:Integer)
 
-GET     /createBreederAccount       controllers.LocationController.getCreateBreederAccount
-POST    /createBreederAccount       controllers.LocationController.postCreateBreederAccount
-GET     /breederPage                controllers.LocationController.getBreederPage
-GET     /createShelterAccount       controllers.LocationController.getCreateShelterAccount
-POST    /createShelterAccount       controllers.LocationController.postCreateShelterAccount
-GET     /shelterPage                controllers.LocationController.getShelterPage
-GET     /location/:id               controllers.LocationController.getLocation(id:Integer)
-GET     /shelters                   controllers.LocationController.getShelters
 GET     /breeders                   controllers.LocationController.getBreeders
+GET     /createBreederAccount       controllers.LocationController.getCreateBreederAccount(status:String ?= "")
+POST    /createBreederAccount       controllers.LocationController.postCreateBreederAccount
+GET     /breederPage                controllers.LocationController.getBreederPage(status:String ?= "")
+GET     /editBreeder                controllers.LocationController.getEditBreeder
+POST    /editBreeder                controllers.LocationController.postEditBreeder
+GET     /shelters                   controllers.LocationController.getShelters
+GET     /createShelterAccount       controllers.LocationController.getCreateShelterAccount(status:String ?= "")
+POST    /createShelterAccount       controllers.LocationController.postCreateShelterAccount
+GET     /shelterPage                controllers.LocationController.getShelterPage(status:String ?= "")
+GET     /location/:id               controllers.LocationController.getLocation(id:Integer)
+GET     /editShelter                controllers.LocationController.getEditShelter
+POST    /editShelter                controllers.LocationController.postEditShelter
+GET     /deleteShelterAccount       controllers.LocationController.getDeleteShelterAccount
 
-GET     /createUserAccount          controllers.UserController.getCreateUserAccount
+GET     /createUserAccount          controllers.UserController.getCreateUserAccount(status:String ?= "")
 POST    /createUserAccount          controllers.UserController.postCreateUserAccount
 GET     /logIn                      controllers.UserController.getLogIn(status:String ?= "")
 POST    /logIn                      controllers.UserController.postLogIn
