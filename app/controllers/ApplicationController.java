@@ -4,9 +4,14 @@ import play.mvc.Controller;
 
 public class ApplicationController extends Controller
 {
-    public void logIn(int userId)
+    public void logInUser(String emailAddress)
     {
-        session().put("loggedIn", "" + userId);
+        session().put("loggedIn", emailAddress);
+    }
+
+    public void logInLocation(String emailAddress)
+    {
+        session().put("loggedIn", emailAddress);
     }
 
     public void logOut()

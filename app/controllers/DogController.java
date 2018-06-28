@@ -217,7 +217,8 @@ public class DogController extends ApplicationController
     {
         String sql = "SELECT dp FROM DogPhoto dp WHERE dp.dogPhotoId = :dogPhotoId";
 
-        DogPhoto dogPhoto = jpaApi.em().createQuery(sql, DogPhoto.class).setParameter("dogPhotoId", dogPhotoId).getSingleResult();
+        DogPhoto dogPhoto = jpaApi.em().createQuery(sql, DogPhoto.class).
+                            setParameter("dogPhotoId", dogPhotoId).getSingleResult();
 
         return ok(dogPhoto.getDogPhotoData()).as("image/jpg");
     }
@@ -226,7 +227,11 @@ public class DogController extends ApplicationController
     @Transactional(readOnly = true)
     public Result getEditUserDog(int userId, int dogId)
     {
-        if(isLoggedIn() && (userId == Integer.parseInt(session().get("loggedIn"))))
+        String userSql = "SELECT ppu FROM PetPagesUser ppu WHERE ppu.userId = :userId";
+        PetPagesUser user = jpaApi.em().createQuery(userSql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
+
+        String emailAddress = user.getEmailAddress();
+        if(isLoggedIn() && emailAddress.equals(session().get("loggedIn")))
         {
             String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
                     "FROM Dog d " +
@@ -258,11 +263,9 @@ public class DogController extends ApplicationController
 
             String colorSql = "SELECT c FROM Color c ORDER BY c.colorName";
             String personalitySql = "SELECT p FROM Personality p ORDER BY p.personalityName";
-            String userSql = "SELECT ppu FROM PetPagesUser ppu WHERE ppu.userId = :userId";
 
             List<Color> colors = jpaApi.em().createQuery(colorSql, Color.class).getResultList();
             List<Personality> personalities = jpaApi.em().createQuery(personalitySql, Personality.class).getResultList();
-            PetPagesUser user = jpaApi.em().createQuery(userSql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
 
             return ok(views.html.edituserdog.render(user, dog, color, colors, dogPersonalities, personalities, dogPersonalityIds));
         }
@@ -391,5 +394,43 @@ public class DogController extends ApplicationController
         }
 
         return redirect(routes.UserController.getUserPage("Dog successfully saved."));
+    }
+
+    @Transactional
+    public Result getDeleteDog(int dogId)
+    {
+        String dogSql = "SELECT d FROM Dog d WHERE d.dogId = :dogId";
+        Dog dog = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("dogId", dogId).getSingleResult();
+
+        String dogBreedSql = "SELECT db FROM DogBreed db WHERE db.dogId = :dogId";
+        List<DogBreed> breeds = jpaApi.em().createQuery(dogBreedSql, DogBreed.class).
+                                setParameter("dogId", dogId).getResultList();
+
+        for(DogBreed dogBreed : breeds)
+        {
+            jpaApi.em().remove(dogBreed);
+        }
+
+        String dogPersonalitySql = "SELECT dp FROM DogPersonality dp WHERE dp.dogId = :dogId";
+        List<DogPersonality> personalities = jpaApi.em().createQuery(dogPersonalitySql, DogPersonality.class).
+                                             setParameter("dogId", dogId).getResultList();
+
+        for(DogPersonality dogPersonality : personalities)
+        {
+            jpaApi.em().remove(dogPersonality);
+        }
+
+        String dogPhotoSql = "SELECT dph FROM DogPhoto dph WHERE dph.dogId = :dogId";
+        List<DogPhoto> photos = jpaApi.em().createQuery(dogPhotoSql, DogPhoto.class).
+                setParameter("dogId", dogId).getResultList();
+
+        for(DogPhoto photo : photos)
+        {
+            jpaApi.em().remove(photo);
+        }
+
+        jpaApi.em().remove(dog);
+
+        return redirect(routes.UserController.getUserPage("Dog successfully deleted"));
     }
 }

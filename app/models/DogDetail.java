@@ -57,19 +57,9 @@ public class DogDetail
         return height;
     }
 
-    public void setDogName(String dogName)
-    {
-        this.dogName = dogName;
-    }
-
     public void setHeight(int height)
     {
         this.height = height;
-    }
-
-    public void setHairLengthName(String hairLengthName)
-    {
-        this.hairLengthName = hairLengthName;
     }
 
     public void setColorName(String colorName)
@@ -87,8 +77,4 @@ public class DogDetail
         return dogAge;
     }
 
-    public void setDogAge(int dogAge)
-    {
-        this.dogAge = dogAge;
-    }
 }

@@ -44,4 +44,9 @@ public class HomeController extends ApplicationController
         return ok(views.html.sendemail.render());
     }
 
+    public Result getCreateAccount()
+    {
+        return ok(views.html.createaccount.render());
+    }
+
 }

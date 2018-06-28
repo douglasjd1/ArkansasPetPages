@@ -16,8 +16,10 @@ public class ShelterDetail
     private String zipCode;
     private String phoneNumber;
     private String websiteURL;
+    private String emailAddress;
 
-    public ShelterDetail(int locationId, String locationName, String city, String address, String stateName, String zipCode, String phoneNumber, String websiteURL)
+    public ShelterDetail(int locationId, String locationName, String city, String address, String stateName, String zipCode, String phoneNumber,
+                         String websiteURL, String emailAddress)
     {
         this.locationId = locationId;
         this.locationName = locationName;
@@ -27,6 +29,7 @@ public class ShelterDetail
         this.zipCode = zipCode;
         this.phoneNumber = phoneNumber;
         this.websiteURL = websiteURL;
+        this.emailAddress = emailAddress;
     }
 
     public String getLocationName()
@@ -62,5 +65,15 @@ public class ShelterDetail
     public String getWebsiteURL()
     {
         return websiteURL;
+    }
+
+    public int getLocationId()
+    {
+        return locationId;
+    }
+
+    public String getEmailAddress()
+    {
+        return emailAddress;
     }
 }

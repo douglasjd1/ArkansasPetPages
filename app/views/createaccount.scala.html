@@ -1,6 +1,4 @@
-@(status : String)
 <!DOCTYPE html>
-@import helper._
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,38 +9,19 @@
     @navbar("createAccount")
     <div class="container">
         <div class="row">
-            <div class="col-6">
-                <h3>Create a new account</h3>
-                <form method="POST" enctype="multipart/form-data">
-                    @CSRF.formField
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" aria-describedby="firstName" placeholder="Enter your first name">
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName"aria-describedby="lastName" placeholder="Enter your last name">
-                    </div>
-                    <div class="form-group">
-                        <label for="emailAddress">Email address</label>
-                        <input type="email" class="form-control" id="emailAddress" name="emailAddress"aria-describedby="emailHelp" placeholder="Enter email">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="userPassword">Password</label>
-                        <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                        <label for="profilePhoto">Upload a profile photo</label>
-                        <input type="file" id="profilePhoto" name="profilePhoto">
-                    </div>
-                    <div class="form-group">
-                        <label for="bio">Tell us about yourself:</label>
-                        <textarea class="form-control" rows="5" id="bio" name="bio" maxlength="500"></textarea>
-                    </div>
-                    <input type="submit" value="Create Account">
-                </form>
-                <p>@status</p>
+            <div class="col-12 text-center">
+                <h3>What type of account would you like to create?</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 text-center">
+                <a href="/createBreederAccount">Breeder</a>
+            </div>
+            <div class="col-4 text-center">
+                <a href="/createShelterAccount">Shelter</a>
+            </div>
+            <div class="col-4 text-center">
+                <a href="/createUserAccount">Person</a>
             </div>
         </div>
     </div>

@@ -1,10 +1,7 @@
 package controllers;
 
 import com.google.common.io.Files;
-import models.Dog;
-import models.DogDetail;
-import models.Password;
-import models.PetPagesUser;
+import models.*;
 import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
@@ -30,13 +27,13 @@ public class UserController extends ApplicationController
         this.formFactory = formFactory;
     }
 
-    public Result getCreateAccount()
+    public Result getCreateUserAccount()
     {
-        return ok(views.html.createaccount.render(""));
+        return ok(views.html.createuseraccount.render(""));
     }
 
     @Transactional
-    public Result postCreateAccount()
+    public Result postCreateUserAccount()
     {
         DynamicForm form = formFactory.form().bindFromRequest();
 
@@ -81,10 +78,9 @@ public class UserController extends ApplicationController
         catch(Exception e)
         {
             e.printStackTrace();
-            return ok(views.html.createaccount.render("Error creating account"));
+            return ok(views.html.createuseraccount.render("Error creating account"));
         }
 
-        System.out.println(petPagesUser.getFirstName());
         jpaApi.em().persist(petPagesUser);
 
         int petPagesUserId = petPagesUser.getUserId();
@@ -92,6 +88,8 @@ public class UserController extends ApplicationController
         String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :petPagesUserId";
 
         List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("petPagesUserId", petPagesUserId).getResultList();
+
+        logInUser(petPagesUser.getEmailAddress());
 
         return ok(views.html.userpage.render(petPagesUser, dogs, "Account successfully created"));
     }
@@ -109,9 +107,11 @@ public class UserController extends ApplicationController
         String emailAddress = form.get("emailAddress");
         String password = form.get("password");
 
-        String sql = "SELECT ppu FROM PetPagesUser ppu WHERE emailAddress = :emailAddress";
+        String userSql = "SELECT ppu FROM PetPagesUser ppu WHERE emailAddress = :emailAddress";
+        String locationSql = "SELECT l FROM Location l WHERE l.emailAddress = :emailAddress";
 
-        List<PetPagesUser> users = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("emailAddress", emailAddress).getResultList();
+        List<PetPagesUser> users = jpaApi.em().createQuery(userSql, PetPagesUser.class).setParameter("emailAddress", emailAddress).getResultList();
+        List<Location> locations = jpaApi.em().createQuery(locationSql, Location.class).setParameter("emailAddress", emailAddress).getResultList();
 
         if(users.size() == 1)
         {
@@ -122,8 +122,34 @@ public class UserController extends ApplicationController
 
             if(Arrays.equals(hashedPassword, loggedInUser.getUserPassword()))
             {
-                logIn(loggedInUser.getUserId());
+                logInUser(loggedInUser.getEmailAddress());
                 return redirect(routes.UserController.getUserPage(""));
+            }
+        }
+        else if(locations.size() == 1 && locations.get(0).getBreedId() != null)
+        {
+            Location loggedInUser = locations.get(0);
+
+            byte salt[] = loggedInUser.getSalt();
+            byte hashedPassword[] = Password.hashPassword(password.toCharArray(), salt);
+
+            if(Arrays.equals(hashedPassword, loggedInUser.getLocationPassword()))
+            {
+                logInLocation(loggedInUser.getEmailAddress());
+                return redirect(routes.LocationController.getBreederPage());
+            }
+        }
+        else if(locations.size() == 1 && locations.get(0).getBreedId() == null)
+        {
+            Location loggedInUser = locations.get(0);
+
+            byte salt[] = loggedInUser.getSalt();
+            byte hashedPassword[] = Password.hashPassword(password.toCharArray(), salt);
+
+            if(Arrays.equals(hashedPassword, loggedInUser.getLocationPassword()))
+            {
+                logInLocation(loggedInUser.getEmailAddress());
+                return redirect(routes.LocationController.getShelterPage());
             }
         }
         else
@@ -145,11 +171,13 @@ public class UserController extends ApplicationController
     @Transactional(readOnly = true)
     public Result getUserEdit(Integer userId)
     {
-        if(isLoggedIn() && userId == Integer.parseInt(session().get("loggedIn")))
-        {
-            String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
+        String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
+        PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
 
-            PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
+        String emailAddress = petPagesUser.getEmailAddress();
+
+        if(isLoggedIn() && emailAddress.equals(session().get("loggedIn")))
+        {
 
             return ok(views.html.useredit.render(petPagesUser));
         }
@@ -160,13 +188,16 @@ public class UserController extends ApplicationController
     @Transactional
     public Result postUserEdit(Integer userId)
     {
-        if(isLoggedIn() && userId == Integer.parseInt(session().get("loggedIn")))
+        String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
+
+        PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
+
+        String emailAddress = petPagesUser.getEmailAddress();
+        if(isLoggedIn() && emailAddress.equals(session().get("loggedIn")))
         {
             DynamicForm form = formFactory.form().bindFromRequest();
 
-            String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
 
-            PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
 
             String password = form.get("password");
 
@@ -213,15 +244,17 @@ public class UserController extends ApplicationController
     {
         if(isLoggedIn())
         {
-            int userId = Integer.parseInt(session().get("loggedIn"));
+            String emailAddress = session().get("loggedIn");
 
-            String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
+            String sql = "SELECT ppu FROM PetPagesUser ppu WHERE emailAddress = :emailAddress";
 
-            PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
+            PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).
+                                        setParameter("emailAddress", emailAddress).getSingleResult();
 
             String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :petPagesUserId";
 
-            List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("petPagesUserId", userId).getResultList();
+            List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).
+                             setParameter("petPagesUserId", petPagesUser.getUserId()).getResultList();
 
             return ok(views.html.userpage.render(petPagesUser, dogs, status));
         }
@@ -253,5 +286,54 @@ public class UserController extends ApplicationController
     {
         logOut();
         return redirect(routes.UserController.getLogIn("Successfully logged out"));
+    }
+
+    @Transactional(readOnly = true)
+    public Result getViewAccount()
+    {
+        String emailAddress = session().get("loggedIn");
+        String userSql = "SELECT ppu FROM PetPagesUser ppu WHERE ppu.emailAddress = :emailAddress";
+        String locationSql = "SELECT l FROM Location l WHERE l.emailAddress = :emailAddress";
+
+        List<PetPagesUser> users = jpaApi.em().createQuery(userSql, PetPagesUser.class).
+                                   setParameter("emailAddress", emailAddress).getResultList();
+        List<Location> locations = jpaApi.em().createQuery(locationSql, Location.class).
+                                   setParameter("emailAddress", emailAddress).getResultList();
+
+        if(isLoggedIn())
+        {
+            if(users.size() == 1)
+            {
+                return redirect(routes.UserController.getUserPage(""));
+            }
+            else if(locations.size() == 1 && locations.get(0).getBreedId() != null)
+            {
+                return redirect(routes.LocationController.getBreederPage());
+            }
+            else if(locations.size() == 1 && locations.get(0).getBreedId() == null)
+            {
+                return redirect(routes.LocationController.getShelterPage());
+            }
+        }
+        return redirect(routes.UserController.getLogIn("Please log in to view this page"));
+    }
+
+    @Transactional
+    public Result getDeleteUserAccount()
+    {
+        if(isLoggedIn())
+        {
+            String emailAddress = session().get("loggedIn");
+            String sql = "SELECT ppu FROM PetPagesUser ppu WHERE ppu.emailAddress = :emailAddress";
+
+            PetPagesUser user = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("emailAddress", emailAddress).getSingleResult();
+
+            jpaApi.em().remove(user);
+            return redirect(routes.UserController.getLogIn("Account successfully deleted."));
+        }
+        else
+        {
+            return redirect(routes.UserController.getLogIn("Please log in to access this page"));
+        }
     }
 }

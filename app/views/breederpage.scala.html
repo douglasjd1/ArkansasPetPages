@@ -1,0 +1,32 @@
+@(location : BreederDetail)
+<!DOCTYPE html>
+@import helper._
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <title>@location.getLocationName</title>
+</head>
+<body>
+    @navbar("userPage")
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>@location.getLocationName</h3>
+                <p>Breed: <br> <a href="/breed/@location.getBreedId">@location.getBreedName</a></p>
+                <p>Address:<br>
+                    @location.getAddress<br>
+                    @location.getCity, @location.getStateName @location.getZipCode
+                </p>
+                <p>Phone number: @location.getPhoneNumber</p>
+                <p>Email: @location.getEmailAddress</p>
+                <p><a href="@location.getWebsiteURL">Website</a> </p>
+                <form action="@routes.UserController.getLogOut">
+                    @CSRF.formField
+                    <input type="submit" value="Log Out">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

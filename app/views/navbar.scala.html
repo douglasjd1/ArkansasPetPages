@@ -50,7 +50,8 @@
 
                 </div>
                 <div class="col-2">
-                    @if("createAccount".equals(page)){
+                    @if("createAccount".equals(page) || "createUserAccount".equals(page) ||
+                        "createShelter".equals(page) || "createBreeder".equals(page)){
                     <li class="nav-item active">
                         } else {
                     <li class="nav-item">
@@ -63,7 +64,7 @@
                         } else {
                     <li class="nav-item">
                         }
-                        <a class="nav-link" href="/userPage">View Account</a>
+                        <a class="nav-link" href="/viewAccount">View Account</a>
                 </div>
                 <div class="col-2">
                     @if("logIn".equals(page)){

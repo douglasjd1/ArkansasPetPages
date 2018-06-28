@@ -18,6 +18,9 @@ public class Location
     private String zipCode;
     private String phoneNumber;
     private String websiteURL;
+    private String emailAddress;
+    private byte[] locationPassword;
+    private byte[] salt;
 
     public String getLocationName()
     {
@@ -98,4 +101,41 @@ public class Location
     {
         return websiteURL;
     }
+
+    public void setWebsiteURL(String websiteURL)
+    {
+        this.websiteURL = websiteURL;
+    }
+
+    public String getEmailAddress()
+    {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress)
+    {
+        this.emailAddress = emailAddress;
+    }
+
+    public byte[] getLocationPassword()
+    {
+        return locationPassword;
+    }
+
+    public void setLocationPassword(byte[] locationPassword)
+    {
+        this.locationPassword = locationPassword;
+    }
+
+    public byte[] getSalt()
+    {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt)
+    {
+        this.salt = salt;
+    }
+
+
 }

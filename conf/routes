@@ -8,6 +8,7 @@ GET     /practice                   controllers.HomeController.getPractice
 GET     /home                       controllers.HomeController.getHome
 GET     /sendEmail                  controllers.HomeController.getSendEmail
 POST    /sendEmail                  controllers.HomeController.postSendEmail
+GET     /createAccount              controllers.HomeController.getCreateAccount
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
@@ -41,15 +42,20 @@ GET     /dogPhoto/:id               controllers.DogController.getDogPhoto(id:Int
 GET     /viewUserDog/:userId/:dogId controllers.DogController.getViewUserDog(userId:Integer, dogId:Integer)
 GET     /editUserDog/:userId/:dogId controllers.DogController.getEditUserDog(userId:Integer, dogId:Integer)
 POST    /editUserDog/:userId/:dogId controllers.DogController.postEditUserDog(userId:Integer, dogId:Integer)
+GET     /deleteDog/:id              controllers.DogController.getDeleteDog(id:Integer)
 
-GET     /newLocation                controllers.LocationController.getNewLocation
-POST    /newLocation                controllers.LocationController.postNewLocation
+GET     /createBreederAccount       controllers.LocationController.getCreateBreederAccount
+POST    /createBreederAccount       controllers.LocationController.postCreateBreederAccount
+GET     /breederPage                controllers.LocationController.getBreederPage
+GET     /createShelterAccount       controllers.LocationController.getCreateShelterAccount
+POST    /createShelterAccount       controllers.LocationController.postCreateShelterAccount
+GET     /shelterPage                controllers.LocationController.getShelterPage
 GET     /location/:id               controllers.LocationController.getLocation(id:Integer)
 GET     /shelters                   controllers.LocationController.getShelters
 GET     /breeders                   controllers.LocationController.getBreeders
 
-GET     /createAccount              controllers.UserController.getCreateAccount
-POST    /createAccount              controllers.UserController.postCreateAccount
+GET     /createUserAccount          controllers.UserController.getCreateUserAccount
+POST    /createUserAccount          controllers.UserController.postCreateUserAccount
 GET     /logIn                      controllers.UserController.getLogIn(status:String ?= "")
 POST    /logIn                      controllers.UserController.postLogIn
 GET     /logOut                     controllers.UserController.getLogOut
@@ -57,5 +63,7 @@ GET     /editUser/:id               controllers.UserController.getUserEdit(id:In
 POST    /editUser/:id               controllers.UserController.postUserEdit(id:Integer)
 GET     /userPage                   controllers.UserController.getUserPage(status:String ?= "")
 GET     /userProfilePhoto/:id       controllers.UserController.getUserProfilePhoto(id:Integer)
+GET     /viewAccount                controllers.UserController.getViewAccount
+GET     /deleteUserAccount          controllers.UserController.getDeleteUserAccount
 
 

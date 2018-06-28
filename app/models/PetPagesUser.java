@@ -14,7 +14,7 @@ public class PetPagesUser
     private String lastName;
     private String emailAddress;
     private byte[] profilePhoto;
-    String bio;
+    private String bio;
     private byte[] userPassword;
     private byte[] salt;
 
