@@ -8,18 +8,15 @@
 </head>
 <body>
     @navbar.render("shelters")
-    <div class="container">
-        <div class="row">
-            <div class="col-4">
-
-            </div>
-            <div class="col-8">
-                <h3>Shelters</h3>
-                @for(shelter <- shelters){
-                <a href="/location/@shelter.getLocationId">@shelter.getLocationName</a><br>
-                }
-            </div>
-        </div>
+    <div class="container text-center">
+        <table class="table table-dark bg-primary table-hover">
+            <h3>Shelters</h3>
+            @for(shelter <- shelters) {
+            <tr>
+                <td><a href="/location/@shelter.getLocationId"><font color="white">@shelter.getLocationName</font> </a></td>
+            </tr>
+            }
+        </table>
     </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-@(location : ShelterDetail)
+@(location : ShelterDetail, dogs : List[Dog], status : String)
 <!DOCTYPE html>
 @import helper._
 <html lang="en">
@@ -24,7 +24,13 @@
                     @CSRF.formField
                     <input type="submit" value="Log Out">
                 </form>
+                <p>Dogs in this shelter:</p>
+                @for(dog <- dogs){
+                    <a href="/viewLocationDog/@dog.getDogId">@dog.getDogName</a>
+                }
+                <a href="/newLocationDog">Add a dog</a>
                 <a href="/editShelter">Edit</a>
+                @status
             </div>
         </div>
     </div>

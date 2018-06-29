@@ -34,14 +34,22 @@ POST    /newDogPersonality          controllers.DogController.postNewDogPersonal
 POST    /newDogColor                controllers.DogController.postNewDogColor
 GET     /newDogPersonality          controllers.DogController.getNewDogPersonality
 GET     /newDogColor                controllers.DogController.getNewDogColor
-GET     /newUserDog/:id             controllers.DogController.getNewUserDog(id:Integer)
-POST    /newUserDog/:id             controllers.DogController.postNewUserDog(id:Integer)
+GET     /newUserDog                 controllers.DogController.getNewUserDog
+GET     /newLocationDog             controllers.DogController.getNewLocationDog
+POST    /newUserDog                 controllers.DogController.postNewUserDog
+POST    /newLocationDog             controllers.DogController.postNewLocationDog
 GET     /dogDefaultPhoto/:id        controllers.DogController.getDogDefaultPhoto(id:Integer)
 GET     /dogPhoto/:id               controllers.DogController.getDogPhoto(id:Integer)
 GET     /viewUserDog/:userId/:dogId controllers.DogController.getViewUserDog(userId:Integer, dogId:Integer)
 GET     /editUserDog/:userId/:dogId controllers.DogController.getEditUserDog(userId:Integer, dogId:Integer)
 POST    /editUserDog/:userId/:dogId controllers.DogController.postEditUserDog(userId:Integer, dogId:Integer)
-GET     /deleteDog/:id              controllers.DogController.getDeleteDog(id:Integer)
+GET     /viewLocationDog/:id        controllers.DogController.getViewLocationDog(id:Integer)
+GET     /editLocationDog/:id        controllers.DogController.getEditLocationDog(id:Integer)
+POST    /editLocationDog/:id        controllers.DogController.postEditLocationDog(id:Integer)
+GET     /viewDog/:id                controllers.DogController.getViewDog(id:Integer)
+GET     /deleteUserDog/:id          controllers.DogController.getDeleteUserDog(id:Integer)
+GET     /deleteLocationDog/:id      controllers.DogController.getDeleteLocationDog(id:Integer)
+GET     /viewDogs                   controllers.DogController.getViewDogs
 
 GET     /breeders                   controllers.LocationController.getBreeders
 GET     /createBreederAccount       controllers.LocationController.getCreateBreederAccount(status:String ?= "")
@@ -49,6 +57,7 @@ POST    /createBreederAccount       controllers.LocationController.postCreateBre
 GET     /breederPage                controllers.LocationController.getBreederPage(status:String ?= "")
 GET     /editBreeder                controllers.LocationController.getEditBreeder
 POST    /editBreeder                controllers.LocationController.postEditBreeder
+GET     /deleteBreederAccount       controllers.LocationController.getDeleteBreederAccount
 GET     /shelters                   controllers.LocationController.getShelters
 GET     /createShelterAccount       controllers.LocationController.getCreateShelterAccount(status:String ?= "")
 POST    /createShelterAccount       controllers.LocationController.postCreateShelterAccount

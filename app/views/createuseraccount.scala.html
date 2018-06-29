@@ -17,20 +17,24 @@
                     @CSRF.formField
                     <div class="form-group">
                         <label for="firstName">First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" aria-describedby="firstName" placeholder="Enter your first name">
+                        <input type="text" class="form-control" id="firstName" name="firstName" maxlength="50"
+                               aria-describedby="firstName" placeholder="Enter your first name">
                     </div>
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName"aria-describedby="lastName" placeholder="Enter your last name">
+                        <input type="text" class="form-control" id="lastName" name="lastName" maxlength="50"
+                               aria-describedby="lastName" placeholder="Enter your last name">
                     </div>
                     <div class="form-group">
                         <label for="emailAddress">Email address</label>
-                        <input type="email" class="form-control" id="emailAddress" name="emailAddress"aria-describedby="emailHelp" placeholder="Enter email">
+                        <input type="email" class="form-control" id="emailAddress" name="emailAddress" maxlength="100"
+                               aria-describedby="emailHelp" placeholder="Enter email">
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div class="form-group">
                         <label for="userPassword">Password</label>
-                        <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Password">
+                        <input type="password" class="form-control" id="userPassword" maxlength="50"
+                               name="userPassword" placeholder="Password">
                     </div>
                     <div class="form-group">
                         <label for="profilePhoto">Upload a profile photo</label>
@@ -39,6 +43,7 @@
                     <div class="form-group">
                         <label for="bio">Tell us about yourself:</label>
                         <textarea class="form-control" rows="5" id="bio" name="bio" maxlength="500"></textarea>
+                        <small id="bioHelp" class="form-text text-muted">Character limit is 500.</small>
                     </div>
                     <input type="submit" value="Create Account">
                 </form>

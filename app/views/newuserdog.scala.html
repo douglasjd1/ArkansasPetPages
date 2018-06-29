@@ -1,4 +1,4 @@
-@(colors : List[Color], personalities : List[Personality])
+@(colors : List[Color], personalities : List[Personality], breeds : List[Breed])
 <!DOCTYPE html>
 @import helper._
 <html lang="en">
@@ -12,11 +12,12 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" action="@routes.DogController.postNewUserDog">
                     @CSRF.formField
                     <div class="form-group">
                         <label for="dogName">Dog Name</label>
-                        <input type="text" class="form-control" id="dogName" name="dogName" aria-describedby="dogName" placeholder="Enter your dog's name">
+                        <input type="text" class="form-control" id="dogName" name="dogName" maxlength="50"
+                               aria-describedby="dogName" placeholder="Enter your dog's name">
                     </div>
                     <div class="form-group">
                         <label for="dogPhoto">Add a photo of your dog</label><br>
@@ -24,17 +25,20 @@
                     </div>
                     <div class="form-group">
                         <label for="dogAge">Dog Age</label>
-                        <input type="text" class="form-control" id="dogAge" name="dogAge" aria-describedby="dogAge" placeholder="Enter your dog's age">
+                        <input type="text" class="form-control" id="dogAge" name="dogAge" maxlength="3"
+                               aria-describedby="dogAge" placeholder="Enter your dog's age">
                         <small id="dogAgeEg" class="form-text text-muted">Examples: 4, 6, 2. If your dog is less than 1 year old, enter 0.</small>
                     </div>
                     <div class="form-group">
                         <label for="dogWeight">Dog Weight</label>
-                        <input type="text" class="form-control" id="dogWeight" name="dogWeight" aria-describedby="dogWeight" placeholder="Enter your dog's weight in pounds">
+                        <input type="text" class="form-control" id="dogWeight" name="dogWeight" maxlength="3"
+                               aria-describedby="dogWeight" placeholder="Enter your dog's weight in pounds">
                         <small id="dogWeightEg" class="form-text text-muted">Examples: 12, 56, 34</small>
                     </div>
                     <div class="form-group">
                         <label for="dogWeight">Dog Height</label>
-                        <input type="text" class="form-control" id="dogHeight" name="dogHeight" aria-describedby="dogHeight" placeholder="Enter your dog's height in inches">
+                        <input type="text" class="form-control" id="dogHeight" name="dogHeight" maxlength="3"
+                               aria-describedby="dogHeight" placeholder="Enter your dog's height in inches">
                         <small id="dogHeightEg" class="form-text text-muted">Examples: 12, 28, 22. If you're not sure, give it your best guess. Reference the breed page to get a better idea.</small>
                     </div>
                     <div class="form-group">
@@ -52,6 +56,27 @@
                         <select class="form-control" id="colorName" name="colorName">
                             @for(color <- colors){
                                 <option>@color.getColorName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="breed1">Select your dog's breed(s)</label>
+                        <select class="form-control" id="breed1" name="breed1">
+                            <option>Select breed</option>
+                            @for(breed <- breeds){
+                            <option>@breed.getBreedName</option>
+                            }
+                        </select>
+                        <select class="form-control" id="breed2" name="breed2">
+                            <option>Select breed</option>
+                            @for(breed <- breeds){
+                            <option>@breed.getBreedName</option>
+                            }
+                        </select>
+                        <select class="form-control" id="breed3" name="breed3">
+                            <option>Select breed</option>
+                            @for(breed <- breeds){
+                            <option>@breed.getBreedName</option>
                             }
                         </select>
                     </div>

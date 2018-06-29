@@ -28,4 +28,14 @@ public class DogBreed
     {
         return breedId;
     }
+
+    public void setDogId(int dogId)
+    {
+        this.dogId = dogId;
+    }
+
+    public void setBreedId(int breedId)
+    {
+        this.breedId = breedId;
+    }
 }

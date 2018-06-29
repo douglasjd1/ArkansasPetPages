@@ -18,17 +18,18 @@
                 <div class="form-group">
                     <label for="locationName">Company name</label>
                     <input type="text" class="form-control"
-                           id="locationName" name="locationName"
+                           id="locationName" name="locationName" maxlength="50"
                            aria-describedby="locationName" placeholder="Enter the name of your company">
                 </div>
                 <div class="form-group">
                     <label for="streetAddress">Street address</label>
-                    <input type="text" class="form-control" id="streetAddress"
+                    <input type="text" class="form-control" id="streetAddress" maxlength="50"
                            name="streetAddress" aria-describedby="streetAddress" placeholder="Enter your street address">
                 </div>
                 <div class="form-group">
                     <label for="city">City</label>
-                    <input type="text" class="form-control" id="city" name="city"aria-describedby="city" placeholder="Enter your city">
+                    <input type="text" class="form-control" id="city" name="city" aria-describedby="city" maxlength="50"
+                           placeholder="Enter your city">
                 </div>
                 <div class="form-group">
                     <label for="state">Select your state</label>
@@ -40,18 +41,18 @@
                 </div>
                 <div class="form-group">
                     <label for="zipCode">Zip code</label>
-                    <input type="text" class="form-control" id="zipCode" name="zipCode"
+                    <input type="text" class="form-control" id="zipCode" name="zipCode" maxlength="50"
                            aria-describedby="zipCode" placeholder="Enter your 5 digit zip code">
                 </div>
                 <div class="form-group">
                     <label for="phoneNumber">Phone number</label>
-                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" maxlength="12"
                            aria-describedby="phoneNumber" placeholder="Enter your phone number">
                     <small id="phoneHelp" class="form-text text-muted">Use the format xxx-xxx-xxxx</small>
                 </div>
                 <div class="form-group">
                     <label for="URL">Website URL</label>
-                    <input type="text" class="form-control" id="URL" name="URL"
+                    <input type="text" class="form-control" id="URL" name="URL" maxlength="1000"
                            aria-describedby="URL" placeholder="Enter your URL">
                     <small id="urlHelp" class="form-text text-muted">Copy paste your company's URL</small>
                 </div>
@@ -65,12 +66,14 @@
                 </div>
                 <div class="form-group">
                     <label for="emailAddress">Email address</label>
-                    <input type="email" class="form-control" id="emailAddress" name="emailAddress"aria-describedby="emailHelp" placeholder="Enter email">
+                    <input type="email" class="form-control" id="emailAddress" name="emailAddress" maxlength="100"
+                           aria-describedby="emailHelp" placeholder="Enter email">
                     <small id="emailHelp" class="form-text text-muted">You'll use this to log in</small>
                 </div>
                 <div class="form-group">
                     <label for="locationPassword">Create password</label>
-                    <input type="password" class="form-control" id="locationPassword" name="locationPassword" placeholder="Password">
+                    <input type="password" class="form-control" id="locationPassword" maxlength="50"
+                           name="locationPassword" placeholder="Password">
                 </div>
                 <input type="submit" value="Create Account">
             </form>

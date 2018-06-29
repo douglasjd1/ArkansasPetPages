@@ -209,7 +209,7 @@ public class UserController extends ApplicationController
             petPagesUser.setFirstName(form.get("firstName"));
             petPagesUser.setLastName(form.get("lastName"));
             petPagesUser.setEmailAddress(form.get("emailAddress"));
-            petPagesUser.setBio(form.get("Bio"));
+            petPagesUser.setBio(form.get("bio"));
 
 
 

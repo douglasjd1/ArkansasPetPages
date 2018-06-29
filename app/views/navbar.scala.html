@@ -1,7 +1,7 @@
 @(page : String)
 <div class="container">
     <div class="row">
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+        <nav class="navbar navbar-expand-sm bg-primary navbar-dark fixed-top">
             <ul class="navbar-nav">
                 <div class="col-3">
                     @if("home".equals(page)){
@@ -11,7 +11,15 @@
                         }
                         <a class="nav-link" href="/home">Arkansas Pet Pages</a>
                 </div>
-
+                <div class="col">
+                    @if("dogs".equals(page)){
+                        <li class="nav-item active">
+                        }else{
+                         <li class="nav-item">
+                        }
+                        <a class="nav-link" href="/viewDogs">Dogs</a>
+                        </li>
+                </div>
                 <div class="col">
                     @if("breeds".equals(page) || "breed".equals(page)){
                     <li class="nav-item active">

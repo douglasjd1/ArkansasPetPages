@@ -15,7 +15,7 @@
                 Welcome, @user.getFirstName @user.getLastName!<br>
                 <img src="../userProfilePhoto/@user.getUserId" height="150"><br>
                 <a href="/editUser/@user.getUserId">Edit Information</a><br>
-                <a href="/newUserDog/@user.getUserId">Add a dog</a><br>
+                <a href="/newUserDog">Add a dog</a><br>
                 <form action="@routes.UserController.getLogOut">
                     @CSRF.formField
                     <input type="submit" value="Log Out">

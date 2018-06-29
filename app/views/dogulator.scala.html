@@ -10,6 +10,8 @@
     <script src="/assets/lib/popper.js/umd/popper.min.js"></script>
     <script src="/assets/lib/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/assets/stylesheets/carousel.css">
+    <link rel="stylesheet" href="/assets/stylesheets/checkbox.css">
+
     <title>Dogulator</title>
 </head>
 <body>
@@ -28,7 +30,7 @@
         <form method="POST">
             @CSRF.formField
             <div class="container mt-3">
-                <div id="myCarousel" class="carousel slide text-center" data-ride="carousel" data-interval="false">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                     <!-- Indicators -->
                     <ul class="carousel-indicators">
                         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -42,127 +44,317 @@
                         <div class="carousel-item active">
                             <br>
                             <div class="container">
-                                <h2>How much does your ideal dog weigh?</h2>
-                                @checkall("weight")
-                                <div class="checkbox">
-                                    <label><input type="checkbox" class="weight" name="weightVerySmall" value="weightVerySmall" id="weightVerySmall">0 - 25 lbs</label>
+                                <div class="row">
+                                    <div class="col-2">
+
+                                    </div>
+                                    <div class="10">
+                                        <h2>How much does your ideal dog weigh?</h2><br>
+                                    </div>
                                 </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" class="weight" name="weightSmall" value="weightSmall" id="weightSmall">26 - 50 lbs</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" class="weight" name="weightMedium" value="weightMedium" id="weightMedium">51 - 75 lbs</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" class="weight" name="weightLarge" value="weightLarge" id="weightLarge">76 - 100 lbs</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" class="weight" name="weightVeryLarge" value="weightVeryLarge" id="weightVeryLarge">100+ lbs</label>
-                                </div>
-                                <div>
-                                    <p>&nbsp;</p>
+                                <div class="row">
+                                    <div class="col-2">
+
+                                    </div>
+                                    <div class="col-10">
+                                        @checkall("weight")
+                                        <div class="checkbox">
+                                            <label class="checkstyle">0 - 25 lbs
+                                                <input type="checkbox" class="weight" name="weightVerySmall" value="weightVerySmall" id="weightVerySmall">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label class="checkstyle">
+                                                <input type="checkbox" class="weight" name="weightSmall" value="weightSmall" id="weightSmall">26 - 50 lbs
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label class="checkstyle">
+                                                <input type="checkbox" class="weight" name="weightMedium" value="weightMedium" id="weightMedium">51 - 75 lbs
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label class="checkstyle">
+                                                <input type="checkbox" class="weight" name="weightLarge" value="weightLarge" id="weightLarge">76 - 100 lbs
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <div class="checkbox">
+                                            <label class="checkstyle">
+                                                <input type="checkbox" class="weight" name="weightVeryLarge" value="weightVeryLarge" id="weightVeryLarge">100+ lbs
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <p>&nbsp;</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <h2>How tall is your ideal dog?</h2>
-                            @checkall("height")
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="height" name="heightVeryShort" value="heightVeryShort" id="heightVeryShort">0 - 15 inches</label>
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-10">
+                                    <h2>How tall is your ideal dog?</h2><br>
+                                </div>
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="height" name="heightShort" value="heightShort" id="heightShort">16 - 20 inches</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="height" name="heightMedium" value="heightMedium" id="heightMedium">21 - 25 inches</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="height" name="heightTall" value="heightTall" id="heightTall">26 - 30 inches</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="height" name="heightVeryTall" value="heightVeryTall" id="heightVeryTall">31+ inches</label>
-                            </div>
-                            <div>
-                                <p>&nbsp;</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <h2>What is the minimum number of years that your dog will live?</h2>
-                            @checkall("lifeSpan")
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="lifeSpan" name="lifeSpanShort" value="lifeSpanShort" id="lifeSpanShort">5 - 9 years</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="lifeSpan" name="lifeSpanMedium" value="lifeSpanMedium" id="lifeSpanMedium">10 - 13 years</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="lifeSpan" name="lifeSpanLong" value="lifeSpanLong" id="lifeSpanLong">14+ years</label>
-                            </div>
-                            <div>
-                                <p>&nbsp;</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <h2>How long will your dogs hair be?</h2>
-                            @checkall("hairLength")
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="hairLength" name="hairHairless" value="hairHairless" id="hairHairless">hairless</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="hairLength" name="hairShort" value="hairShort" id="hairShort">short</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="hairLength" name="hairMedium" value="hairMedium" id="hairMedium">medium</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="hairLength" name="hairLong" value="hairLong" id="hairLong">long</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="hairLength" name="hairVeryLong" value="hairVeryLong" id="hairVeryLong">very long</label>
-                            </div>
-                            <div>
-                                <p>&nbsp;</p>
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-10">
+                                    @checkall("height")
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="height" name="heightVeryShort" value="heightVeryShort" id="heightVeryShort">0 - 15 inches
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="height" name="heightShort" value="heightShort" id="heightShort">16 - 20 inches
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="height" name="heightMedium" value="heightMedium" id="heightMedium">21 - 25 inches
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="height" name="heightTall" value="heightTall" id="heightTall">26 - 30 inches
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="height" name="heightVeryTall" value="heightVeryTall" id="heightVeryTall">31+ inches
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <h2>What personality characteristics will your dog have?</h2>
-                            @checkall("personality")
-                            @for(personality <- personalities){
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="personality" name="personality@personality.getPersonalityId" value="personality@personality.getPersonalityId" id="personality@personality.getPersonalityId">@personality.getPersonalityName</label>
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-10">
+                                    <h2>How many years will you spend with your new best friend?</h2><br>
+                                </div>
                             </div>
-                            }
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-10">
+                                    @checkall("lifeSpan")
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="lifeSpan" name="lifeSpanShort" value="lifeSpanShort" id="lifeSpanShort">5 - 9 years
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="lifeSpan" name="lifeSpanMedium" value="lifeSpanMedium" id="lifeSpanMedium">10 - 13 years
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="lifeSpan" name="lifeSpanLong" value="lifeSpanLong" id="lifeSpanLong">14+ years
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-10">
+                                    <h2>How long will your dogs hair be?</h2><br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-10">
+                                    @checkall("hairLength")
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="hairLength" name="hairHairless" value="hairHairless" id="hairHairless">Hairless
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="hairLength" name="hairShort" value="hairShort" id="hairShort">Short
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="hairLength" name="hairMedium" value="hairMedium" id="hairMedium">Medium
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="hairLength" name="hairLong" value="hairLong" id="hairLong">Long
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="hairLength" name="hairVeryLong" value="hairVeryLong" id="hairVeryLong">Very long
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <p>&nbsp;</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-10">
+                                    <h2>What personality characteristics will your dog have?</h2><br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-8">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            @checkall("personality")
+                                        </div>
+                                        @for(personality <- personalities){
+                                        <div class="col-4">
+                                            <div class="checkbox">
+                                                <label class="checkstyle">@personality.getPersonalityName
+                                                    <input type="checkbox" class="personality" name="personality@personality.getPersonalityId"
+                                                           value="personality@personality.getPersonalityId" id="personality@personality.getPersonalityId">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-2">
+
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <p>&nbsp;</p>
                         </div>
                         <div class="carousel-item">
-                            <h2>What colors do you prefer your dog to have?</h2>
-                            @checkall("color")
-                            @for(color <- colors){
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="color" name="color@color.getColorId" value="color@color.getColorId" id="color@color.getColorId">@color.getColorName</label>
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-10">
+                                    <h2>What colors do you prefer your dog to have?</h2><br>
+                                </div>
                             </div>
-                            }
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-8">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            @checkall("color")
+                                        </div>
+                                        @for(color <- colors){
+                                        <div class="col-5">
+                                            <div class="checkbox">
+                                                <label class="checkstyle">
+                                                    <input type="checkbox" class="color" name="color@color.getColorId" value="color@color.getColorId" id="color@color.getColorId">@color.getColorName
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-2">
+
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <p>&nbsp;</p>
                         </div>
                         <div class="carousel-item">
-                            <h2>How much would you be willing to pay for a pure bred?</h2>
-                            @checkall("price")
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="price" name="cheap" value="cheap" id="cheap">$0 - $500</label>
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-10">
+                                    <h2>How much would you be willing to pay for a pure bred?</h2><br>
+                                </div>
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="price" name="moderate" value="moderate" id="moderate">$501 - $1,000</label>
+                            <div class="row">
+                                <div class="col-2">
+
+                                </div>
+                                <div class="col-10">
+                                    @checkall("price")
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="price" name="cheap" value="cheap" id="cheap">$0 - $500
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="price" name="moderate" value="moderate" id="moderate">$501 - $1,000
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="price" name="expensive" value="expensive" id="expensive">$1,001 - $1,500
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label class="checkstyle">
+                                            <input type="checkbox" class="price" name="veryExpensive" value="veryExpensive" id="veryExpensive">$1,501 and up
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="price" name="expensive" value="expensive" id="expensive">$1,001 - $1,500</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" class="price" name="veryExpensive" value="veryExpensive" id="veryExpensive">$1,501 and up</label>
-                            </div>
+
                         </div>
                         <div>
                             <p>&nbsp;</p>
@@ -177,7 +369,14 @@
                     </a>
                 </div>
             </div>
-            <input type="submit" value="Find My Dog!">
+            <div class="row">
+                <div class="col-2">
+
+                </div>
+                <div class="col-10">
+                    <input type="submit" class="btn btn-primary" value="Find My Dog!">
+                </div>
+            </div>
         </form>
     </div>
 

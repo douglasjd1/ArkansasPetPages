@@ -174,7 +174,12 @@ public class LocationController extends ApplicationController
             ShelterDetail location = jpaApi.em().createQuery(sql, ShelterDetail.class).
                                       setParameter("emailAddress", emailAddress).getSingleResult();
 
-            return ok(views.html.shelterpage.render(location));
+            int locationId = location.getLocationId();
+
+            String dogSql = "SELECT d FROM Dog d WHERE d.locationId = :locationId";
+
+            List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("locationId", locationId).getResultList();
+            return ok(views.html.shelterpage.render(location, dogs, ""));
         }
         return redirect(routes.UserController.getLogIn("Log in to access this page."));
     }
@@ -469,6 +474,15 @@ public class LocationController extends ApplicationController
     @Transactional
     public Result getDeleteBreederAccount()
     {
-        return ok("");
+        String emailAddress = session().get("loggedIn");
+
+        String locationSql = "SELECT l FROM Location l WHERE l.emailAddress = :emailAddress";
+
+        Location location = jpaApi.em().createQuery(locationSql, Location.class).
+                setParameter("emailAddress", emailAddress).getSingleResult();
+
+        jpaApi.em().remove(location);
+
+        return redirect(routes.UserController.getLogIn("Account successfully deleted"));
     }
 }

@@ -1,4 +1,4 @@
-@(dog : DogDetail, personalities : List[Personality], photos : List[DogPhoto], firstPhoto : DogPhoto)
+@(dog : DogDetail, personalities : List[Personality], photos : List[DogPhoto], firstPhoto : DogPhoto, shelter : Location)
 <!DOCTYPE html>
 @import helper._
 <html lang="en">
@@ -17,7 +17,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            @dog.getDogName <a href="/editLocationDog/@dog.getDogId">Edit</a> <br>
+            @dog.getDogName
         </div>
     </div>
     <div class="row">
@@ -50,10 +50,8 @@
                     </a>
                 </div>
             </div>
-            <div class="col-4">
-
-            </div>
-            <div class="col-4">
+            <div class="col-8">
+                <p>Available at: <a href="/location/@shelter.getLocationId">@shelter.getLocationName</a> </p>
 
             </div>
         </div>

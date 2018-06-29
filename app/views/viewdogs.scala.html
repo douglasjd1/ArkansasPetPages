@@ -1,0 +1,27 @@
+@(dogs : List[Dog])
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <title>Title</title>
+</head>
+<body>
+    @navbar("dogs")
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-dark bg-primary table-hover">
+                    <h3>Available Dogs</h3>
+                    @for(dog <- dogs) {
+                    <tr>
+                        <td><a href="/viewDog/@dog.getDogId"><font color="white">@dog.getDogName</font> </a></td>
+                        <td><img src="/dogDefaultPhoto/@dog.getDogId" height="200"></td>
+                    </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

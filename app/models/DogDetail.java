@@ -10,16 +10,18 @@ public class DogDetail
     private int dogId;
 
     private String dogName;
+    private String dogReffNum;
     private int weight;
     private int height;
     private String hairLengthName;
     private String colorName;
     private int dogAge;
 
-    public DogDetail(int dogId, String dogName, int weight, int height, String hairLengthName, String colorName, int dogAge)
+    public DogDetail(int dogId, String dogName, String dogReffNum, int weight, int height, String hairLengthName, String colorName, int dogAge)
     {
         this.dogId = dogId;
         this.dogName = dogName;
+        this.dogReffNum = dogReffNum;
         this.weight = weight;
         this.height = height;
         this.hairLengthName = hairLengthName;
@@ -77,4 +79,8 @@ public class DogDetail
         return dogAge;
     }
 
+    public String getDogReffNum()
+    {
+        return dogReffNum;
+    }
 }

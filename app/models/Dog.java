@@ -13,7 +13,7 @@ public class Dog
 
     private String dogName;
     private int dogAge;
-    private Integer dogReffNum;
+    private String dogReffNum;
     private int weight;
     private int height;
     private int hairLengthId;
@@ -32,7 +32,7 @@ public class Dog
         this.dogAge = dogAge;
     }
 
-    public void setDogReffNum(Integer dogReffNum)
+    public void setDogReffNum(String dogReffNum)
     {
         this.dogReffNum = dogReffNum;
     }
@@ -67,7 +67,7 @@ public class Dog
         return dogAge;
     }
 
-    public Integer getDogReffNum()
+    public String getDogReffNum()
     {
         return dogReffNum;
     }

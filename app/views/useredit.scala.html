@@ -16,20 +16,24 @@
                     @CSRF.formField
                     <div class="form-group">
                         <label for="firstName">Edit First Name</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" aria-describedby="firstName" value="@user.getFirstName">
+                        <input type="text" class="form-control" id="firstName" name="firstName"
+                               aria-describedby="firstName" value="@user.getFirstName" maxlength="50">
                     </div>
                     <div class="form-group">
                         <label for="lastName">Edit Last Name</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" aria-describedby="lastName" value="@user.getLastName">
+                        <input type="text" class="form-control" id="lastName" name="lastName"
+                               aria-describedby="lastName" value="@user.getLastName" maxlength="50">
                     </div>
                     <div class="form-group">
                         <label for="emailAddress">Edit Email address</label>
-                        <input type="email" class="form-control" id="emailAddress" name="emailAddress" aria-describedby="emailHelp" value="@user.getEmailAddress">
+                        <input type="email" class="form-control" id="emailAddress" name="emailAddress"
+                               aria-describedby="emailHelp" value="@user.getEmailAddress" maxlength="50">
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div class="form-group">
                         <label for="userPassword">Change Password</label>
-                        <input type="password" class="form-control" id="userPassword" name="userPassword" value="">
+                        <input type="password" class="form-control" id="userPassword" name="userPassword" value=""
+                               maxlength="50">
                     </div>
                     <div class="form-group">
                         <label for="userProfilePhoto">Upload a new profile photo</label>
@@ -37,13 +41,13 @@
                     </div>
                     <div class="form-group">
                         <label for="bio">Edit your bio:</label>
-                        <textarea class="form-control" rows="5" id="bio" name="bio" maxlength="500"></textarea>
+                        <textarea class="form-control" rows="5" id="bio" name="bio" maxlength="500">@user.getBio</textarea>
                         <small id="bioLen" class="form-text text-muted">Character limit of 500</small>
                     </div>
-                    <input type="submit" value="Save">
+                    <input type="submit" class="btn btn-primary" value="Save">
                 </form>
                 <form action="@routes.UserController.getDeleteUserAccount">
-                    <input type="submit" value="Delete Account">
+                    <input type="submit" class="btn btn-danger" value="Delete Account">
                 </form>
             </div>
         </div>

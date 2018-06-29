@@ -17,18 +17,18 @@
                 @CSRF.formField
                 <div class="form-group">
                     <label for="locationName">Edit shelter name</label>
-                    <input type="text" class="form-control" value="@shelter.getLocationName"
+                    <input type="text" class="form-control" value="@shelter.getLocationName" maxlength="50"
                            id="locationName" name="locationName"
                            aria-describedby="locationName" placeholder="Enter the name of your shelter">
                 </div>
                 <div class="form-group">
                     <label for="streetAddress">Edit street address</label>
-                    <input type="text" class="form-control" id="streetAddress" value="@shelter.getAddress"
+                    <input type="text" class="form-control" id="streetAddress" value="@shelter.getAddress" maxlength="50"
                            name="streetAddress" aria-describedby="streetAddress" placeholder="Enter your street address">
                 </div>
                 <div class="form-group">
                     <label for="city">Edit city</label>
-                    <input type="text" class="form-control" id="city" value="@shelter.getCity"
+                    <input type="text" class="form-control" id="city" value="@shelter.getCity" maxlength="50"
                            name="city"aria-describedby="city" placeholder="Enter your city">
                 </div>
                 <div class="form-group">
@@ -45,36 +45,36 @@
                 </div>
                 <div class="form-group">
                     <label for="zipCode">Edit zip code</label>
-                    <input type="text" class="form-control" id="zipCode" name="zipCode" value="@shelter.getZipCode"
+                    <input type="text" class="form-control" id="zipCode" name="zipCode" value="@shelter.getZipCode" maxlength="5"
                            aria-describedby="zipCode" placeholder="Enter your 5 digit zip code">
                 </div>
                 <div class="form-group">
                     <label for="phoneNumber">Edit phone number</label>
-                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="@shelter.getPhoneNumber"
+                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="@shelter.getPhoneNumber" maxlength="50"
                            aria-describedby="phoneNumber" placeholder="Enter your phone number">
                     <small id="phoneHelp" class="form-text text-muted">Use the format xxx-xxx-xxxx</small>
                 </div>
                 <div class="form-group">
                     <label for="URL">Edit website URL</label>
-                    <input type="text" class="form-control" id="URL" name="URL" value="@shelter.getWebsiteURL"
+                    <input type="text" class="form-control" id="URL" name="URL" value="@shelter.getWebsiteURL" maxlength="1000"
                            aria-describedby="URL" placeholder="Enter your URL">
                     <small id="urlHelp" class="form-text text-muted">Copy paste your company's URL</small>
                 </div>
                 <div class="form-group">
                     <label for="emailAddress">Edit email address</label>
-                    <input type="email" class="form-control" id="emailAddress" value="@shelter.getEmailAddress"
+                    <input type="email" class="form-control" id="emailAddress" value="@shelter.getEmailAddress" maxlength="100"
                            name="emailAddress"aria-describedby="emailHelp" placeholder="Enter email">
                     <small id="emailHelp" class="form-text text-muted">You'll use this to log in</small>
                 </div>
                 <div class="form-group">
                     <label for="locationPassword">Change password</label>
-                    <input type="password" class="form-control" id="locationPassword" value=""
+                    <input type="password" class="form-control" id="locationPassword" value="" maxlength="50"
                            name="locationPassword" placeholder="Password">
                 </div>
-                <input type="submit" value="Save">
+                <input type="submit" class="btn btn-primary" value="Save">
             </form>
             <form action="@routes.LocationController.getDeleteShelterAccount">
-                <input type="submit" value="Delete Account">
+                <input type="submit" class="btn btn-danger" value="Delete Account">
             </form>
             <p>@status</p>
         </div>

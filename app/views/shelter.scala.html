@@ -19,7 +19,7 @@
                 <p>Available dogs:</p>
 
                 @for(dog <- dogs){
-                <a href="/dog/@dog.getDogId">@dog.getDogName</a><br>
+                <a href="/viewDog/@dog.getDogId">@dog.getDogName</a><br>
                 <img src="../dogDefaultPhoto/@dog.getDogId"><br>
                 }
             </div>
