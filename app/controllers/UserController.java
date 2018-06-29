@@ -66,7 +66,7 @@ public class UserController extends ApplicationController
             }
             catch(Exception e)
             {
-
+                //do nothing
             }
         }
 
@@ -165,7 +165,7 @@ public class UserController extends ApplicationController
             }
             catch(Exception e)
             {
-
+                //do nothing
             }
         }
 
@@ -221,7 +221,7 @@ public class UserController extends ApplicationController
                 }
                 catch(Exception e)
                 {
-
+                    //do nothing
                 }
             }
 

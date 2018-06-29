@@ -116,6 +116,8 @@ public class BreedController extends Controller
 
         Personality personality = new Personality();
 
+        personality.setPersonalityName(personalityName);
+
         jpaApi.em().persist(personality);
 
         return ok(views.html.newpersonality.render());

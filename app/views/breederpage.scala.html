@@ -1,5 +1,5 @@
-@(location : BreederDetail)
-<!DOCTYPE html>
+@(location : BreederDetail, status : String)
+@html5.render
 @import helper._
 <html lang="en">
 <head>
@@ -26,6 +26,7 @@
                     <input type="submit" value="Log Out">
                 </form>
                 <a href="/editBreeder">Edit</a>
+                @status
             </div>
         </div>
     </div>

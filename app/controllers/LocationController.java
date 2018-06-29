@@ -95,7 +95,7 @@ public class LocationController extends ApplicationController
 
         List<State> states = jpaApi.em().createQuery(stateSql, State.class).getResultList();
 
-        return ok(views.html.createshelteraccount.render(states, ""));
+        return ok(views.html.createshelteraccount.render(states, status));
     }
 
     @Transactional
@@ -179,7 +179,7 @@ public class LocationController extends ApplicationController
             String dogSql = "SELECT d FROM Dog d WHERE d.locationId = :locationId";
 
             List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("locationId", locationId).getResultList();
-            return ok(views.html.shelterpage.render(location, dogs, ""));
+            return ok(views.html.shelterpage.render(location, dogs, status));
         }
         return redirect(routes.UserController.getLogIn("Log in to access this page."));
     }
@@ -374,6 +374,7 @@ public class LocationController extends ApplicationController
     @Transactional(readOnly = true)
     public Result getBreederPage(String status)
     {
+
         if(isLoggedIn())
         {
             String emailAddress = session().get("loggedIn");
@@ -388,8 +389,9 @@ public class LocationController extends ApplicationController
             BreederDetail location = jpaApi.em().createQuery(sql, BreederDetail.class).
                     setParameter("emailAddress", emailAddress).getSingleResult();
 
-            return ok(views.html.breederpage.render(location));
+            return ok(views.html.breederpage.render(location, status));
         }
+
         return redirect(routes.UserController.getLogIn("Log in to access this page."));
     }
 
