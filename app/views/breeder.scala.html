@@ -1,4 +1,4 @@
-@(breeder : BreederDetail)
+@(breeder : BreederDetail, breed : Breed)
 @html5.render
 <html lang="en">
 <head>
@@ -8,13 +8,51 @@
 </head>
 <body>
     @navbar("breeder")
-    <div class="container">
+    <div class="container bg-primary text-white">
         <div class="row">
-            <div class="col-12">
+            <div class="col-6">
                 <h3>@breeder.getLocationName</h3>
-                <p>@breeder.getAddress, @breeder.getStateName, @breeder.getZipCode</p>
-                <p>@breeder.getPhoneNumber</p>
-                <p><a href="@breeder.getWebsiteURL">Website</a></p>
+                <p>Address: </p>
+                <div class="row">
+                    <div class="col-1">
+
+                    </div>
+                    <div class="col-11">
+                        @breeder.getAddress<br>
+                        @breeder.getCity, @breeder.getStateName @breeder.getZipCode
+                    </div>
+                </div><br>
+                <p>Phone number:</p>
+                <div class="row">
+                    <div class="col-1">
+
+                    </div>
+                    <div class="col-11">
+                        @breeder.getPhoneNumber
+                    </div>
+                </div><br>
+                <p>Email address:</p>
+                <div class="row">
+                    <div class="col-1">
+
+                    </div>
+                    <div class="col-11">
+                        @breeder.getEmailAddress
+                    </div>
+                </div><br>
+                <p>Website:</p>
+                <div class="row">
+                    <div class="col-1">
+
+                    </div>
+                    <div class="col-11">
+                        <a href="@breeder.getWebsiteURL"><font color="white">@breeder.getWebsiteURL</font></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <h3><a href="/breed/@breed.getBreedId"><font color="white">@breed.getBreedName</font></a></h3>
+                <img src="/assets/images/@breed.getBreedName/@breed.getPhoto1" height="250">
             </div>
         </div>
     </div>

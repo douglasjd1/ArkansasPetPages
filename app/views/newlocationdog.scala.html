@@ -1,4 +1,4 @@
-@(colors : List[Color], personalities : List[Personality], breeds : List[Breed])
+@(colors : List[Color], personalities : List[Personality], breeds : List[Breed], status : String)
 @html5.render
 @import helper._
 <html lang="en">
@@ -6,13 +6,17 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/stylesheets/radio.css">
+    <link rel="stylesheet" href="/assets/stylesheets/checkbox.css">
     <title>New Dog</title>
 </head>
 <body>
 @navbar("userPage")
-<div class="container">
+<div class="container bg-primary text-white">
+    <br>
     <div class="row">
         <div class="col-12">
+            <h3>Add a dog</h3>
+            @status
             <form method="POST" enctype="multipart/form-data">
                 @CSRF.formField
                 <div class="form-group">
@@ -27,38 +31,38 @@
                 </div>
                 <div class="form-group">
                     <label for="dogPhoto">Add a photo of your dog</label><br>
-                    <input type="file" name="dogPhoto" id="dogPhoto">
+                    <input class="btn btn-light" type="file" name="dogPhoto" id="dogPhoto">
                 </div>
                 <p>Dog Gender</p>
                 <div class="radio">
                     <label class="radiochoice">Male
                         <input type="radio" name="gender" value="1">
-                        <span class="checkmark"></span>
+                        <span class="radiocheckmark"></span>
                     </label>
                 </div>
                 <div class="radio">
                     <label class="radiochoice">Female
                         <input type="radio" name="gender" value="2">
-                        <span class="checkmark"></span>
+                        <span class="radiocheckmark"></span>
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="dogAge">Dog Age</label>
                     <input type="text" class="form-control" id="dogAge" name="dogAge" maxlength="2"
                            aria-describedby="dogAge" placeholder="Enter your dog's age">
-                    <small id="dogAgeEg" class="form-text text-muted">Examples: 4, 6, 2. If your dog is less than 1 year old, enter 0.</small>
+                    <small id="dogAgeEg" class="form-text text-muted"><font color="white">Examples: 4, 6, 2. If your dog is less than 1 year old, enter 0.</font></small>
                 </div>
                 <div class="form-group">
                     <label for="dogWeight">Dog Weight</label>
                     <input type="text" class="form-control" id="dogWeight" name="dogWeight" maxlength="3"
                            aria-describedby="dogWeight" placeholder="Enter your dog's weight in pounds">
-                    <small id="dogWeightEg" class="form-text text-muted">Examples: 12, 56, 34</small>
+                    <small id="dogWeightEg" class="form-text text-muted"><font color="white">Examples: 12, 56, 34</font></small>
                 </div>
                 <div class="form-group">
                     <label for="dogWeight">Dog Height</label>
                     <input type="text" class="form-control" id="dogHeight" name="dogHeight" maxlength="3"
                            aria-describedby="dogHeight" placeholder="Enter your dog's height in inches">
-                    <small id="dogHeightEg" class="form-text text-muted">Examples: 12, 28, 22. If you're not sure, give it your best guess. Reference the breed page to get a better idea.</small>
+                    <small id="dogHeightEg" class="form-text text-muted"><font color="white">Examples: 12, 28, 22. If you're not sure, give it your best guess. Reference the breed page to get a better idea.</font></small>
                 </div>
                 <div class="form-group">
                     <label for="hairLength">Select your dog's hair length:</label>
@@ -103,19 +107,19 @@
                     <p>Select your dog's personality traits:</p>
                     <div class="row">
                         @for(personality <- personalities){
-                        <div class="col-2">
+                        <div class="col-3">
                             <div class="checkbox">
-                                <label><input type="checkbox" class="personality"
-                                              name="@personality.getPersonalityName"
-                                              value="@personality.getPersonalityId"
-                                              id="@personality.getPersonalityName">
-                                    @personality.getPersonalityName</label>
+                                <label class="checkstyle">
+                                    <input type="checkbox" class="weight" name="@personality.getPersonalityName"
+                                           value="@personality.getPersonalityId" id="@personality.getPersonalityName">@personality.getPersonalityName
+                                    <span class="checkmark"></span>
+                                </label>
                             </div>
                         </div>
                         }
                     </div>
                 </div>
-                <input type="submit" value="Save">
+                <input class="btn btn-light" type="submit" value="Save">
             </form>
         </div>
     </div>

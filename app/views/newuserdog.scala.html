@@ -1,4 +1,4 @@
-@(colors : List[Color], personalities : List[Personality], breeds : List[Breed])
+@(colors : List[Color], personalities : List[Personality], breeds : List[Breed], status : String)
 @html5.render
 @import helper._
 <html lang="en">
@@ -11,10 +11,12 @@
 </head>
 <body>
     @navbar("userPage")
-    <div class="container">
+    <div class="container bg-primary text-white">
+        <br>
         <div class="row">
             <div class="col-12">
-                <h3>Add a dog</h3><br>
+                <h3>Add a dog</h3>
+                @status<br>
             </div>
         </div>
         <div class="row">
@@ -41,25 +43,25 @@
                     </div>
                     <div class="form-group">
                         <label for="dogPhoto">Add a photo of your dog</label><br>
-                        <input type="file" name="dogPhoto" id="dogPhoto">
+                        <input class="btn btn-light" type="file" name="dogPhoto" id="dogPhoto">
                     </div>
                     <div class="form-group">
                         <label for="dogAge">Dog Age</label>
                         <input type="text" class="form-control" id="dogAge" name="dogAge" maxlength="3"
                                aria-describedby="dogAge" placeholder="Enter your dog's age">
-                        <small id="dogAgeEg" class="form-text text-muted">Examples: 4, 6, 2. If your dog is less than 1 year old, enter 0.</small>
+                        <small id="dogAgeEg" class="form-text text-muted"><font color="white">Examples: 4, 6, 2. If your dog is less than 1 year old, enter 0.</font></small>
                     </div>
                     <div class="form-group">
                         <label for="dogWeight">Dog Weight</label>
                         <input type="text" class="form-control" id="dogWeight" name="dogWeight" maxlength="3"
                                aria-describedby="dogWeight" placeholder="Enter your dog's weight in pounds">
-                        <small id="dogWeightEg" class="form-text text-muted">Examples: 12, 56, 34</small>
+                        <small id="dogWeightEg" class="form-text text-muted"><font color="white">Examples: 12, 56, 34</font></small>
                     </div>
                     <div class="form-group">
                         <label for="dogWeight">Dog Height</label>
                         <input type="text" class="form-control" id="dogHeight" name="dogHeight" maxlength="3"
                                aria-describedby="dogHeight" placeholder="Enter your dog's height in inches">
-                        <small id="dogHeightEg" class="form-text text-muted">Examples: 12, 28, 22. If you're not sure, give it your best guess. Reference the breed page to get a better idea.</small>
+                        <small id="dogHeightEg" class="form-text text-muted"><font color="white">Examples: 12, 28, 22. If you're not sure, give it your best guess. Reference the breed page to get a better idea.</font></small>
                     </div>
                     <div class="form-group">
                         <label for="hairLength">Select your dog's hair length:</label>
@@ -116,7 +118,7 @@
                             }
                         </div>
                     </div>
-                    <input type="submit" class="btn btn-primary" value="Save">
+                    <input type="submit" class="btn btn-light" value="Save">
                 </form>
             </div>
         </div>

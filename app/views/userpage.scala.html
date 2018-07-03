@@ -9,7 +9,7 @@
 </head>
 <body>
     @navbar("userPage")
-    <div class="container">
+    <div class="container bg-primary text-white">
         <div class="row">
             <div class="col-12">
                 <div class="row">
@@ -19,7 +19,7 @@
                         <p>Email: @user.getEmailAddress</p>
                         <p>About you:</p>
                         <p>@user.getBio</p>
-                        <p><a href="/editUser/@user.getUserId">Edit Information</a></p>
+                        <p><a href="/editUser/@user.getUserId"><font color="white">Edit Information</font></a></p>
                         <p>
                             <form action="@routes.UserController.getLogOut">
                                 @CSRF.formField
@@ -29,16 +29,20 @@
                         <p>@status</p>
                     </div>
                     <div class="col-6">
-                        <h4>Your dogs:</h4><br><br>
+                        <h4>Your dogs:</h4>
                             @if(dogs.size() == 0){
                                 <p>No dogs added yet!</p>
                             }else{
+                                <div class="row">
                                 @for(dog <- dogs){
-                                <p><a href="../viewUserDog/@user.getUserId/@dog.getDogId">@dog.getDogName</a></p>
-                                <p><img src="/dogDefaultPhoto/@dog.getDogId" height="100"> </p>
+                                        <div class="col-4">
+                                            <a href="../viewUserDog/@user.getUserId/@dog.getDogId"><font color="white">@dog.getDogName</font></a>
+                                            <img src="/dogDefaultPhoto/@dog.getDogId" height="100">
+                                        </div>
                                 }
+                                </div>
                             }
-                        <p><a href="/newUserDog">Add a dog</a></p>
+                        <p><a href="/newUserDog"><font color="white">Add a dog</font></a></p>
                     </div>
                 </div>
             </div>

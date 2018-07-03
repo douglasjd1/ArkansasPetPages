@@ -47,6 +47,11 @@ public class UserController extends ApplicationController
             return redirect(routes.UserController.getCreateUserAccount("That email is already in use"));
         }
 
+        if(password.length() < 8)
+        {
+            return redirect(routes.UserController.getCreateUserAccount("Password must be at least 8 characters"));
+        }
+
         Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> filePart = formData.getFile("profilePhoto");
         File file = filePart.getFile();
@@ -58,7 +63,7 @@ public class UserController extends ApplicationController
         petPagesUser.setEmailAddress(emailAddress);
         petPagesUser.setBio(bio);
 
-        if(file != null)
+        if(file.length() != 0)
         {
             try
             {
@@ -243,19 +248,27 @@ public class UserController extends ApplicationController
     {
         if(isLoggedIn())
         {
-            String emailAddress = session().get("loggedIn");
+            try
+            {
+                String emailAddress = session().get("loggedIn");
 
-            String sql = "SELECT ppu FROM PetPagesUser ppu WHERE emailAddress = :emailAddress";
+                String sql = "SELECT ppu FROM PetPagesUser ppu WHERE emailAddress = :emailAddress";
 
-            PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).
-                                        setParameter("emailAddress", emailAddress).getSingleResult();
+                PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).
+                        setParameter("emailAddress", emailAddress).getSingleResult();
+                String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :petPagesUserId";
 
-            String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :petPagesUserId";
+                List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).
+                        setParameter("petPagesUserId", petPagesUser.getUserId()).getResultList();
 
-            List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).
-                             setParameter("petPagesUserId", petPagesUser.getUserId()).getResultList();
+                return ok(views.html.userpage.render(petPagesUser, dogs, status));
 
-            return ok(views.html.userpage.render(petPagesUser, dogs, status));
+            }
+            catch(Exception e)
+            {
+                return redirect(routes.UserController.getLogIn("Log in as a user to view your account"));
+            }
+
         }
 
         else

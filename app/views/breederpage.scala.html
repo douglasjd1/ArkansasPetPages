@@ -1,34 +1,63 @@
-@(location : BreederDetail, status : String)
+@(breeder : BreederDetail, status : String)
 @html5.render
 @import helper._
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
-    <title>@location.getLocationName</title>
+    <title>@breeder.getLocationName</title>
 </head>
 <body>
     @navbar("userPage")
-    <div class="container">
+    <div class="container bg-primary text-white">
         <div class="row">
-            <div class="col-12">
-                <h3>@location.getLocationName</h3>
-                <p>Breed: <br> <a href="/breed/@location.getBreedId">@location.getBreedName</a></p>
-                <p>Address:<br>
-                    @location.getAddress<br>
-                    @location.getCity, @location.getStateName @location.getZipCode
-                </p>
-                <p>Phone number: @location.getPhoneNumber</p>
-                <p>Email: @location.getEmailAddress</p>
-                <p><a href="@location.getWebsiteURL">Website</a> </p>
+            <div class="col-6">
+                <h3>@breeder.getLocationName</h3>
+                <p>Address: </p>
+                <div class="row">
+                    <div class="col-1">
+
+                    </div>
+                    <div class="col-11">
+                        @breeder.getAddress<br>
+                        @breeder.getCity, @breeder.getStateName @breeder.getZipCode
+                    </div>
+                </div><br>
+                <p>Phone number:</p>
+                <div class="row">
+                    <div class="col-1">
+
+                    </div>
+                    <div class="col-11">
+                        @breeder.getPhoneNumber
+                    </div>
+                </div><br>
+                <p>Email address:</p>
+                <div class="row">
+                    <div class="col-1">
+
+                    </div>
+                    <div class="col-11">
+                        @breeder.getEmailAddress
+                    </div>
+                </div><br>
+                <p>Website:</p>
+                <div class="row">
+                    <div class="col-1">
+
+                    </div>
+                    <div class="col-11">
+                        <a href="@breeder.getWebsiteURL"><font color="white">@breeder.getWebsiteURL</font></a>
+                    </div>
+                </div><br>
                 <form action="@routes.UserController.getLogOut">
                     @CSRF.formField
-                    <input type="submit" value="Log Out">
+                    <input type="submit" class="btn btn-danger" value="Log Out">
                 </form>
-                <a href="/editBreeder">Edit</a>
-                @status
             </div>
-        </div>
+        </div><br>
+        <a href="/editBreeder"><font color="white">Edit information</font></a>
     </div>
 </body>
 </html>
+

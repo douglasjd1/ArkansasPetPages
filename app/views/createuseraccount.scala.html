@@ -9,10 +9,12 @@
 </head>
 <body>
     @navbar("createUserAccount")
-    <div class="container">
+    <div class="container bg-primary text-white">
+        <br>
         <div class="row">
             <div class="col-6">
                 <h3>Create a new account</h3>
+                <p>@status</p>
                 <form method="POST" enctype="multipart/form-data">
                     @CSRF.formField
                     <div class="form-group">
@@ -29,25 +31,25 @@
                         <label for="emailAddress">Email address</label>
                         <input type="email" class="form-control" id="emailAddress" name="emailAddress" maxlength="100"
                                aria-describedby="emailHelp" placeholder="Enter email">
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <small id="emailHelp" class="form-text text-muted"><font color="white">We'll never share your email with anyone else.</font></small>
                     </div>
                     <div class="form-group">
                         <label for="userPassword">Password</label>
                         <input type="password" class="form-control" id="userPassword" maxlength="50"
                                name="userPassword" placeholder="Password">
+                        <small id="passWordHelp" class="form-text text-muted"><font color="white">Password must be at least 8 characters.</font> </small>
                     </div>
                     <div class="form-group">
                         <label for="profilePhoto">Upload a profile photo</label>
-                        <input type="file" id="profilePhoto" name="profilePhoto">
+                        <input class="btn btn-light" type="file" id="profilePhoto" name="profilePhoto">
                     </div>
                     <div class="form-group">
                         <label for="bio">Tell us about yourself:</label>
                         <textarea class="form-control" rows="5" id="bio" name="bio" maxlength="500"></textarea>
-                        <small id="bioHelp" class="form-text text-muted">Character limit is 500.</small>
+                        <small id="bioHelp" class="form-text text-muted"><font color="white">Character limit is 500.</font></small>
                     </div>
-                    <input type="submit" value="Create Account">
+                    <input class="btn btn-light" type="submit" value="Create Account">
                 </form>
-                <p>@status</p>
             </div>
         </div>
     </div>

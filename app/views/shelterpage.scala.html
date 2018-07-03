@@ -1,4 +1,4 @@
-@(location : ShelterDetail, dogs : List[Dog], status : String)
+@(shelter : ShelterDetail, dogs : List[Dog], status : String)
 @html5.render
 @import helper._
 <html lang="en">
@@ -9,30 +9,74 @@
 </head>
 <body>  
     @navbar("userPage")
-    <div class="container">
+    <div class="container bg-primary text-white">
         <div class="row">
             <div class="col-12">
-                <h3>@location.getLocationName</h3><a
-                <p>Address:<br>
-                    @location.getAddress<br>
-                    @location.getCity, @location.getStateName @location.getZipCode
-                </p>
-                <p>Phone number: @location.getPhoneNumber</p>
-                <p>Email: @location.getEmailAddress</p>
-                <p><a href="@location.getWebsiteURL">Website</a> </p>
-                <form action="@routes.UserController.getLogOut">
-                    @CSRF.formField
-                    <input type="submit" value="Log Out">
-                </form>
-                <p>Dogs in this shelter:</p>
-                @for(dog <- dogs){
-                    <a href="/viewLocationDog/@dog.getDogId">@dog.getDogName</a>
-                }
-                <a href="/newLocationDog">Add a dog</a>
-                <a href="/editShelter">Edit</a>
-                @status
+                <div class="row">
+                    <div class="col-6">
+                        <h3>@shelter.getLocationName</h3><br>
+                        <p>Address: </p>
+                        <div class="row">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-11">
+                                @shelter.getAddress<br>
+                                @shelter.getCity, @shelter.getStateName @shelter.getZipCode
+                            </div>
+                        </div><br>
+                        <p>Phone number:</p>
+                        <div class="row">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-11">
+                                @shelter.getPhoneNumber
+                            </div>
+                        </div><br>
+                        <p>Email address:</p>
+                        <div class="row">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-11">
+                                @shelter.getEmailAddress
+                            </div>
+                        </div><br>
+                        <p>Website:</p>
+                        <div class="row">
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-11">
+                                <a href="@shelter.getWebsiteURL"><font color="white">@shelter.getWebsiteURL</font></a>
+                            </div>
+                        </div><br>
+                        <form action="@routes.UserController.getLogOut">
+                            @CSRF.formField
+                            <input type="submit" class="btn btn-danger" value="Log Out">
+                        </form>
+                    </div>
+                    <div class="col-6">
+                        <h3>Your dogs:</h3>
+                        @if(dogs.size() == 0){
+                        <p>You haven't added any dogs yet</p>
+                        }else{
+                        <div class="row">
+                            @for(dog <- dogs){
+                            <div class="col-4">
+                                <a href="/viewLocationDog/@dog.getDogId"><font color="white">@dog.getDogName</font> </a><br>
+                                <img src="../dogDefaultPhoto/@dog.getDogId" height="100"><br>
+                            </div>
+                            }
+                        </div>
+                        }
+                        <a href="/newLocationDog"><font color="white">Add a dog</font></a>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div><br>
+        <a href="/editShelter"><font color="white">Edit information</font></a>
     </div>
 </body>
 </html>

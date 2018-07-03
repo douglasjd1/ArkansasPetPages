@@ -34,17 +34,17 @@ POST    /newDogPersonality          controllers.DogController.postNewDogPersonal
 POST    /newDogColor                controllers.DogController.postNewDogColor
 GET     /newDogPersonality          controllers.DogController.getNewDogPersonality
 GET     /newDogColor                controllers.DogController.getNewDogColor
-GET     /newUserDog                 controllers.DogController.getNewUserDog
-GET     /newLocationDog             controllers.DogController.getNewLocationDog
+GET     /newUserDog                 controllers.DogController.getNewUserDog(status:String ?= "")
+GET     /newLocationDog             controllers.DogController.getNewLocationDog(status:String ?= "")
 POST    /newUserDog                 controllers.DogController.postNewUserDog
 POST    /newLocationDog             controllers.DogController.postNewLocationDog
 GET     /dogDefaultPhoto/:id        controllers.DogController.getDogDefaultPhoto(id:Integer)
 GET     /dogPhoto/:id               controllers.DogController.getDogPhoto(id:Integer)
 GET     /viewUserDog/:userId/:dogId controllers.DogController.getViewUserDog(userId:Integer, dogId:Integer)
-GET     /editUserDog/:userId/:dogId controllers.DogController.getEditUserDog(userId:Integer, dogId:Integer)
+GET     /editUserDog/:userId/:dogId controllers.DogController.getEditUserDog(userId:Integer, dogId:Integer, status:String ?= "")
 POST    /editUserDog/:userId/:dogId controllers.DogController.postEditUserDog(userId:Integer, dogId:Integer)
 GET     /viewLocationDog/:id        controllers.DogController.getViewLocationDog(id:Integer)
-GET     /editLocationDog/:id        controllers.DogController.getEditLocationDog(id:Integer)
+GET     /editLocationDog/:id        controllers.DogController.getEditLocationDog(id:Integer, status:String ?= "")
 POST    /editLocationDog/:id        controllers.DogController.postEditLocationDog(id:Integer)
 GET     /viewDog/:id                controllers.DogController.getViewDog(id:Integer)
 GET     /deleteUserDog/:id          controllers.DogController.getDeleteUserDog(id:Integer)

@@ -9,10 +9,12 @@
 </head>
 <body>
 @navbar("createUserAccount")
-<div class="container">
+<div class="container bg-primary text-white">
+    <br>
     <div class="row">
         <div class="col-6">
             <h3>Create a new shelter account</h3>
+            <p>@status</p>
             <form method="POST">
                 @CSRF.formField
                 <div class="form-group">
@@ -48,28 +50,28 @@
                     <label for="phoneNumber">Phone number</label>
                     <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" maxlength="12"
                            aria-describedby="phoneNumber" placeholder="Enter your phone number">
-                    <small id="phoneHelp" class="form-text text-muted">Use the format xxx-xxx-xxxx</small>
+                    <small id="phoneHelp" class="form-text text-muted"><font color="white">Use the format xxx-xxx-xxxx</font></small>
                 </div>
                 <div class="form-group">
                     <label for="URL">Website URL</label>
                     <input type="text" class="form-control" id="URL" name="URL" maxlength="1000"
                            aria-describedby="URL" placeholder="Enter your URL">
-                    <small id="urlHelp" class="form-text text-muted">Copy paste your company's URL</small>
+                    <small id="urlHelp" class="form-text text-muted"><font color="white">Copy paste your company's URL</font></small>
                 </div>
                 <div class="form-group">
                     <label for="emailAddress">Email address</label>
                     <input type="email" class="form-control" id="emailAddress" name="emailAddress" maxlength="100"
                            aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">You'll use this to log in</small>
+                    <small id="emailHelp" class="form-text text-muted"><font color="white">You'll use this to log in</font></small>
                 </div>
                 <div class="form-group">
                     <label for="locationPassword">Create password</label>
                     <input type="password" class="form-control" id="locationPassword" maxlength="50"
                            name="locationPassword" placeholder="Password">
+                    <small id="passWordHelp" class="form-text text-muted"><font color="white">Password must be at least 8 characters</font></small>
                 </div>
-                <input type="submit" value="Create Account">
+                <input class="btn btn-light" type="submit" value="Create Account">
             </form>
-            <p>@status</p>
         </div>
     </div>
 </div>
