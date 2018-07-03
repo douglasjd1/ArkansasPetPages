@@ -8,16 +8,22 @@
 </head>
 <body>
     @navbar("breeds")
-    <div class="container text-center">
-        <table class="table table-dark bg-primary table-hover">
-            <h3>Breeds</h3>
-            @for(breed <- breeds) {
-            <tr>
-                <td><a href="/breed/@breed.getBreedId"><font color="white">@breed.getBreedName</font> </a></td>
-                <td><img src="/assets/images/@breed.getBreedName/@breed.getPhoto1" height="200"></td>
-            </tr>
+    <div class="container text-primary">
+        <h3>Breeds</h3>
+    </div>
+    <div class="container bg-primary">
+        <br>
+        <div class="row">
+            @for(breed <- breeds){
+                <div class="col-4">
+                    <a href="/breed/@breed.getBreedId"><font color="white">@breed.getBreedName</font></a><br>
+                    <img src="/assets/images/@breed.getBreedName/@breed.getPhoto1" height="150">
+                    <div>
+                        <p>&nbsp;</p>
+                    </div>
+                </div>
             }
-        </table>
+        </div>
     </div>
 </body>
 </html>

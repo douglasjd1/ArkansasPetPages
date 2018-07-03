@@ -12,19 +12,35 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                Welcome, @user.getFirstName @user.getLastName!<br>
-                <img src="../userProfilePhoto/@user.getUserId" height="150"><br>
-                <a href="/editUser/@user.getUserId">Edit Information</a><br>
-                <a href="/newUserDog">Add a dog</a><br>
-                <form action="@routes.UserController.getLogOut">
-                    @CSRF.formField
-                    <input type="submit" value="Log Out">
-                </form>
-                Your dogs:<br>
-                @for(dog <- dogs){
-                    <a href="../viewUserDog/@user.getUserId/@dog.getDogId">@dog.getDogName</a>
-                }
-                @status
+                <div class="row">
+                    <div class="col-6">
+                        <h4>Welcome, @user.getFirstName @user.getLastName!</h4>
+                        <p><img src="../userProfilePhoto/@user.getUserId" height="150"></p>
+                        <p>Email: @user.getEmailAddress</p>
+                        <p>About you:</p>
+                        <p>@user.getBio</p>
+                        <p><a href="/editUser/@user.getUserId">Edit Information</a></p>
+                        <p>
+                            <form action="@routes.UserController.getLogOut">
+                                @CSRF.formField
+                                <input type="submit" class="btn btn-danger" value="Log Out">
+                            </form>
+                        </p>
+                        <p>@status</p>
+                    </div>
+                    <div class="col-6">
+                        <h4>Your dogs:</h4><br><br>
+                            @if(dogs.size() == 0){
+                                <p>No dogs added yet!</p>
+                            }else{
+                                @for(dog <- dogs){
+                                <p><a href="../viewUserDog/@user.getUserId/@dog.getDogId">@dog.getDogName</a></p>
+                                <p><img src="/dogDefaultPhoto/@dog.getDogId" height="100"> </p>
+                                }
+                            }
+                        <p><a href="/newUserDog">Add a dog</a></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

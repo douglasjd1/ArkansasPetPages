@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/radio.css">
     <title>New Dog</title>
 </head>
 <body>
@@ -27,6 +28,19 @@
                 <div class="form-group">
                     <label for="dogPhoto">Add a photo of your dog</label><br>
                     <input type="file" name="dogPhoto" id="dogPhoto">
+                </div>
+                <p>Dog Gender</p>
+                <div class="radio">
+                    <label class="radiochoice">Male
+                        <input type="radio" name="gender" value="1">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label class="radiochoice">Female
+                        <input type="radio" name="gender" value="2">
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
                 <div class="form-group">
                     <label for="dogAge">Dog Age</label>

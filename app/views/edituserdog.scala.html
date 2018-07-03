@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/radio.css">
     <title>Edit Dog</title>
 </head>
 <body>
@@ -22,11 +23,46 @@
                            aria-describedby="dogName" value="@dog.getDogName">
                 </div>
                 <div class="form-group">
+                    <label for="dogDefaultPhoto">Change @dog.getDogName's default photo</label><br>
+                    <input type="file" name="dogDefaultPhoto" id="dogDefaultPhoto">
+                </div>
+                <div class="form-group">
                     <label for="dogPhoto1">Add up to 3 photos of @dog.getDogName</label><br>
                     <input type="file" name="dogPhoto1" id="dogPhoto1">
                     <input type="file" name="dogPhoto2" id="dogPhoto2">
                     <input type="file" name="dogPhoto3" id="dogPhoto3">
                 </div>
+                <p>Edit @dog.getDogName's Gender</p>
+                @if(dog.getGenderName == "Male"){
+                    <div class="radio">
+                        <label class="radiochoice">Male
+                            <input type="radio" name="gender" value="1" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                }else{
+                    <div class="radio">
+                        <label class="radiochoice">Male
+                            <input type="radio" name="gender" value="1">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                }
+                @if(dog.getGenderName == "Female"){
+                    <div class="radio">
+                        <label class="radiochoice">Female
+                            <input type="radio" name="gender" value="2" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                }else{
+                    <div class="radio">
+                        <label class="radiochoice">Female
+                            <input type="radio" name="gender" value="2">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                }
                 <div class="form-group">
                     <label for="dogAge">Edit @dog.getDogName's Age</label>
                     <input type="text" class="form-control" id="dogAge" name="dogAge" maxlength="2"
@@ -162,6 +198,8 @@
                 <br>
                 <input type="submit" class="btn btn-primary" value="Save Dog">
             </form>
+        </div>
+        <div class="col-2">
             <form action="@routes.DogController.getDeleteUserDog(dog.getDogId)">
                 <input type="submit" class="btn btn-danger" value="Delete Dog">
             </form>

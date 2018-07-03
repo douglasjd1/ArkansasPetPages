@@ -21,6 +21,7 @@ public class Dog
     private int colorId;
     private byte[] defaultPhotoData;
     private Integer petPagesUserId;
+    private int genderId;
 
     public void setDogName(String dogName)
     {
@@ -125,5 +126,15 @@ public class Dog
     public void setPetPagesUserId(Integer petPagesUserId)
     {
         this.petPagesUserId = petPagesUserId;
+    }
+
+    public int getGenderId()
+    {
+        return genderId;
+    }
+
+    public void setGenderId(int genderId)
+    {
+        this.genderId = genderId;
     }
 }

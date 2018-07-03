@@ -1,4 +1,4 @@
-@(breedDetail : BreedDetail, personalities : List[PersonalityByBreed], colors : List[ColorByBreed])
+@(breed : BreedDetail, personalities : List[PersonalityByBreed], colors : List[ColorByBreed])
 @html5.render
 <html lang="en">
 <head>
@@ -14,53 +14,94 @@
 <body>
     @navbar("breed")
     <div class="container">
-        <h1>@breedDetail.getBreedName</h1>
-        Personality traits:
-        @for(personalityByBreed <- personalities){
-            @personalityByBreed.getPersonalityName
-        }
-        Colors:
-        @for(colorByBreed <- colors){
-            @colorByBreed.getColorName
-        }
-        <div class="row">
-            <div class="col-4">
-                <div class="container mt-3">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ul class="carousel-indicators">
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
-                        </ul>
-                        <!-- The slideshow -->
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="/assets/images/@breedDetail.getBreedName/@breedDetail.getPhoto1" height="100">
+        <div class="table table-dark bg-primary table-hover">
+            <thead>
+                <tr>
+                    <div class="row">
+                        <div class="col-1">
+
+                        </div>
+                        <div class="col-11">
+                            <br>
+                            <h1>@breed.getBreedName</h1>
+                        </div>
+                    </div>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="row">
+                            <div class="col-2">
+
                             </div>
-                            <div class="carousel-item">
-                                <img src="/assets/images/@breedDetail.getBreedName/@breedDetail.getPhoto2" height="100">
+                            <div class="col-8">
+                                <div class="container mt-3">
+                                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                        <!-- Indicators -->
+                                        <ul class="carousel-indicators">
+                                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                                        </ul>
+                                        <!-- The slideshow -->
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img src="/assets/images/@breed.getBreedName/@breed.getPhoto1" height="100">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="/assets/images/@breed.getBreedName/@breed.getPhoto2" height="100">
+                                            </div>
+                                            <div class="carousel-item">
+                                                <img src="/assets/images/@breed.getBreedName/@breed.getPhoto3" height="100">
+                                            </div>
+                                        </div>
+                                        <!-- Left and right controls -->
+                                        <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+                                            <span class="carousel-control-prev-icon"></span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+                                            <span class="carousel-control-next-icon"></span>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="carousel-item">
-                                <img src="/assets/images/@breedDetail.getBreedName/@breedDetail.getPhoto3" height="100">
+                            <div class="col-2">
+
                             </div>
                         </div>
-                        <!-- Left and right controls -->
-                        <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </a>
-                        <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
+                    </td>
+                </tr>
+                <tr>
+                    <td><br>
+                        <div class="row">
+                            <div class="col-2">
 
-            </div>
-            <div class="col-4">
-
-            </div>
+                            </div>
+                            <div class="col-3">
+                                <h3>General Traits:</h3>
+                                <p>Weight: @breed.getWeightMin - @breed.getWeightMax pounds</p>
+                                <p>Height: @breed.getHeightMin - @breed.getHeightMax inches</p>
+                                <p>Lifspan: @breed.getLifeSpanMin - @breed.getLifeSpanMax years</p>
+                                <p>Hair length: @breed.getHairLengthName</p>
+                                <p>Cost from breeder: $@breed.getCostFromBreeder</p>
+                            </div>
+                            <div class="col-3">
+                                <h3>Available colors: </h3>
+                                @for(colorByBreed <- colors){
+                                    <p>@colorByBreed.getColorName</p>
+                                }
+                            </div>
+                            <div class="col-4">
+                                <h3>Personality traits: </h3>
+                                @for(personalityByBreed <- personalities){
+                                    <p>@personalityByBreed.getPersonalityName</p>
+                                }
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
         </div>
     </div>
 </body>

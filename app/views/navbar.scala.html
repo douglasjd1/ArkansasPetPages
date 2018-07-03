@@ -1,90 +1,69 @@
 @(page : String)
 <div class="container">
-    <div class="row">
-        <nav class="navbar navbar-expand-sm bg-primary navbar-dark fixed-top">
-            <ul class="navbar-nav">
-                <div class="col-3">
-                    @if("home".equals(page)){
-                    <li class="nav-item active">
-                        } else {
-                    <li class="nav-item">
-                        }
-                        <a class="nav-link" href="/home">Arkansas Pet Pages</a>
-                </div>
-                <div class="col">
-                    @if("dogs".equals(page)){
-                        <li class="nav-item active">
-                        }else{
-                         <li class="nav-item">
-                        }
-                        <a class="nav-link" href="/viewDogs">Dogs</a>
-                        </li>
-                </div>
-                <div class="col">
-                    @if("breeds".equals(page) || "breed".equals(page)){
-                    <li class="nav-item active">
-                        } else {
-                    <li class="nav-item">
-                        }
-                        <a class="nav-link" href="/breeds">Breeds</a>
-                    </li>
-                </div>
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark fixed-top justify-content-center">
+        <a href="/home" class="navbar-brand d-flex w-50 mr-auto">Arkansas Pet Pages</a>
+        <ul class="navbar-nav justify-content-center">
 
-                <div class="col">
-                    @if("shelters".equals(page) || "shelter".equals(page) || "dog".equals(page) || "dog".equals(page)){
-                    <li class="nav-item active">
-                        } else {
-                    <li class="nav-item">
-                        }
-                        <a class="nav-link" href="/shelters">Shelters</a>
-                </div>
-                <div class="col">
-                    @if("breeders".equals(page) || "breeder".equals(page)){
-                    <li class="nav-item active">
-                        } else {
-                    <li class="nav-item">
-                        }
-                        <a class="nav-link" href="/breeders">Breeders</a>
-                </div>
-                <div class="col">
-                    @if("dogulator".equals(page) || "dogulatorResults".equals(page)){
-                    <li class="nav-item active">
-                        } else {
-                    <li class="nav-item">
-                        }
-                        <a class="nav-link" href="/dogulator">Dogulator</a>
-                </div>
-                <div class="col-5">
+            @if("dogs".equals(page)){
+                <li class="nav-item active">
+                }else{
+                 <li class="nav-item">
+                }
+                <a class="nav-link" href="/viewDogs">Dogs</a>
+                </li>
 
-                </div>
-                <div class="col-2">
-                    @if("createAccount".equals(page) || "createUserAccount".equals(page) ||
-                        "createShelter".equals(page) || "createBreeder".equals(page)){
-                    <li class="nav-item active">
-                        } else {
-                    <li class="nav-item">
-                        }
-                        <a class="nav-link" href="/createAccount">Create Account</a>
-                </div>
-                <div class="col-2">
-                    @if("userPage".equals(page) || "editUser".equals(page)){
-                    <li class="nav-item active">
-                        } else {
-                    <li class="nav-item">
-                        }
-                        <a class="nav-link" href="/viewAccount">View Account</a>
-                </div>
-                <div class="col-2">
-                    @if("logIn".equals(page)){
-                    <li class="nav-item active">
-                        } else {
-                    <li class="nav-item">
-                        }
-                        <a class="nav-link" href="/logIn">Log In</a>
-                </div>
+            @if("breeds".equals(page) || "breed".equals(page)){
+            <li class="nav-item active">
+                } else {
+            <li class="nav-item">
+                }
+                <a class="nav-link" href="/breeds">Breeds</a>
+            </li>
 
-            </ul>
-        </nav>
-    </div>
+            @if("shelters".equals(page) || "shelter".equals(page) || "dog".equals(page) || "dog".equals(page)){
+            <li class="nav-item active">
+                } else {
+            <li class="nav-item">
+                }
+                <a class="nav-link" href="/shelters">Shelters</a>
+
+            @if("breeders".equals(page) || "breeder".equals(page)){
+            <li class="nav-item active">
+                } else {
+            <li class="nav-item">
+                }
+                <a class="nav-link" href="/breeders">Breeders</a>
+
+            @if("dogulator".equals(page) || "dogulatorResults".equals(page)){
+            <li class="nav-item active">
+                } else {
+            <li class="nav-item">
+                }
+                <a class="nav-link" href="/dogulator">Dogulator</a>
+        </ul>
+        <ul class="navbar-nav ml-auto w-100 justify-content-end">
+            @if("createAccount".equals(page) || "createUserAccount".equals(page) ||
+            "createShelter".equals(page) || "createBreeder".equals(page)){
+            <li class="nav-item active">
+                } else {
+            <li class="nav-item">
+                }
+                <a class="nav-link" href="/createAccount">Create Account</a>
+
+                @if("userPage".equals(page) || "editUser".equals(page)){
+            <li class="nav-item active">
+                } else {
+            <li class="nav-item">
+                }
+                <a class="nav-link" href="/viewAccount">View Account</a>
+
+                @if("logIn".equals(page)){
+            <li class="nav-item active">
+                } else {
+            <li class="nav-item">
+                }
+                <a class="nav-link" href="/logIn">Log In</a>
+        </ul>
+    </nav>
 </div>
 <br><br><br>

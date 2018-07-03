@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/radio.css">
     <title>Edit Dog</title>
 </head>
 <body>
@@ -27,6 +28,10 @@
                            aria-describedby="refId" value="@dog.getDogReffNum">
                 </div>
                 <div class="form-group">
+                    <label for="dogDefaultPhoto">Change @dog.getDogName's default photo</label><br>
+                    <input type="file" name="dogDefaultPhoto" id="dogDefaultPhoto">
+                </div>
+                <div class="form-group">
                     <label for="dogPhoto1">Add up to 3 photos of @dog.getDogName</label><br>
                     <input type="file" name="dogPhoto1" id="dogPhoto1">
                     <input type="file" name="dogPhoto2" id="dogPhoto2">
@@ -38,6 +43,37 @@
                            aria-describedby="dogAge" value="@dog.getDogAge">
                     <small id="dogAgeEg" class="form-text text-muted">Examples: 4, 6, 2. If your dog is less than 1 year old, enter 0.</small>
                 </div>
+                <p>Edit @dog.getDogName's Gender</p>
+                @if(dog.getGenderName == "Male"){
+                <div class="radio">
+                    <label class="radiochoice">Male
+                        <input type="radio" name="gender" value="1" checked="checked">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                }else{
+                <div class="radio">
+                    <label class="radiochoice">Male
+                        <input type="radio" name="gender" value="1">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                }
+                @if(dog.getGenderName == "Female"){
+                <div class="radio">
+                    <label class="radiochoice">Female
+                        <input type="radio" name="gender" value="2" checked="checked">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                }else{
+                <div class="radio">
+                    <label class="radiochoice">Female
+                        <input type="radio" name="gender" value="2">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                }
                 <div class="form-group">
                     <label for="dogWeight">Edit @dog.getDogName's Weight</label>
                     <input type="text" class="form-control" id="dogWeight" name="dogWeight" maxlength="3"

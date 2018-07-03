@@ -14,14 +14,18 @@
 </head>
 <body>
 @navbar("dog")
-<div class="container">
+<div class="container bg-primary text-white">
+    <br>
     <div class="row">
-        <div class="col-12">
-            @dog.getDogName
+        <div class="col-1">
+
         </div>
-    </div>
-    <div class="row">
         <div class="col-4">
+            <h3>@dog.getDogName</h3> <br>
+            @if(photos.size() == 0){
+            <p>No photos yet!</p>
+            }else{
+            <p>
             <div class="container mt-3">
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
@@ -50,11 +54,33 @@
                     </a>
                 </div>
             </div>
-            <div class="col-8">
-                <p>Available at: <a href="/location/@shelter.getLocationId">@shelter.getLocationName</a> </p>
-
-            </div>
+            </p>
+            }
         </div>
+        <div class="col-3">
+            <h3>Details</h3><br>
+            <p>Gender: @dog.getGenderName</p>
+            <p>Age: @dog.getDogAge years</p>
+            <P>Weight: @dog.getWeight pounds</P>
+            <p>Height: @dog.getHeight inches</p>
+            <p>Hair length: @dog.getHairLengthName</p>
+            <p>Color: @dog.getColorName</p>
+        </div>
+        <div class="col-4">
+            <h3>Personality Traits</h3><br>
+            @for(personality <- personalities){
+            <p>@personality.getPersonalityName</p>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-1">
+
+        </div>
+        <div class="col-11">
+            <p>Available at: <a href="/location/@shelter.getLocationId"><font color="white">@shelter.getLocationName</font></a> </p>
+        </div>
+        <br>
     </div>
 </div>
 </body>

@@ -1,30 +1,38 @@
-<!doctype html>
-<html>
-
+@html5.render
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
-    <title>Bar Chart</title>
-    <script src="/assets/lib/chart.js/Chart.bundle.min.js"></script>
-    <script src="/assets/lib/chart.js/utils.js"></script>
+    <title>Log In</title>
 </head>
 
-<body>
-<form>
-    <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+<nav class="navbar navbar-light navbar-expand-md bg-faded justify-content-center">
+    <a href="/" class="navbar-brand d-flex w-50 mr-auto">Navbar 3</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
+        <ul class="navbar-nav w-100 justify-content-center">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="//codeply.com">Codeply</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Right</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Right</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Right</a>
+            </li>
+        </ul>
     </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-    </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-</body>
-</html>
+</nav>

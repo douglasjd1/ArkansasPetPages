@@ -4,47 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/progressbar.css">
     <title>Dogulator Results</title>
 </head>
 <body>
     @navbar("dogulatorResults")
     <div class="container">
         <h3>Results</h3>
-
-        @for(result <- results){
-        <div class="row">
-            <div class="col-6">
-                <a href="breed/@result.getBreedId">@result.getBreedName</a>, @result.getPercentage%<br>
-                <img src="/assets/images/@result.getBreedName/@result.getPhoto1" height="100">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="@result.getPercentage"
-                         aria-valuemin="0" aria-valuemax="100" style="width:@result.getPercentage%">
-                        <span class="sr-only">@result.getPercentage%</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-            }
-    </div>
-    <div class="container">
         <table class="table table-dark bg-primary table-hover">
-            <h3>Breeds</h3>
             @for(result <- results){
             <tr>
                 <td>
-                    <a href="breed/@result.getBreedId">@result.getBreedName</a><br>
-                    <img src="/assets/images/@result.getBreedName/@result.getPhoto1" height="100">
-                </td>
-                <td>
-                    @result.getPercentage%<br>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="@result.getPercentage"
-                             aria-valuemin="0" aria-valuemax="100" style="width:@result.getPercentage%">
-                            <span class="sr-only">@result.getPercentage%</span>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="breed/@result.getBreedId"><font color="white">@result.getBreedName</font></a>, @result.getPercentage%<br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <img src="/assets/images/@result.getBreedName/@result.getPhoto1" height="200">
+                        </div>
+                        <div class="col-6">
+                            <br><br><br>
+                            <div class="progress vertical">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="90"
+                                     aria-valuemin="0" aria-valuemax="100" style="width: @result.getPercentage%; background-color: blue;">
+                                    <span class="sr-only">@result.getPercentage%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </td>
@@ -52,7 +39,6 @@
             }
         </table>
     </div>
-
 </body>
 </html>
 

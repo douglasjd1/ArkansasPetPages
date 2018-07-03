@@ -7,12 +7,16 @@
     <title>Breeders</title>
 </head>
 <body>
-    @navbar("breeders")
-    <div class="container text-center">
-        @for(breeder <- breeders){
-        <a href="/location/@breeder.getLocationId">@breeder.getLocationName</a><br>
+@navbar.render("breeders")
+<div class="container">
+    <h3 class="text-primary">Breeders</h3>
+    <table class="table table-dark bg-primary table-hover">
+        @for(breeder <- breeders) {
+        <tr>
+            <td><a href="/location/@breeder.getLocationId"><font color="white">@breeder.getLocationName</font> </a></td>
+        </tr>
         }
-    </div>
-
+    </table>
+</div>
 </body>
 </html>

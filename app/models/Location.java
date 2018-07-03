@@ -57,11 +57,6 @@ public class Location
         this.address = address;
     }
 
-    public String getStateId()
-    {
-        return stateId;
-    }
-
     public void setStateId(String stateId)
     {
         this.stateId = stateId;

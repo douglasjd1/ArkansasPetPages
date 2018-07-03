@@ -11,17 +11,30 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3>@shelter.getLocationName</h3><br>
-                <p>@shelter.getAddress</p>
-                <p>@shelter.getCity, @shelter.getStateName @shelter.getZipCode</p>
-                <p>@shelter.getPhoneNumber</p>
-                <p><a href="@shelter.getWebsiteURL">Website</a></p>
-                <p>Available dogs:</p>
+                <div class="row">
+                    <div class="col-6">
+                        <h3>@shelter.getLocationName</h3><br>
+                        <p>@shelter.getAddress</p>
+                        <p>@shelter.getCity, @shelter.getStateName @shelter.getZipCode</p>
+                        <p>@shelter.getPhoneNumber</p>
+                        <p>@shelter.getEmailAddress</p>
+                        <p><a href="@shelter.getWebsiteURL">Website</a></p>
+                    </div>
+                    <div class="col-6">
+                        <h3>Available dogs:</h3>
+                        @if(dogs.size() == 0){
+                            <p>No dogs available at this time!</p>
+                        }else{
+                            @for(dog <- dogs){
+                            <p>
+                                <a href="/viewDog/@dog.getDogId">@dog.getDogName</a><br>
+                                <img src="../dogDefaultPhoto/@dog.getDogId"><br>
+                            </p>
+                            }
+                        }
 
-                @for(dog <- dogs){
-                <a href="/viewDog/@dog.getDogId">@dog.getDogName</a><br>
-                <img src="../dogDefaultPhoto/@dog.getDogId"><br>
-                }
+                    </div>
+                </div>
             </div>
         </div>
     </div>

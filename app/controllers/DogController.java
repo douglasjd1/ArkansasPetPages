@@ -83,6 +83,7 @@ public class DogController extends ApplicationController
     {
         DynamicForm form = formFactory.form().bindFromRequest();
 
+        //Create dog
         Dog dog = new Dog();
 
         String dogName = form.get("dogName");
@@ -91,6 +92,7 @@ public class DogController extends ApplicationController
         int height = Integer.parseInt(form.get("dogHeight"));
         String hairLengthName = form.get("hairLength");
         String colorName = form.get("colorName");
+        int genderId = Integer.parseInt(form.get("gender"));
 
         Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> filePart = formData.getFile("dogPhoto");
@@ -123,8 +125,9 @@ public class DogController extends ApplicationController
         dog.setHairLengthId(hairLength.getHairLengthId());
         dog.setColorId(color.getColorId());
         dog.setPetPagesUserId(petPagesUser.getUserId());
+        dog.setGenderId(genderId);
 
-        if(file != null)
+        if(file.length() != 0)
         {
             try
             {
@@ -138,24 +141,7 @@ public class DogController extends ApplicationController
 
         jpaApi.em().persist(dog);
 
-        DogPhoto dogPhoto = new DogPhoto();
-
-        dogPhoto.setDogId(dog.getDogId());
-
-        if(file != null)
-        {
-            try
-            {
-                dogPhoto.setDogPhotoData(Files.toByteArray(file));
-            }
-            catch(Exception e)
-            {
-                //do nothing
-            }
-        }
-
-        jpaApi.em().persist(dogPhoto);
-
+        //Create new dogPersonalities
         String personalitySql = "SELECT p FROM Personality p";
 
         List<Personality> personalities = jpaApi.em().createQuery(personalitySql, Personality.class).getResultList();
@@ -173,6 +159,7 @@ public class DogController extends ApplicationController
             }
         }
 
+        //Create new dogBreeds
         String breed1 = form.get("breed1");
         String breed2 = form.get("breed2");
         String breed3 = form.get("breed3");
@@ -212,6 +199,7 @@ public class DogController extends ApplicationController
     {
         DynamicForm form = formFactory.form().bindFromRequest();
 
+        //Create new dog
         Dog dog = new Dog();
 
         String dogName = form.get("dogName");
@@ -221,6 +209,7 @@ public class DogController extends ApplicationController
         int height = Integer.parseInt(form.get("dogHeight"));
         String hairLengthName = form.get("hairLength");
         String colorName = form.get("colorName");
+        int genderId = Integer.parseInt(form.get("gender"));
 
         Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> filePart = formData.getFile("dogPhoto");
@@ -255,8 +244,9 @@ public class DogController extends ApplicationController
         dog.setHairLengthId(hairLength.getHairLengthId());
         dog.setColorId(color.getColorId());
         dog.setLocationId(location.getLocationId());
+        dog.setGenderId(genderId);
 
-        if(file != null)
+        if(file.length() != 0)
         {
             try
             {
@@ -270,24 +260,7 @@ public class DogController extends ApplicationController
 
         jpaApi.em().persist(dog);
 
-        DogPhoto dogPhoto = new DogPhoto();
-
-        dogPhoto.setDogId(dog.getDogId());
-
-        if(file != null)
-        {
-            try
-            {
-                dogPhoto.setDogPhotoData(Files.toByteArray(file));
-            }
-            catch(Exception e)
-            {
-                //do nothing
-            }
-        }
-
-        jpaApi.em().persist(dogPhoto);
-
+        //Create new dogPersonalities
         String personalitySql = "SELECT p FROM Personality p";
 
         List<Personality> personalities = jpaApi.em().createQuery(personalitySql, Personality.class).getResultList();
@@ -305,6 +278,7 @@ public class DogController extends ApplicationController
             }
         }
 
+        //Create new dogBreeds
         String breed1 = form.get("breed1");
         String breed2 = form.get("breed2");
         String breed3 = form.get("breed3");
@@ -327,10 +301,12 @@ public class DogController extends ApplicationController
     @Transactional(readOnly = true)
     public Result getViewUserDog(int userId, int dogId)
     {
-        String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.dogReffNum, d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
+        String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.dogReffNum, g.genderName, " +
+                                                    "d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
                 "FROM Dog d " +
                 "JOIN HairLength hl ON d.hairLengthId = hl.hairLengthId " +
                 "JOIN Color c ON c.colorId = d.colorId " +
+                "JOIN Gender g ON g.genderId = d.genderId " +
                 "WHERE d.dogId = :dogId " +
                 "ORDER BY d.dogName";
 
@@ -398,10 +374,12 @@ public class DogController extends ApplicationController
         String emailAddress = user.getEmailAddress();
         if(isLoggedIn() && emailAddress.equals(session().get("loggedIn")))
         {
-            String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.dogReffNum, d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
+            String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.dogReffNum, g.genderName, " +
+                    "d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
                     "FROM Dog d " +
                     "JOIN HairLength hl ON d.hairLengthId = hl.hairLengthId " +
                     "JOIN Color c ON c.colorId = d.colorId " +
+                    "JOIN Gender g ON g.genderId = d.genderId " +
                     "WHERE d.dogId = :dogId " +
                     "ORDER BY d.dogName";
 
@@ -493,6 +471,7 @@ public class DogController extends ApplicationController
         int height = Integer.parseInt(form.get("dogHeight"));
         String hairLengthName = form.get("hairLength");
         String colorName = form.get("colorName");
+        int genderId = Integer.parseInt(form.get("gender"));
 
         String hairLengthSql = "SELECT hl FROM HairLength hl " +
                                "WHERE hl.hairLengthName = :hairLengthName";
@@ -511,6 +490,7 @@ public class DogController extends ApplicationController
         dog.setHeight(height);
         dog.setHairLengthId(hairLength.getHairLengthId());
         dog.setColorId(color.getColorId());
+        dog.setGenderId(genderId);
 
         String deleteDogPersonalitiesSql = "SELECT dp FROM DogPersonality dp WHERE dp.dogId = :dogId";
 
@@ -543,6 +523,9 @@ public class DogController extends ApplicationController
 
         Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
 
+        Http.MultipartFormData.FilePart<File> defaultFilePart = formData.getFile("dogDefaultPhoto");
+        File defaultPhoto = defaultFilePart.getFile();
+
         Http.MultipartFormData.FilePart<File> filePart1 = formData.getFile("dogPhoto1");
         File file1 = filePart1.getFile();
 
@@ -552,7 +535,21 @@ public class DogController extends ApplicationController
         Http.MultipartFormData.FilePart<File> filePart3 = formData.getFile("dogPhoto3");
         File file3 = filePart3.getFile();
 
-        if(file1 != null)
+        //Change default photo
+        if(defaultPhoto.length() != 0)
+        {
+            try
+            {
+                dog.setDefaultPhotoData(Files.toByteArray(defaultPhoto));
+            }
+            catch (Exception e)
+            {
+                //do nothing
+            }
+        }
+
+        //Add dog photos
+        if(file1.length() != 0)
         {
             try
             {
@@ -567,7 +564,7 @@ public class DogController extends ApplicationController
             }
         }
 
-        if(file2 != null)
+        if(file2.length() != 0)
         {
             try
             {
@@ -582,7 +579,7 @@ public class DogController extends ApplicationController
             }
         }
 
-        if(file3 != null)
+        if(file3.length() != 0)
         {
             try
             {
@@ -678,10 +675,12 @@ public class DogController extends ApplicationController
     @Transactional(readOnly = true)
     public Result getViewLocationDog(int dogId)
     {
-        String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.dogReffNum, d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
+        String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.dogReffNum, g.genderName, " +
+                "d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
                 "FROM Dog d " +
                 "JOIN HairLength hl ON d.hairLengthId = hl.hairLengthId " +
                 "JOIN Color c ON c.colorId = d.colorId " +
+                "JOIN Gender g ON g.genderId = d.genderId " +
                 "WHERE d.dogId = :dogId " +
                 "ORDER BY d.dogName";
 
@@ -721,10 +720,12 @@ public class DogController extends ApplicationController
 
         if(isLoggedIn() && emailAddress.equals(session().get("loggedIn")))
         {
-            String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.dogReffNum, d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
+            String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.dogReffNum, g.genderName, " +
+                    "d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
                     "FROM Dog d " +
                     "JOIN HairLength hl ON d.hairLengthId = hl.hairLengthId " +
                     "JOIN Color c ON c.colorId = d.colorId " +
+                    "JOIN Gender g ON g.genderId = d.genderId " +
                     "WHERE d.dogId = :dogId " +
                     "ORDER BY d.dogName";
 
@@ -808,6 +809,7 @@ public class DogController extends ApplicationController
     {
         DynamicForm form = formFactory.form().bindFromRequest();
 
+        //Change dog
         String dogSql = "SELECT d FROM Dog d WHERE dogId = :dogId";
 
         Dog dog = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("dogId", dogId).getSingleResult();
@@ -819,6 +821,7 @@ public class DogController extends ApplicationController
         int height = Integer.parseInt(form.get("dogHeight"));
         String hairLengthName = form.get("hairLength");
         String colorName = form.get("colorName");
+        int genderId = Integer.parseInt(form.get("gender"));
 
         String hairLengthSql = "SELECT hl FROM HairLength hl " +
                 "WHERE hl.hairLengthName = :hairLengthName";
@@ -837,7 +840,9 @@ public class DogController extends ApplicationController
         dog.setHeight(height);
         dog.setHairLengthId(hairLength.getHairLengthId());
         dog.setColorId(color.getColorId());
+        dog.setGenderId(genderId);
 
+        //Change dogPersonalities
         String deleteDogPersonalitiesSql = "SELECT dp FROM DogPersonality dp WHERE dp.dogId = :dogId";
 
         List<DogPersonality> deletedDogPersonalities = jpaApi.em().
@@ -869,6 +874,9 @@ public class DogController extends ApplicationController
 
         Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
 
+        Http.MultipartFormData.FilePart<File> defaultPhoto = formData.getFile("dogDefaultPhoto");
+        File defaultPhotoFile = defaultPhoto.getFile();
+
         Http.MultipartFormData.FilePart<File> filePart1 = formData.getFile("dogPhoto1");
         File file1 = filePart1.getFile();
 
@@ -878,7 +886,21 @@ public class DogController extends ApplicationController
         Http.MultipartFormData.FilePart<File> filePart3 = formData.getFile("dogPhoto3");
         File file3 = filePart3.getFile();
 
-        if(file1 != null)
+        //Change defaultPhoto
+        if(defaultPhotoFile.length() != 0)
+        {
+            try
+            {
+                dog.setDefaultPhotoData(Files.toByteArray(defaultPhotoFile));
+            }
+            catch (Exception e)
+            {
+                //do nothing
+            }
+        }
+
+        //Add new dogPhotos
+        if(file1.length() != 0)
         {
             try
             {
@@ -893,7 +915,7 @@ public class DogController extends ApplicationController
             }
         }
 
-        if(file2 != null)
+        if(file2.length() != 0)
         {
             try
             {
@@ -908,7 +930,7 @@ public class DogController extends ApplicationController
             }
         }
 
-        if(file3 != null)
+        if(file3.length() != 0)
         {
             try
             {
@@ -923,6 +945,7 @@ public class DogController extends ApplicationController
             }
         }
 
+        //Change dogBreeds
         String dogBreedSql = "SELECT db FROM DogBreed db " +
                 "WHERE db.dogId = :dogId";
 
@@ -970,6 +993,7 @@ public class DogController extends ApplicationController
         String dogSql = "SELECT d FROM Dog d WHERE d.dogId = :dogId";
         Dog dog = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("dogId", dogId).getSingleResult();
 
+        //Delete dogBreeds
         String dogBreedSql = "SELECT db FROM DogBreed db WHERE db.dogId = :dogId";
         List<DogBreed> breeds = jpaApi.em().createQuery(dogBreedSql, DogBreed.class).
                 setParameter("dogId", dogId).getResultList();
@@ -979,6 +1003,7 @@ public class DogController extends ApplicationController
             jpaApi.em().remove(dogBreed);
         }
 
+        //Delete dogPersonalities
         String dogPersonalitySql = "SELECT dp FROM DogPersonality dp WHERE dp.dogId = :dogId";
         List<DogPersonality> personalities = jpaApi.em().createQuery(dogPersonalitySql, DogPersonality.class).
                 setParameter("dogId", dogId).getResultList();
@@ -992,11 +1017,13 @@ public class DogController extends ApplicationController
         List<DogPhoto> photos = jpaApi.em().createQuery(dogPhotoSql, DogPhoto.class).
                 setParameter("dogId", dogId).getResultList();
 
+        //Delete dogPhotos
         for(DogPhoto photo : photos)
         {
             jpaApi.em().remove(photo);
         }
 
+        //Delete dog
         jpaApi.em().remove(dog);
 
         return redirect(routes.LocationController.getShelterPage("Dog successfully deleted"));
@@ -1005,10 +1032,12 @@ public class DogController extends ApplicationController
     @Transactional(readOnly = true)
     public Result getViewDog(int dogId)
     {
-        String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.dogReffNum, d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
+        String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.dogReffNum, g.genderName, " +
+                "d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
                 "FROM Dog d " +
                 "JOIN HairLength hl ON d.hairLengthId = hl.hairLengthId " +
                 "JOIN Color c ON c.colorId = d.colorId " +
+                "JOIN Gender g ON g.genderId = d.genderId " +
                 "WHERE d.dogId = :dogId " +
                 "ORDER BY d.dogName";
 

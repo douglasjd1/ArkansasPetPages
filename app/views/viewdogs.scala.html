@@ -4,24 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
-    <title>Title</title>
+    <title>Available Dogs</title>
 </head>
 <body>
-    @navbar("dogs")
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <table class="table table-dark bg-primary table-hover">
-                    <h3>Available Dogs</h3>
-                    @for(dog <- dogs) {
-                    <tr>
-                        <td><a href="/viewDog/@dog.getDogId"><font color="white">@dog.getDogName</font> </a></td>
-                        <td><img src="/dogDefaultPhoto/@dog.getDogId" height="200"></td>
-                    </tr>
-                    }
-                </table>
+@navbar("dogs")
+<div class="container text-primary">
+    <h3>Dogs</h3>
+</div>
+<div class="container bg-primary">
+    <br>
+    <div class="row">
+        @for(dog <- dogs){
+        <div class="col-4">
+            <a href="/viewDog/@dog.getDogId"><font color="white">@dog.getDogName</font> </a></a><br>
+            <img src="/dogDefaultPhoto/@dog.getDogId" height="200">
+            <div>
+                <p>&nbsp;</p>
             </div>
         </div>
+        }
     </div>
+</div>
 </body>
 </html>

@@ -1,0 +1,17 @@
+.container {
+  margin-top: 0px;
+  padding-top: 30px;
+  /*background-color: #beb*/
+}
+.vertical {
+  width:45%;
+  height: 40px;
+  -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+  transform: rotate(-90deg);
+}
+.vertical {
+  box-shadow: inset 0px 4px 6px #ccc;
+}
+.progress-bar {
+  box-shadow: inset 0px 4px 6px rgba(100,100,100,0.6);
+}

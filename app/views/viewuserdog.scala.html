@@ -14,48 +14,72 @@
 </head>
 <body>
     @navbar("dog")
-    <div class="container">
+    <div class="container bg-primary text-white">
+        <br>
         <div class="row">
-            <div class="col-12">
-                @dog.getDogName <a href="/editUserDog/@user.getUserId/@dog.getDogId">Edit</a> <br>
+            <div class="col-1">
+
+            </div>
+            <div class="col-4">
+                <h3>@dog.getDogName</h3><br>
+                @if(photos.size() == 0){
+                    <p>No photos yet!</p>
+                }else{
+                    <p>
+                        <div class="container mt-3">
+                            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                <!-- Indicators -->
+                                <ul class="carousel-indicators">
+                                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                                </ul>
+                                <!-- The slideshow -->
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="/dogPhoto/@firstPhoto.getDogPhotoId" height="200">
+                                    </div>
+                                    @for(dogPhoto <- photos){
+                                    <div class="carousel-item">
+                                        <img src="/dogPhoto/@dogPhoto.getDogPhotoId" height="200">
+                                    </div>
+                                    }
+                                </div>
+                                <!-- Left and right controls -->
+                                <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </a>
+                                <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </p>
+                }
+            </div>
+            <div class="col-3">
+                <h3>General Traits</h3><br>
+                <p>Gender: @dog.getGenderName</p>
+                <p>Age: @dog.getDogAge years</p>
+                <P>Weight: @dog.getWeight pounds</P>
+                <p>Height: @dog.getHeight inches</p>
+                <p>Hair length: @dog.getHairLengthName</p>
+                <p>Color: @dog.getColorName</p>
+            </div>
+            <div class="col-4">
+                <h3>Personality Traits</h3><br>
+                @for(personality <- personalities){
+                    <p>@personality.getPersonalityName</p>
+                }
             </div>
         </div>
         <div class="row">
-            <div class="col-4">
-                <div class="container mt-3">
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ul class="carousel-indicators">
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
-                        </ul>
-                        <!-- The slideshow -->
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="/dogPhoto/@firstPhoto.getDogPhotoId" height="200">
-                            </div>
-                            @for(dogPhoto <- photos){
-                            <div class="carousel-item">
-                                <img src="/dogPhoto/@dogPhoto.getDogPhotoId" height="200">
-                            </div>
-                            }
-                        </div>
-                        <!-- Left and right controls -->
-                        <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-                            <span class="carousel-control-prev-icon"></span>
-                        </a>
-                        <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-                            <span class="carousel-control-next-icon"></span>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-4">
+            <div class="col-1">
 
-                </div>
-                <div class="col-4">
-
-                </div>
+            </div>
+            <div class="col-11">
+                <a href="/editUserDog/@user.getUserId/@dog.getDogId"><font color="white">Edit</font></a>
+                <br>
             </div>
         </div>
     </div>

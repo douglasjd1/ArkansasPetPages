@@ -10,6 +10,7 @@ public class DogPersonality
 {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int dogPersonalityid;
+
     private int dogId;
     private int personalityId;
 

@@ -5,11 +5,18 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/radio.css">
+    <link rel="stylesheet" href="/assets/stylesheets/checkbox.css">
     <title>New Dog</title>
 </head>
 <body>
     @navbar("userPage")
     <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h3>Add a dog</h3><br>
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <form method="POST" enctype="multipart/form-data" action="@routes.DogController.postNewUserDog">
@@ -18,6 +25,19 @@
                         <label for="dogName">Dog Name</label>
                         <input type="text" class="form-control" id="dogName" name="dogName" maxlength="50"
                                aria-describedby="dogName" placeholder="Enter your dog's name">
+                    </div>
+                    <p>Dog Gender</p>
+                    <div class="radio">
+                        <label class="radiochoice">Male
+                            <input type="radio" name="gender" value="1">
+                            <span class="radiocheckmark"></span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="radiochoice">Female
+                            <input type="radio" name="gender" value="2">
+                            <span class="radiocheckmark"></span>
+                        </label>
                     </div>
                     <div class="form-group">
                         <label for="dogPhoto">Add a photo of your dog</label><br>
@@ -84,19 +104,19 @@
                         <p>Select your dog's personality traits:</p>
                         <div class="row">
                             @for(personality <- personalities){
-                            <div class="col-2">
+                            <div class="col-3">
                                 <div class="checkbox">
-                                    <label><input type="checkbox" class="personality"
-                                                  name="@personality.getPersonalityName"
-                                                  value="@personality.getPersonalityId"
-                                                  id="@personality.getPersonalityName">
-                                        @personality.getPersonalityName</label>
+                                    <label class="checkstyle">
+                                        <input type="checkbox" class="weight" name="@personality.getPersonalityName"
+                                               value="@personality.getPersonalityId" id="@personality.getPersonalityName">@personality.getPersonalityName
+                                        <span class="checkmark"></span>
+                                    </label>
                                 </div>
                             </div>
                             }
                         </div>
                     </div>
-                    <input type="submit" value="Save">
+                    <input type="submit" class="btn btn-primary" value="Save">
                 </form>
             </div>
         </div>

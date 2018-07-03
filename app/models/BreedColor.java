@@ -10,6 +10,7 @@ public class BreedColor
 {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int breedColorId;
+
     private int breedId;
     private int colorId;
 
