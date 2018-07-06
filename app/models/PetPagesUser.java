@@ -83,11 +83,6 @@ public class PetPagesUser
         return userId;
     }
 
-    public void setUserId(int userId)
-    {
-        this.userId = userId;
-    }
-
     public String getBio()
     {
         return bio;

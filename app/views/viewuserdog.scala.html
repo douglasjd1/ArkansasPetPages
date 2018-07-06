@@ -14,21 +14,11 @@
 </head>
 <body>
     @navbar("dog")
+    <div class="container text-primary">
+        <h3>@dog.getDogName</h3>
+    </div>
     <div class="container">
         <div class="table table-dark bg-primary table-hover">
-            <thead>
-            <tr>
-                <div class="row">
-                    <div class="col-1">
-
-                    </div>
-                    <div class="col-11">
-                        <br>
-                        <h1>@dog.getDogName</h1>
-                    </div>
-                </div>
-            </tr>
-            </thead>
             <tbody>
             <tr>
                 <td>
@@ -119,6 +109,7 @@
             </tr>
             </tbody>
         </div>
+        <br>
     </div>
 </body>
 </html>

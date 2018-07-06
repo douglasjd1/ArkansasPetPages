@@ -9,10 +9,14 @@
 </head>
 <body>
 @navbar("createUserAccount")
-<div class="container">
+<div class="container text-primary">
+    <h3>Edit your shelter account</h3>
+    <p>@status</p>
+</div>
+<div class="container bg-primary text-white">
+    <br>
     <div class="row">
         <div class="col-6">
-            <h3>Edit your shelter account</h3>
             <form method="POST">
                 @CSRF.formField
                 <div class="form-group">
@@ -52,33 +56,31 @@
                     <label for="phoneNumber">Edit phone number</label>
                     <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="@shelter.getPhoneNumber" maxlength="50"
                            aria-describedby="phoneNumber" placeholder="Enter your phone number">
-                    <small id="phoneHelp" class="form-text text-muted">Use the format xxx-xxx-xxxx</small>
+                    <small id="phoneHelp" class="form-text text-muted"><font color="white">Use the format xxx-xxx-xxxx</font></small>
                 </div>
                 <div class="form-group">
                     <label for="URL">Edit website URL</label>
                     <input type="text" class="form-control" id="URL" name="URL" value="@shelter.getWebsiteURL" maxlength="1000"
                            aria-describedby="URL" placeholder="Enter your URL">
-                    <small id="urlHelp" class="form-text text-muted">Copy paste your company's URL</small>
+                    <small id="urlHelp" class="form-text text-muted"><font color="white">Copy paste your company's URL</font></small>
                 </div>
                 <div class="form-group">
                     <label for="emailAddress">Edit email address</label>
                     <input type="email" class="form-control" id="emailAddress" value="@shelter.getEmailAddress" maxlength="100"
                            name="emailAddress"aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">You'll use this to log in</small>
+                    <small id="emailHelp" class="form-text text-muted"><font color="white">You'll use this to log in</font></small>
                 </div>
                 <div class="form-group">
                     <label for="locationPassword">Change password</label>
                     <input type="password" class="form-control" id="locationPassword" value="" maxlength="50"
                            name="locationPassword" placeholder="Password">
                 </div>
-                <input type="submit" class="btn btn-primary" value="Save">
+                <input type="submit" class="btn btn-light" value="Save">
+                <a href="/deleteShelterAccount" class="btn btn-danger">Delete Account</a>
             </form>
-            <form action="@routes.LocationController.getDeleteShelterAccount">
-                <input type="submit" class="btn btn-danger" value="Delete Account">
-            </form>
-            <p>@status</p>
         </div>
     </div>
+    <br>
 </div>
 </body>
 </html>

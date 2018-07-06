@@ -1,5 +1,10 @@
 package services;
 
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
+import com.amazonaws.services.simpleemail.model.*;
+
 /**
  * This interface demonstrates how to create a component that is injected
  * into a controller. The interface represents a counter that returns a
@@ -10,4 +15,5 @@ package services;
  */
 public interface Counter {
     int nextCount();
+
 }

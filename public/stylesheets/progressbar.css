@@ -4,7 +4,7 @@
   /*background-color: #beb*/
 }
 .vertical {
-  width:45%;
+  width:40%;
   height: 40px;
   -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
   transform: rotate(-90deg);

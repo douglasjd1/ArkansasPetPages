@@ -172,10 +172,18 @@ public class LocationController extends ApplicationController
     @Transactional(readOnly = true)
     public Result getShelterPage(String status)
     {
-        String shelterSql = "SELECT l FROM Location l WHERE l.emailAddress = :emailAddress";
+        Location shelter;
+        try
+        {
+            String shelterSql = "SELECT l FROM Location l WHERE l.emailAddress = :emailAddress";
 
-        Location shelter = jpaApi.em().createQuery(shelterSql, Location.class).
-                setParameter("emailAddress", session().get("loggedIn")).getSingleResult();
+            shelter = jpaApi.em().createQuery(shelterSql, Location.class).
+                    setParameter("emailAddress", session().get("loggedIn")).getSingleResult();
+        }
+        catch(Exception e)
+        {
+            return redirect(routes.UserController.getLogIn("Log in as a shelter to access this page."));
+        }
 
         if(isLoggedIn() && shelter.getBreedId() == null)
         {
@@ -212,26 +220,32 @@ public class LocationController extends ApplicationController
     {
         if(isLoggedIn())
         {
-            String emailAddress = session().get("loggedIn");
-            String sql = "SELECT NEW models.ShelterDetail(l.locationId, l.locationName, l.address, l.city, s.stateName, " +
-                    "l.zipCode, l.phoneNumber, l.websiteURL, l.emailAddress) " +
-                    "FROM Location l " +
-                    "JOIN State s ON s.stateId = l.stateId " +
-                    "WHERE l.emailAddress = :emailAddress";
+            try
+            {
+                String emailAddress = session().get("loggedIn");
+                String sql = "SELECT NEW models.ShelterDetail(l.locationId, l.locationName, l.address, l.city, s.stateName, " +
+                        "l.zipCode, l.phoneNumber, l.websiteURL, l.emailAddress) " +
+                        "FROM Location l " +
+                        "JOIN State s ON s.stateId = l.stateId " +
+                        "WHERE l.emailAddress = :emailAddress";
 
-            ShelterDetail location = jpaApi.em().createQuery(sql, ShelterDetail.class).
-                    setParameter("emailAddress", emailAddress).getSingleResult();
+                ShelterDetail location = jpaApi.em().createQuery(sql, ShelterDetail.class).
+                        setParameter("emailAddress", emailAddress).getSingleResult();
 
-            String stateSql = "SELECT s FROM State s";
+                String stateSql = "SELECT s FROM State s";
 
-            List<State> states = jpaApi.em().createQuery(stateSql, State.class).getResultList();
+                List<State> states = jpaApi.em().createQuery(stateSql, State.class).getResultList();
 
-            return ok(views.html.editshelter.render(location, states, ""));
+                return ok(views.html.editshelter.render(location, states, ""));
+            }
+            catch(Exception e)
+            {
+                redirect(routes.UserController.getLogIn("Please log in as a shelter to access this page"));
+            }
+
         }
-        else
-        {
-            return redirect(routes.UserController.getLogIn("Please log in to view this page"));
-        }
+
+        return redirect(routes.UserController.getLogIn("Please log in to view this page"));
     }
 
     @Transactional
@@ -402,12 +416,21 @@ public class LocationController extends ApplicationController
     @Transactional(readOnly = true)
     public Result getBreederPage(String status)
     {
-        String shelterSql = "SELECT l FROM Location l WHERE l.emailAddress = :emailAddress";
+        Location breeder;
+        try
+        {
+            String breederSql = "SELECT l FROM Location l WHERE l.emailAddress = :emailAddress";
 
-        Location shelter = jpaApi.em().createQuery(shelterSql, Location.class).
-                setParameter("emailAddress", session().get("loggedIn")).getSingleResult();
+            breeder = jpaApi.em().createQuery(breederSql, Location.class).
+                    setParameter("emailAddress", session().get("loggedIn")).getSingleResult();
+        }
+        catch(Exception e)
+        {
+            return redirect(routes.UserController.getLogIn("Log in as a breeder to access this page."));
+        }
 
-        if(isLoggedIn() && shelter.getBreedId() != null)
+
+        if(isLoggedIn() && breeder.getBreedId() != null)
         {
             try
             {
@@ -439,26 +462,34 @@ public class LocationController extends ApplicationController
     {
         if(isLoggedIn())
         {
-            String emailAddress = session().get("loggedIn");
-            String sql = "SELECT NEW models.BreederDetail(l.locationId, l.locationName, l.address, l.city, s.stateName, " +
-                    "l.zipCode, b.breedName, b.breedId, " +
-                    "l.phoneNumber, l.emailAddress, l.websiteURL) " +
-                    "FROM Location l " +
-                    "JOIN Breed b ON b.breedId = l.breedId " +
-                    "JOIN State s ON s.stateId = l.stateId " +
-                    "WHERE l.emailAddress = :emailAddress";
+            try
+            {
+                String emailAddress = session().get("loggedIn");
+                String sql = "SELECT NEW models.BreederDetail(l.locationId, l.locationName, l.address, l.city, s.stateName, " +
+                        "l.zipCode, b.breedName, b.breedId, " +
+                        "l.phoneNumber, l.emailAddress, l.websiteURL) " +
+                        "FROM Location l " +
+                        "JOIN Breed b ON b.breedId = l.breedId " +
+                        "JOIN State s ON s.stateId = l.stateId " +
+                        "WHERE l.emailAddress = :emailAddress";
 
-            BreederDetail location = jpaApi.em().createQuery(sql, BreederDetail.class).
-                    setParameter("emailAddress", emailAddress).getSingleResult();
-            String stateSql = "SELECT s FROM State s";
+                BreederDetail location = jpaApi.em().createQuery(sql, BreederDetail.class).
+                        setParameter("emailAddress", emailAddress).getSingleResult();
+                String stateSql = "SELECT s FROM State s";
 
-            List<State> states = jpaApi.em().createQuery(stateSql, State.class).getResultList();
+                List<State> states = jpaApi.em().createQuery(stateSql, State.class).getResultList();
 
-            String breedSql = "SELECT b FROM Breed b";
+                String breedSql = "SELECT b FROM Breed b";
 
-            List<Breed> breeds = jpaApi.em().createQuery(breedSql, Breed.class).getResultList();
+                List<Breed> breeds = jpaApi.em().createQuery(breedSql, Breed.class).getResultList();
 
-            return ok(views.html.editbreeder.render(location, breeds, states, ""));
+                return ok(views.html.editbreeder.render(location, breeds, states, ""));
+            }
+            catch(Exception e)
+            {
+                return redirect(routes.UserController.getLogIn("Please log as a breeder to access this page."));
+            }
+
         }
         else
         {

@@ -348,4 +348,31 @@ public class UserController extends ApplicationController
             return redirect(routes.UserController.getLogIn("Please log in to access this page"));
         }
     }
+
+    @Transactional(readOnly = true)
+    public Result getUsers()
+    {
+        String userSql = "SELECT ppu FROM PetPagesUser ppu";
+
+        List<PetPagesUser> users = jpaApi.em().createQuery(userSql, PetPagesUser.class).getResultList();
+
+        return ok(views.html.users.render(users));
+    }
+
+    @Transactional(readOnly = true)
+    public Result getUser(Integer userId)
+    {
+        String userSql = "SELECT ppu FROM PetPagesUser ppu " +
+                         "WHERE ppu.userId = :userId";
+
+        PetPagesUser user = jpaApi.em().createQuery(userSql, PetPagesUser.class).
+                            setParameter("userId", userId).getSingleResult();
+
+        String dogSql = "SELECT d FROM Dog d WHERE d.petPagesUserId = :userId";
+
+        List<Dog> dogs = jpaApi.em().createQuery(dogSql, Dog.class).
+                         setParameter("userId", userId).getResultList();
+
+        return ok(views.html.user.render(user, dogs));
+    }
 }

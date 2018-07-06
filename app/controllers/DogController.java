@@ -27,29 +27,6 @@ public class DogController extends ApplicationController
         this.jpaApi = jpaApi;
     }
 
-    @Transactional
-    public Result postNewDogPersonality()
-    {
-        return ok(views.html.newdogpersonality.render());
-    }
-
-    @Transactional
-    public Result postNewDogColor()
-    {
-        return ok(views.html.newdogcolor.render());
-    }
-    @Transactional
-    public Result getNewDogPersonality()
-    {
-        return ok(views.html.newdogpersonality.render());
-    }
-
-    @Transactional
-    public Result getNewDogColor()
-    {
-        return ok(views.html.newdogcolor.render());
-    }
-
     @Transactional(readOnly = true)
     public Result getNewUserDog(String status)
     {
@@ -93,7 +70,7 @@ public class DogController extends ApplicationController
             List<Personality> personalities = jpaApi.em().createQuery(personalitySql, Personality.class).getResultList();
             List<Breed> breeds = jpaApi.em().createQuery(breedSql, Breed.class).getResultList();
 
-            return ok(views.html.newlocationdog.render(colors, personalities, breeds, ""));
+            return ok(views.html.newlocationdog.render(colors, personalities, breeds, status));
         }
         else
         {
@@ -109,15 +86,20 @@ public class DogController extends ApplicationController
         //Create dog
         Dog dog = new Dog();
 
-
         String dogName = form.get("dogName");
-
+        System.out.println(dogName + "h");
         String hairLengthName = form.get("hairLength");
         String colorName = form.get("colorName");
         int genderId = Integer.parseInt(form.get("gender"));
         int dogAge;
         int weight;
         int height;
+
+        if(dogName.equals(""))
+        {
+            return redirect(routes.DogController.getNewUserDog("Please enter a name for you dog."));
+        }
+
         try
         {
             dogAge = Integer.parseInt(form.get("dogAge"));
@@ -128,6 +110,7 @@ public class DogController extends ApplicationController
         {
             return redirect(routes.DogController.getNewUserDog("Please enter numbers for the height, weight, and age fields"));
         }
+
         Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> filePart = formData.getFile("dogPhoto");
         File file = filePart.getFile();
@@ -255,6 +238,11 @@ public class DogController extends ApplicationController
         catch(Exception e)
         {
             return redirect(routes.DogController.getNewLocationDog("Only enter numbers for age, height, and weight"));
+        }
+
+        if(dogName.equals(""))
+        {
+            return redirect(routes.DogController.getNewLocationDog("Please enter a name for you dog."));
         }
 
         Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
@@ -500,7 +488,7 @@ public class DogController extends ApplicationController
             }
 
             return ok(views.html.edituserdog.render(user, dog, color, colors, dogPersonalities, personalities, dogPersonalityIds,
-                                                    breeds, breed1, breed2, breed3));
+                                                    breeds, breed1, breed2, breed3, status));
         }
         else
         {
@@ -518,12 +506,28 @@ public class DogController extends ApplicationController
         Dog dog = jpaApi.em().createQuery(dogSql, Dog.class).setParameter("dogId", dogId).getSingleResult();
 
         String dogName = form.get("dogName");
-        int dogAge = Integer.parseInt(form.get("dogAge"));
-        int weight = Integer.parseInt(form.get("dogWeight"));
-        int height = Integer.parseInt(form.get("dogHeight"));
+        int dogAge;
+        int weight;
+        int height;
         String hairLengthName = form.get("hairLength");
         String colorName = form.get("colorName");
         int genderId = Integer.parseInt(form.get("gender"));
+
+        if(dogName.equals(""))
+        {
+            return redirect(routes.DogController.getEditUserDog(userId, dogId, "Please enter a name for you dog."));
+        }
+
+        try
+        {
+            dogAge = Integer.parseInt(form.get("dogAge"));
+            weight = Integer.parseInt(form.get("dogWeight"));
+            height = Integer.parseInt(form.get("dogHeight"));
+        }
+        catch(Exception e)
+        {
+            return redirect(routes.DogController.getEditUserDog(userId, dog.getDogId(), "Please enter numbers for age, height, and weight"));
+        }
 
         String hairLengthSql = "SELECT hl FROM HairLength hl " +
                                "WHERE hl.hairLengthName = :hairLengthName";
@@ -874,12 +878,28 @@ public class DogController extends ApplicationController
 
         String dogName = form.get("dogName");
         String dogReffNum = form.get("refId");
-        int dogAge = Integer.parseInt(form.get("dogAge"));
-        int weight = Integer.parseInt(form.get("dogWeight"));
-        int height = Integer.parseInt(form.get("dogHeight"));
+        int dogAge;
+        int weight;
+        int height;
         String hairLengthName = form.get("hairLength");
         String colorName = form.get("colorName");
         int genderId = Integer.parseInt(form.get("gender"));
+
+        try
+        {
+            dogAge = Integer.parseInt(form.get("dogAge"));
+            weight = Integer.parseInt(form.get("dogWeight"));
+            height = Integer.parseInt(form.get("dogHeight"));
+        }
+        catch(Exception e)
+        {
+            return redirect(routes.DogController.getEditLocationDog(dog.getDogId(), "Please enter numbers for age, height, and weight"));
+        }
+
+        if(dogName.equals(""))
+        {
+            return redirect(routes.DogController.getEditLocationDog(dogId, "Please enter a name for you dog."));
+        }
 
         String hairLengthSql = "SELECT hl FROM HairLength hl " +
                 "WHERE hl.hairLengthName = :hairLengthName";

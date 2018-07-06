@@ -40,6 +40,14 @@
             <li class="nav-item">
                 }
                 <a class="nav-link" href="/dogulator">Dogulator</a>
+
+            @if("user".equals(page)){
+            <li class="nav-item active">
+                }else{
+            <li class="nav-item">
+                }
+            <a class="nav-link" href="/users">Connect</a>
+
         </ul>
         <ul class="navbar-nav ml-auto w-100 justify-content-end">
             @if("createAccount".equals(page) || "createUserAccount".equals(page) ||
@@ -50,7 +58,8 @@
                 }
                 <a class="nav-link" href="/createAccount">Create Account</a>
 
-                @if("userPage".equals(page) || "editUser".equals(page)){
+                @if("userPage".equals(page) || "editUser".equals(page) ||
+                    "account".equals(page)){
             <li class="nav-item active">
                 } else {
             <li class="nav-item">

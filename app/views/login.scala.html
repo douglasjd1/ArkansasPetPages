@@ -9,18 +9,28 @@
 </head>
 <body>
     @navbar("logIn")
+    <div class="container text-primary">
+        <h3>Log In</h3>
+        <p>@status</p>
+    </div>
     <div class="container bg-primary text-white">
+        <br>
         <div class="row">
             <div class="col-12">
-                <h3>Log In</h3>
                 <form method="POST" action="@routes.UserController.postLogIn">
                     @CSRF.formField
-                    Email:<br>
-                    <input type="text" name="emailAddress" id="emailAddress"><br>
-                    Password:<br>
-                    <input type="password" name="password" id="password"><br><br>
+                    <div class="form-group">
+                        <label for="emailAddress">Email Address:</label>
+                        <input type="email" class="form-control" id="emailAddress" maxlength="100"
+                               name="emailAddress" aria-describedby="emailHelp" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Change password</label>
+                        <input type="password" class="form-control" id="password" value="" maxlength="50"
+                               name="password" placeholder="Password">
+                        <small id="passwordHelp" class="form-text text-muted"><a href="/forgotPassword"><font color="white">(Forgot password)</font></a></small>
+                    </div>
                     <input class="btn btn-light" type="submit" value="Log In"><br><br>
-                    @status
                 </form>
             </div>
         </div>

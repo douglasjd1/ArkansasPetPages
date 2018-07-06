@@ -6,34 +6,19 @@
 GET     /                           controllers.HomeController.index
 GET     /practice                   controllers.HomeController.getPractice
 GET     /home                       controllers.HomeController.getHome
-GET     /sendEmail                  controllers.HomeController.getSendEmail
-POST    /sendEmail                  controllers.HomeController.postSendEmail
 GET     /createAccount              controllers.HomeController.getCreateAccount
+GET     /forgotPassword             controllers.HomeController.getForgotPassword
+POST    /forgotPassword             controllers.HomeController.postForgotPassword
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 GET     /breed/:id                  controllers.BreedController.getBreed(id:Integer)
 GET     /breeds                     controllers.BreedController.getBreeds
-GET     /newBreed                   controllers.BreedController.getNewBreed
-POST    /newBreed                   controllers.BreedController.postNewBreed
-POST    /newPersonality             controllers.BreedController.postNewPersonality
-POST    /newColor                   controllers.BreedController.postNewColor
-POST    /newBreedPersonality        controllers.BreedController.postNewBreedPersonality
-POST    /newBreedColor              controllers.BreedController.postNewBreedColor
-GET     /newPersonality             controllers.BreedController.getNewPersonality
-GET     /newColor                   controllers.BreedController.getNewColor
-GET     /newBreedPersonality        controllers.BreedController.getNewBreedPersonality
-GET     /newBreedColor              controllers.BreedController.getNewBreedColor
-GET     /colors                     controllers.BreedController.getColors
-GET     /personalities              controllers.BreedController.getPersonalities
+POST    /breeds                     controllers.BreedController.postBreeds
 GET     /dogulator                  controllers.BreedController.getDogulator
 POST    /dogulator                  controllers.BreedController.postDogulator
 
-POST    /newDogPersonality          controllers.DogController.postNewDogPersonality
-POST    /newDogColor                controllers.DogController.postNewDogColor
-GET     /newDogPersonality          controllers.DogController.getNewDogPersonality
-GET     /newDogColor                controllers.DogController.getNewDogColor
 GET     /newUserDog                 controllers.DogController.getNewUserDog(status:String ?= "")
 GET     /newLocationDog             controllers.DogController.getNewLocationDog(status:String ?= "")
 POST    /newUserDog                 controllers.DogController.postNewUserDog
@@ -78,5 +63,7 @@ GET     /userPage                   controllers.UserController.getUserPage(statu
 GET     /userProfilePhoto/:id       controllers.UserController.getUserProfilePhoto(id:Integer)
 GET     /viewAccount                controllers.UserController.getViewAccount
 GET     /deleteUserAccount          controllers.UserController.getDeleteUserAccount
+GET     /user/:id                   controllers.UserController.getUser(id:Integer)
+GET     /users                      controllers.UserController.getUsers
 
 

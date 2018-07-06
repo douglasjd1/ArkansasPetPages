@@ -9,12 +9,14 @@
 </head>
 <body>
 @navbar("createUserAccount")
+<div class="container text-primary">
+    <h3>Create a new shelter account</h3>
+    <p>@status</p>
+</div>
 <div class="container bg-primary text-white">
     <br>
     <div class="row">
         <div class="col-6">
-            <h3>Create a new shelter account</h3>
-            <p>@status</p>
             <form method="POST">
                 @CSRF.formField
                 <div class="form-group">
@@ -74,6 +76,7 @@
             </form>
         </div>
     </div>
+    <br>
 </div>
 </body>
 </html>

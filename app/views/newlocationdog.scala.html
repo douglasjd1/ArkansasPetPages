@@ -11,12 +11,14 @@
 </head>
 <body>
 @navbar("userPage")
+<div class="container text-primary">
+    <h3>Add a dog</h3>
+    <p>@status</p>
+</div>
 <div class="container bg-primary text-white">
     <br>
     <div class="row">
         <div class="col-12">
-            <h3>Add a dog</h3>
-            @status
             <form method="POST" enctype="multipart/form-data">
                 @CSRF.formField
                 <div class="form-group">
@@ -36,7 +38,7 @@
                 <p>Dog Gender</p>
                 <div class="radio">
                     <label class="radiochoice">Male
-                        <input type="radio" name="gender" value="1">
+                        <input type="radio" checked="checked" name="gender" value="1">
                         <span class="radiocheckmark"></span>
                     </label>
                 </div>
@@ -103,7 +105,7 @@
                         }
                     </select>
                 </div>
-                <div class="container">
+                <div class="form-group">
                     <p>Select your dog's personality traits:</p>
                     <div class="row">
                         @for(personality <- personalities){
@@ -123,6 +125,7 @@
             </form>
         </div>
     </div>
+    <br>
 </div>
 </body>
 </html>

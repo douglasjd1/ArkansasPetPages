@@ -1,0 +1,53 @@
+@(user : PetPagesUser, dogs : List[Dog])
+@html5.render
+@import helper._
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <title>Title</title>
+</head>
+<body>
+@navbar("user")
+<div class="container text-primary">
+    <div class="row">
+        <div class="col-6">
+            <h3>@user.getFirstName @user.getLastName</h3>
+        </div>
+        <div class="col-6">
+            <h3>@user.getFirstName's dogs:</h3>
+        </div>
+    </div>
+</div>
+<div class="container bg-primary text-white">
+    <br>
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-6">
+                    <p><img src="../userProfilePhoto/@user.getUserId" height="150"></p>
+                    <p>About @user.getFirstName:</p>
+                    <p>@user.getBio</p>
+                </div>
+                <div class="col-6">
+                    @if(dogs.size() == 0){
+                    <p>No dogs added yet!</p>
+                    }else{
+                    <div class="row">
+                        @for(dog <- dogs){
+                        <div class="col-4">
+                            <a href="../viewUserDog/@user.getUserId/@dog.getDogId"><font color="white">@dog.getDogName</font></a>
+                            <br><br>
+                            <img src="/dogDefaultPhoto/@dog.getDogId" height="100">
+                        </div>
+                        }
+                    </div>
+                    }
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

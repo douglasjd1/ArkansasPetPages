@@ -67,7 +67,6 @@ public class ApplicationController extends Controller
         {
             result = false;
         }
-
         return result;
     }
 

@@ -8,11 +8,15 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/stylesheets/radio.css">
+    <link rel="stylesheet" href="/assets/stylesheets/checkbox.css">
     <title>Edit Dog</title>
 </head>
 <body>
 @navbar("userPage")
-<div class="container">
+<div class="container text-primary">
+    <h3>Edit @dog.getDogName</h3>
+</div>
+<div class="container bg-primary text-white">
     <div class="row">
         <div class="col-12">
             <form method="POST" enctype="multipart/form-data">
@@ -41,7 +45,7 @@
                     <label for="dogAge">Edit @dog.getDogName's Age</label>
                     <input type="text" class="form-control" id="dogAge" name="dogAge" maxlength="2"
                            aria-describedby="dogAge" value="@dog.getDogAge">
-                    <small id="dogAgeEg" class="form-text text-muted">Examples: 4, 6, 2. If your dog is less than 1 year old, enter 0.</small>
+                    <small id="dogAgeEg" class="form-text text-muted"><font color="white">Examples: 4, 6, 2. If your dog is less than 1 year old, enter 0.</font></small>
                 </div>
                 <p>Edit @dog.getDogName's Gender</p>
                 @if(dog.getGenderName == "Male"){
@@ -78,13 +82,13 @@
                     <label for="dogWeight">Edit @dog.getDogName's Weight</label>
                     <input type="text" class="form-control" id="dogWeight" name="dogWeight" maxlength="3"
                            aria-describedby="dogWeight" value="@dog.getWeight">
-                    <small id="dogWeightEg" class="form-text text-muted">Examples: 12, 56, 34</small>
+                    <small id="dogWeightEg" class="form-text text-muted"><font color="white">Examples: 12, 56, 34</font></small>
                 </div>
                 <div class="form-group">
                     <label for="dogWeight">Dog @dog.getDogName's Height</label>
                     <input type="text" class="form-control" id="dogHeight" name="dogHeight" maxlength="50"
                            aria-describedby="dogHeight" value="@dog.getHeight">
-                    <small id="dogHeightEg" class="form-text text-muted">Examples: 12, 28, 22. If you're not sure, give it your best guess. Reference the breed page to get a better idea.</small>
+                    <small id="dogHeightEg" class="form-text text-muted"><font color="white">Examples: 12, 28, 22. If you're not sure, give it your best guess. Reference the breed page to get a better idea.</font></small>
                 </div>
                 <div class="form-group">
                     <label for="hairLength">Edit @dog.getDogName's hair length:</label>
@@ -176,39 +180,41 @@
                         @for(personality <- dogPersonalities){
                         @personality.getPersonalityName,
                         }):<br>
-                        <small id="dogPersonalities" class="form-text text-muted">These will override all current personalities</small>
+                        <small id="dogPersonalities" class="form-text text-muted"></small><font color="white">These will override all current personalities</font></small>
                     </p>
                     <div class="row">
                         @for(personality <- personalities){
                         @if(dogPersonalityIds.contains(personality.getPersonalityId)){
-                        <div class="col-2">
+                        <div class="col-3">
                             <div class="checkbox">
-                                <label><input type="checkbox" class="personality"
+                                <label class="checkstyle"><input type="checkbox" class="personality"
                                               name="@personality.getPersonalityName"
                                               value="@personality.getPersonalityName"
                                               id="@personality.getPersonalityName"
                                               data-bind="checked: params.availToStream" checked>
-                                    @personality.getPersonalityName</label>
+                                    @personality.getPersonalityName
+                                <span class="checkmark"></span>
+                                </label>
                             </div>
                         </div>
                         }else{
-                        <div class="col-2">
+                        <div class="col-3">
                             <div class="checkbox">
-                                <label><input type="checkbox" class="personality"
+                                <label class="checkstyle"><input type="checkbox" class="personality"
                                               name="@personality.getPersonalityId"
                                               value="@personality.getPersonalityId"
                                               id="@personality.getPersonalityId">
-                                    @personality.getPersonalityName</label>
+                                    @personality.getPersonalityName
+                                    <span class="checkmark"></span>
+                                </label>
                             </div>
                         </div>
                         }
                         }
                     </div>
                 </div>
-                <input type="submit" class="btn btn-primary" value="Save Dog">
-            </form>
-            <form action="@routes.DogController.getDeleteUserDog(dog.getDogId)">
-                <input type="submit" class="btn btn-danger" value="Delete Dog">
+                <input type="submit" class="btn btn-light" value="Save @dog.getDogName">
+                <a href="/deleteLocationDog" class="btn btn-danger">Delete @dog.getDogName</a>
             </form>
         </div>
     </div>
