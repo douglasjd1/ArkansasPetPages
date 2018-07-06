@@ -1170,4 +1170,54 @@ public class DogController extends ApplicationController
 
         return ok(views.html.viewdogs.render(dogs));
     }
+
+    @Transactional(readOnly = true)
+    public Result getUserDog(int userId, int dogId)
+    {
+        String dogSql = "SELECT NEW models.DogDetail(d.dogId, d.dogName, d.dogReffNum, g.genderName, " +
+                "d.weight, d.height, hl.hairLengthName, c.colorName, d.dogAge) " +
+                "FROM Dog d " +
+                "JOIN HairLength hl ON d.hairLengthId = hl.hairLengthId " +
+                "JOIN Color c ON c.colorId = d.colorId " +
+                "JOIN Gender g ON g.genderId = d.genderId " +
+                "WHERE d.dogId = :dogId " +
+                "ORDER BY d.dogName";
+
+        DogDetail dog = jpaApi.em().createQuery(dogSql, DogDetail.class).setParameter("dogId", dogId).getSingleResult();
+
+        String personalitySql = "SELECT p " +
+                "FROM Personality p " +
+                "JOIN DogPersonality dp ON p.personalityId = dp.personalityId " +
+                "JOIN Dog d ON dp.dogId = d.dogId " +
+                "WHERE d.dogId = :dogId " +
+                "ORDER BY p.personalityName";
+
+        List<Personality> personalities = jpaApi.em().createQuery(personalitySql, Personality.class).setParameter("dogId", dogId).getResultList();
+
+        String photoSql ="SELECT dp FROM DogPhoto dp WHERE dp.dogId = :dogId";
+
+        List<DogPhoto> photos = jpaApi.em().createQuery(photoSql, DogPhoto.class).setParameter("dogId", dogId).getResultList();
+        DogPhoto firstPhoto;
+
+        if(photos.size() > 0)
+        {
+            firstPhoto = photos.get(0);
+            photos.remove(0);
+        }
+        else
+        {
+            firstPhoto = new DogPhoto();
+        }
+
+        String userSql = "SELECT ppu FROM PetPagesUser ppu WHERE ppu.userId = :userId";
+        PetPagesUser user = jpaApi.em().createQuery(userSql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
+
+        String breedSql = "SELECT b FROM Breed b " +
+                "JOIN DogBreed db ON db.breedId = b.breedId " +
+                "WHERE db.dogId = :dogId";
+
+        List<Breed> breeds = jpaApi.em().createQuery(breedSql, Breed.class).setParameter("dogId", dogId).getResultList();
+
+        return ok(views.html.userdog.render(user, dog, personalities, photos, firstPhoto, breeds));
+    }
 }

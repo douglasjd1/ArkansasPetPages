@@ -35,6 +35,7 @@ GET     /viewDog/:id                controllers.DogController.getViewDog(id:Inte
 GET     /deleteUserDog/:id          controllers.DogController.getDeleteUserDog(id:Integer)
 GET     /deleteLocationDog/:id      controllers.DogController.getDeleteLocationDog(id:Integer)
 GET     /viewDogs                   controllers.DogController.getViewDogs
+GET     /userDog/:userId/:dogId     controllers.DogController.getUserDog(userId:Integer, dogId:Integer)
 
 GET     /breeders                   controllers.LocationController.getBreeders
 GET     /createBreederAccount       controllers.LocationController.getCreateBreederAccount(status:String ?= "")
