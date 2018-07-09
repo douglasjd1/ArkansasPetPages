@@ -13,6 +13,8 @@ import play.mvc.Result;
 import javax.inject.Inject;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class DogController extends ApplicationController
@@ -904,7 +906,8 @@ public class DogController extends ApplicationController
         String hairLengthSql = "SELECT hl FROM HairLength hl " +
                 "WHERE hl.hairLengthName = :hairLengthName";
 
-        HairLength hairLength = jpaApi.em().createQuery(hairLengthSql, HairLength.class).setParameter("hairLengthName", hairLengthName).getSingleResult();
+        HairLength hairLength = jpaApi.em().createQuery(hairLengthSql, HairLength.class).
+                                setParameter("hairLengthName", hairLengthName).getSingleResult();
 
         String colorSql = "SELECT c FROM Color c " +
                 "WHERE c.colorName = :colorName";
@@ -938,7 +941,7 @@ public class DogController extends ApplicationController
 
         for(Personality personality : personalities)
         {
-            if(form.get(String.valueOf(personality.getPersonalityId())) != null)
+            if(form.get(personality.getPersonalityName()) != null)
             {
                 DogPersonality newDogPersonality = new DogPersonality();
 
@@ -1167,6 +1170,41 @@ public class DogController extends ApplicationController
         String dogsSql = "SELECT d FROM Dog d WHERE d.locationId != null";
 
         List<Dog> dogs = jpaApi.em().createQuery(dogsSql, Dog.class).getResultList();
+
+        return ok(views.html.viewdogs.render(dogs));
+    }
+
+    @Transactional(readOnly = true)
+    public Result postViewDogs()
+    {
+        DynamicForm form = formFactory.form().bindFromRequest();
+
+        String name = form.get("searchName");
+        String breed = form.get("searchBreed");
+
+        List<Dog> nameDogs = new ArrayList<>();
+
+        System.out.println(name);
+
+        String nameSql = "SELECT d FROM Dog d WHERE d.dogName LIKE CONCAT('%', :name, '%')";
+
+        nameDogs = jpaApi.em().createQuery(nameSql, Dog.class).
+                setParameter("name", name).getResultList();
+
+        List<Dog> breedDogs = new ArrayList<>();
+
+        String breedSql = "SELECT d FROM Dog d " +
+                "JOIN DogBreed db ON db.dogId = d.dogId " +
+                "JOIN Breed b ON b.breedId = db.breedId " +
+                "WHERE b.breedName LIKE CONCAT('%', :breed, '%')";
+
+        breedDogs = jpaApi.em().createQuery(breedSql, Dog.class).setParameter("breed", breed).getResultList();
+
+        List<Dog> dogs = new ArrayList<>();
+
+        dogs.addAll(nameDogs);
+
+        dogs.addAll(breedDogs);
 
         return ok(views.html.viewdogs.render(dogs));
     }

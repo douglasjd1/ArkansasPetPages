@@ -35,6 +35,7 @@ GET     /viewDog/:id                controllers.DogController.getViewDog(id:Inte
 GET     /deleteUserDog/:id          controllers.DogController.getDeleteUserDog(id:Integer)
 GET     /deleteLocationDog/:id      controllers.DogController.getDeleteLocationDog(id:Integer)
 GET     /viewDogs                   controllers.DogController.getViewDogs
+POST    /viewDogs                   controllers.DogController.postViewDogs
 GET     /userDog/:userId/:dogId     controllers.DogController.getUserDog(userId:Integer, dogId:Integer)
 
 GET     /breeders                   controllers.LocationController.getBreeders
@@ -66,5 +67,6 @@ GET     /viewAccount                controllers.UserController.getViewAccount
 GET     /deleteUserAccount          controllers.UserController.getDeleteUserAccount
 GET     /user/:id                   controllers.UserController.getUser(id:Integer)
 GET     /users                      controllers.UserController.getUsers
+POST    /users                      controllers.UserController.postUsers
 
 

@@ -11,6 +11,7 @@ import play.mvc.Result;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -358,6 +359,39 @@ public class UserController extends ApplicationController
 
         return ok(views.html.users.render(users));
     }
+
+    @Transactional(readOnly = true)
+    public Result postUsers()
+    {
+        DynamicForm form = formFactory.form().bindFromRequest();
+
+        String search = form.get("search");
+
+        String firstNameql = "SELECT ppu FROM PetPagesUser ppu WHERE ppu.firstName LIKE CONCAT('%', :search, '%')";
+
+        List<PetPagesUser> firstNameUsers = jpaApi.em().createQuery(firstNameql, PetPagesUser.class).
+                                   setParameter("search", search).getResultList();
+
+        String lastNameSql = "SELECT ppu FROM PetPagesUser ppu WHERE ppu.lastName LIKE CONCAT('%', :search, '%')";
+
+        List<PetPagesUser> lastNameUsers = jpaApi.em().createQuery(lastNameSql, PetPagesUser.class).
+                setParameter("search", search).getResultList();
+
+        List<PetPagesUser> users = new ArrayList<>();
+
+        for(PetPagesUser user : firstNameUsers)
+        {
+            users.add(user);
+        }
+
+        for(PetPagesUser user : lastNameUsers)
+        {
+            users.add(user);
+        }
+
+        return ok(views.html.users.render(users));
+    }
+
 
     @Transactional(readOnly = true)
     public Result getUser(Integer userId)

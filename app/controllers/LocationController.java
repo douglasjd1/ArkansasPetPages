@@ -210,7 +210,6 @@ public class LocationController extends ApplicationController
             {
                 return redirect(routes.UserController.getLogIn("Log in as a shelter to access this page."));
             }
-
         }
         return redirect(routes.UserController.getLogIn("Log in as a shelter to access this page."));
     }

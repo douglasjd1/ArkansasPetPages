@@ -78,7 +78,7 @@ public class BreedController extends Controller
         String search = form.get("search");
 
         String sql = "SELECT b FROM Breed b " +
-                     "WHERE b.breedName LIKE :search";
+                     "WHERE b.breedName LIKE CONCAT('%', :search, '%')";
 
         List<Breed> breeds = jpaApi.em().createQuery(sql, Breed.class).
                     setParameter("search", search).getResultList();
