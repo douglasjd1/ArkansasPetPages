@@ -1167,7 +1167,7 @@ public class DogController extends ApplicationController
     @Transactional(readOnly = true)
     public Result getViewDogs()
     {
-        String dogsSql = "SELECT d FROM Dog d WHERE d.locationId != null";
+        String dogsSql = "SELECT d FROM Dog d WHERE d.locationId != null ORDER BY d.dogName";
 
         List<Dog> dogs = jpaApi.em().createQuery(dogsSql, Dog.class).getResultList();
 
