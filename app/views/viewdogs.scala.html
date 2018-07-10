@@ -29,20 +29,24 @@
         </div>
     </div>
 </div>
-<div class="container bg-primary">
+<div class="container bg-primary text-white">
     <br>
-    <div class="row">
-        @for(dog <- dogs){
-        <div class="col-4">
-            <a href="/viewDog/@dog.getDogId"><font color="white">@dog.getDogName</font></a>
-            <br><br>
-            <a href="/viewDog/@dog.getDogId"><img src="/dogDefaultPhoto/@dog.getDogId" height="200"></a>
-            <div>
-                <p>&nbsp;</p>
+    @if(dogs.size() == 0){
+        <p>No results found</p><br>
+    }else{
+        <div class="row">
+            @for(dog <- dogs){
+            <div class="col-4">
+                <a href="/viewDog/@dog.getDogId"><font color="white">@dog.getDogName</font></a>
+                <br><br>
+                <a href="/viewDog/@dog.getDogId"><img src="/dogDefaultPhoto/@dog.getDogId" height="200"></a>
+                <div>
+                    <p>&nbsp;</p>
+                </div>
             </div>
+            }
         </div>
-        }
-    </div>
+    }
 </div>
 </body>
 </html>

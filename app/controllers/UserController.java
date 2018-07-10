@@ -29,29 +29,26 @@ public class UserController extends ApplicationController
 
     public Result getCreateUserAccount(String status)
     {
-        return ok(views.html.createuseraccount.render(status));
+        PetPagesUser user = new PetPagesUser();
+        List<String> statusList = new ArrayList<>();
+        statusList.add(status);
+        return ok(views.html.createuseraccount.render(statusList, user));
     }
 
     @Transactional
     public Result postCreateUserAccount()
     {
+        boolean isValid = true;
+        List<String> status = new ArrayList<>();
+
         DynamicForm form = formFactory.form().bindFromRequest();
 
         String firstName = form.get("firstName");
         String lastName = form.get("lastName");
         String emailAddress = form.get("emailAddress");
         String password = form.get("userPassword");
+        String passwordCheck = form.get("userPasswordCheck");
         String bio = form.get("bio");
-
-        if(!isNewEmail(emailAddress, jpaApi))
-        {
-            return redirect(routes.UserController.getCreateUserAccount("That email is already in use"));
-        }
-
-        if(password.length() < 8)
-        {
-            return redirect(routes.UserController.getCreateUserAccount("Password must be at least 8 characters"));
-        }
 
         Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> filePart = formData.getFile("profilePhoto");
@@ -87,8 +84,45 @@ public class UserController extends ApplicationController
 
         catch(Exception e)
         {
-            e.printStackTrace();
-            return ok(views.html.createuseraccount.render("Error creating account"));
+            return ok(views.html.createuseraccount.render(status, petPagesUser));
+        }
+
+        if(!password.equals(passwordCheck))
+        {
+            isValid = false;
+            status.add("Passwords must match");
+        }
+        if(!isNewEmail(emailAddress, jpaApi))
+        {
+            isValid = false;
+            status.add("That email address is already in use. ");
+        }
+
+        if(emailAddress.equals(""))
+        {
+            isValid = false;
+            status.add("Enter an email address.");
+        }
+        if(password.length() < 8)
+        {
+            isValid = false;
+            status.add("Password must be at least 8 characters.");
+        }
+
+        if(firstName.equals(""))
+        {
+            isValid = false;
+            status.add("Enter a first name.");
+        }
+
+        if(lastName.equals(""))
+        {
+            isValid = false;
+            status.add("Enter a last name.");
+        }
+        if(!isValid)
+        {
+            return ok(views.html.createuseraccount.render(status, petPagesUser));
         }
 
         jpaApi.em().persist(petPagesUser);
@@ -179,17 +213,19 @@ public class UserController extends ApplicationController
     }
 
     @Transactional(readOnly = true)
-    public Result getUserEdit(Integer userId)
+    public Result getUserEdit(Integer userId, String status)
     {
         String sql = "SELECT ppu FROM PetPagesUser ppu WHERE userId = :userId";
         PetPagesUser petPagesUser = jpaApi.em().createQuery(sql, PetPagesUser.class).setParameter("userId", userId).getSingleResult();
+
+        List<String> statusList = new ArrayList<>();
+        statusList.add(status);
 
         String emailAddress = petPagesUser.getEmailAddress();
 
         if(isLoggedIn() && emailAddress.equals(session().get("loggedIn")))
         {
-
-            return ok(views.html.useredit.render(petPagesUser));
+            return ok(views.html.useredit.render(petPagesUser, statusList));
         }
 
         return ok(views.html.login.render("Please log in."));
@@ -205,19 +241,24 @@ public class UserController extends ApplicationController
         String emailAddress = petPagesUser.getEmailAddress();
         if(isLoggedIn() && emailAddress.equals(session().get("loggedIn")))
         {
-            DynamicForm form = formFactory.form().bindFromRequest();
+            boolean isValid = true;
 
+            DynamicForm form = formFactory.form().bindFromRequest();
 
             Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
             Http.MultipartFormData.FilePart<File> filePart = formData.getFile("userProfilePhoto");
             File file = filePart.getFile();
 
+            String firstName = form.get("firstName");
+            String lastName = form.get("lastName");
+            String newEmailAddress = form.get("emailAddress");
+            String password = form.get("userPassword");
+            String passwordCheck = form.get("userPasswordCheck");
+
             petPagesUser.setFirstName(form.get("firstName"));
             petPagesUser.setLastName(form.get("lastName"));
             petPagesUser.setEmailAddress(form.get("emailAddress"));
             petPagesUser.setBio(form.get("bio"));
-
-
 
             if(file.length() != 0)
             {
@@ -231,16 +272,13 @@ public class UserController extends ApplicationController
                 }
             }
 
-            String password = form.get("userPassword");
             byte salt[] = petPagesUser.getSalt();
             byte hashedPassword[] = Password.hashPassword(password.toCharArray(), salt);
             petPagesUser.setUserPassword(hashedPassword);
 
-            if(Arrays.equals(hashedPassword, petPagesUser.getUserPassword()))
-            {
-                return redirect(routes.UserController.getUserPage("Account successfully saved"));
-            }
+            return redirect(routes.UserController.getUserPage("Account successfully saved"));
         }
+
         return ok(views.html.login.render("Please log in to access this page."));
     }
 
@@ -379,15 +417,8 @@ public class UserController extends ApplicationController
 
         List<PetPagesUser> users = new ArrayList<>();
 
-        for(PetPagesUser user : firstNameUsers)
-        {
-            users.add(user);
-        }
-
-        for(PetPagesUser user : lastNameUsers)
-        {
-            users.add(user);
-        }
+        users.addAll(firstNameUsers);
+        users.addAll(lastNameUsers);
 
         return ok(views.html.users.render(users));
     }

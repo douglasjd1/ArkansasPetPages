@@ -1,4 +1,4 @@
-@(status : String)
+@(status : List[String], user : PetPagesUser)
 @html5.render
 @import helper._
 <html lang="en">
@@ -11,7 +11,9 @@
     @navbar("createUserAccount")
     <div class="container text-primary">
         <h3>Create a new account</h3>
-        <p>@status</p>
+        @for(message <- status){
+            <p>@message</p>
+        }
     </div>
     <div class="container bg-primary text-white">
         <br>
@@ -22,24 +24,29 @@
                     <div class="form-group">
                         <label for="firstName">First Name</label>
                         <input type="text" class="form-control" id="firstName" name="firstName" maxlength="50"
-                               aria-describedby="firstName" placeholder="Enter your first name">
+                               aria-describedby="firstName" value="@user.getFirstName">
                     </div>
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
                         <input type="text" class="form-control" id="lastName" name="lastName" maxlength="50"
-                               aria-describedby="lastName" placeholder="Enter your last name">
+                               aria-describedby="lastName" value="@user.getLastName">
                     </div>
                     <div class="form-group">
                         <label for="emailAddress">Email address</label>
                         <input type="email" class="form-control" id="emailAddress" name="emailAddress" maxlength="100"
-                               aria-describedby="emailHelp" placeholder="Enter email">
+                               aria-describedby="emailHelp" value="@user.getEmailAddress">
                         <small id="emailHelp" class="form-text text-muted"><font color="white">You'll use this to log in.</font></small>
                     </div>
                     <div class="form-group">
                         <label for="userPassword">Password</label>
                         <input type="password" class="form-control" id="userPassword" maxlength="50"
-                               name="userPassword" placeholder="Password">
+                               name="userPassword">
                         <small id="passWordHelp" class="form-text text-muted"><font color="white">Password must be at least 8 characters.</font> </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="userPasswordCheck">Repeat Password</label>
+                        <input type="password" class="form-control" id="userPasswordCheck" maxlength="50"
+                               name="userPasswordCheck">
                     </div>
                     <div class="form-group">
                         <label for="profilePhoto">Upload a profile photo</label>
@@ -47,7 +54,7 @@
                     </div>
                     <div class="form-group">
                         <label for="bio">Tell us about yourself:</label>
-                        <textarea class="form-control" rows="5" id="bio" name="bio" maxlength="500"></textarea>
+                        <textarea class="form-control" rows="5" id="bio" name="bio" maxlength="500">@user.getBio</textarea>
                         <small id="bioHelp" class="form-text text-muted"><font color="white">Character limit is 500.</font></small>
                     </div>
                     <input class="btn btn-light" type="submit" value="Create Account">

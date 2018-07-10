@@ -1,4 +1,4 @@
-@(user : PetPagesUser)
+@(user : PetPagesUser, status : List[String])
 @html5.render
 @import helper._
 <html lang="en">
@@ -11,6 +11,9 @@
     @navbar("editUser")
     <div class="container text-primary">
         <h3>Edit Your Account</h3>
+        @for(message <- status){
+            <p>@message</p>
+        }
     </div>
     <div class="container bg-primary text-white">
         <br>
@@ -37,6 +40,11 @@
                     <div class="form-group">
                         <label for="userPassword">Change Password</label>
                         <input type="password" class="form-control" id="userPassword" name="userPassword" value=""
+                               maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="userPasswordCheck">Repeat Password</label>
+                        <input type="password" class="form-control" id="userPasswordCheck" name="userPasswordCheck" value=""
                                maxlength="50">
                     </div>
                     <div class="form-group">

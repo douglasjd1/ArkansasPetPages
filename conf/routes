@@ -59,7 +59,7 @@ POST    /createUserAccount          controllers.UserController.postCreateUserAcc
 GET     /logIn                      controllers.UserController.getLogIn(status:String ?= "")
 POST    /logIn                      controllers.UserController.postLogIn
 GET     /logOut                     controllers.UserController.getLogOut
-GET     /editUser/:id               controllers.UserController.getUserEdit(id:Integer)
+GET     /editUser/:id               controllers.UserController.getUserEdit(id:Integer, status:String ?= "")
 POST    /editUser/:id               controllers.UserController.postUserEdit(id:Integer)
 GET     /userPage                   controllers.UserController.getUserPage(status:String ?= "")
 GET     /userProfilePhoto/:id       controllers.UserController.getUserProfilePhoto(id:Integer)

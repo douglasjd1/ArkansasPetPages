@@ -20,12 +20,12 @@
                 <form method="POST" action="@routes.UserController.postLogIn">
                     @CSRF.formField
                     <div class="form-group">
-                        <label for="emailAddress">Email Address:</label>
+                        <label for="emailAddress">Email Address</label>
                         <input type="email" class="form-control" id="emailAddress" maxlength="100"
                                name="emailAddress" aria-describedby="emailHelp" placeholder="Enter your email">
                     </div>
                     <div class="form-group">
-                        <label for="password">Change password</label>
+                        <label for="password">Password</label>
                         <input type="password" class="form-control" id="password" value="" maxlength="50"
                                name="password" placeholder="Password">
                         <small id="passwordHelp" class="form-text text-muted"><a href="/forgotPassword"><font color="white">(Forgot password)</font></a></small>
