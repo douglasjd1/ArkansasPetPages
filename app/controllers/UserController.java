@@ -242,6 +242,7 @@ public class UserController extends ApplicationController
         if(isLoggedIn() && emailAddress.equals(session().get("loggedIn")))
         {
             boolean isValid = true;
+            List<String> status = new ArrayList<>();
 
             DynamicForm form = formFactory.form().bindFromRequest();
 
@@ -254,6 +255,47 @@ public class UserController extends ApplicationController
             String newEmailAddress = form.get("emailAddress");
             String password = form.get("userPassword");
             String passwordCheck = form.get("userPasswordCheck");
+
+            if(firstName.equals(""))
+            {
+                isValid = false;
+                status.add("Enter a first name.");
+            }
+
+            if(lastName.equals(""))
+            {
+                isValid = false;
+                status.add("Enter a last name.");
+            }
+
+            if(emailAddress.equals(""))
+            {
+                isValid = false;
+                status.add("Enter an email address.");
+            }
+
+            if(!isNewEmail(newEmailAddress, jpaApi) && !newEmailAddress.equals(emailAddress))
+            {
+                isValid = false;
+                status.add("That email is already in use.");
+            }
+
+            if(password.length() < 8 && !password.equals(""))
+            {
+                isValid = false;
+                status.add("Password must be at least 8 characters.");
+            }
+
+            if(!password.equals(passwordCheck))
+            {
+                isValid = false;
+                status.add("Passwords must match");
+            }
+
+            if(!isValid)
+            {
+                return ok(views.html.useredit.render(petPagesUser, status));
+            }
 
             petPagesUser.setFirstName(form.get("firstName"));
             petPagesUser.setLastName(form.get("lastName"));
@@ -272,9 +314,12 @@ public class UserController extends ApplicationController
                 }
             }
 
-            byte salt[] = petPagesUser.getSalt();
-            byte hashedPassword[] = Password.hashPassword(password.toCharArray(), salt);
-            petPagesUser.setUserPassword(hashedPassword);
+            if(!password.equals(""))
+            {
+                byte salt[] = petPagesUser.getSalt();
+                byte hashedPassword[] = Password.hashPassword(password.toCharArray(), salt);
+                petPagesUser.setUserPassword(hashedPassword);
+            }
 
             return redirect(routes.UserController.getUserPage("Account successfully saved"));
         }
