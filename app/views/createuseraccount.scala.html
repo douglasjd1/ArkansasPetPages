@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/radio.css">
     <title>Create Account</title>
 </head>
 <body>
@@ -56,6 +57,19 @@
                         <label for="bio">Tell us about yourself:</label>
                         <textarea class="form-control" rows="5" id="bio" name="bio" maxlength="500">@user.getBio</textarea>
                         <small id="bioHelp" class="form-text text-muted"><font color="white">Character limit is 500.</font></small>
+                    </div>
+                    <p>Email Visibilty</p>
+                    <div class="radio">
+                        <label class="radiochoice">Show Email
+                            <input type="radio" checked="checked" name="showEmail" value="1">
+                            <span class="radiocheckmark"></span>
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label class="radiochoice">Hide Email
+                            <input type="radio" name="showEmail" value="0">
+                            <span class="radiocheckmark"></span>
+                        </label>
                     </div>
                     <input class="btn btn-light" type="submit" value="Create Account">
                 </form>

@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/radio.css">
     <title>Title</title>
 </head>
 <body>
@@ -57,6 +58,35 @@
                         <textarea class="form-control" rows="5" id="bio" name="bio" maxlength="500">@user.getBio</textarea>
                         <small id="bioLen" class="form-text text-muted"><font color="white">Character limit of 500</font></small>
                     </div>
+                    <p>Email Visibilty</p>
+                    @if(user.isEmailFlag){
+                        <div class="radio">
+                            <label class="radiochoice">Show Email
+                                <input type="radio" checked="checked" name="showEmail" value="1">
+                                <span class="radiocheckmark"></span>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label class="radiochoice">Hide Email
+                                <input type="radio" name="showEmail" value="0">
+                                <span class="radiocheckmark"></span>
+                            </label>
+                        </div>
+                    }else{
+                        <div class="radio">
+                            <label class="radiochoice">Show Email
+                                <input type="radio" name="showEmail" value="1">
+                                <span class="radiocheckmark"></span>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label class="radiochoice">Hide Email
+                                <input type="radio"  checked="checked" name="showEmail" value="0">
+                                <span class="radiocheckmark"></span>
+                            </label>
+                        </div>
+                    }
+
                     <input type="submit" class="btn btn-light" value="Save">
                     <a href="/deleteUserAccount" class="btn btn-danger">Delete Account</a>
                 </form>

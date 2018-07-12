@@ -168,10 +168,7 @@
                     </select>
                 </div>
                 <div class="container">
-                    <p>Edit your dog's personality traits (current personalities:
-                        @for(personality <- dogPersonalities){
-                            @personality.getPersonalityName,
-                        }):<br>
+                    <p>Edit your dog's personality traits:<br>
                         <small id="dogPersonalities" class="form-text text-muted"><font color="white">These will override all current personalities</font></small>
                     </p>
                     <div class="row">
@@ -193,9 +190,9 @@
                                 <div class="col-3">
                                     <div class="checkbox">
                                         <label class="checkstyle"><input type="checkbox" class="personality"
-                                                      name="@personality.getPersonalityId"
+                                                      name="@personality.getPersonalityName"
                                                       value="@personality.getPersonalityId"
-                                                      id="@personality.getPersonalityId">
+                                                      id="@personality.getPersonalityName">
                                             @personality.getPersonalityName
                                             <span class="checkmark"></span>
                                         </label>

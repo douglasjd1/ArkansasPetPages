@@ -18,7 +18,7 @@
             <div class="col-4">
                 <form method="POST">
                     @CSRF.formField
-                    <input type="text" name="search" placeholder="Search">
+                    <input type="text" id="search" name="search" placeholder="Search">
                 </form>
             </div>
         </div>
@@ -28,12 +28,16 @@
         @if(users.size() == 0){
             <p>No results found</p><br>
         }else{
-            <div class="row">
+            <div class="row" id="row">
                 @for(user <- users){
                 <div class="col-4">
                     <a href="/user/@user.getUserId"><font color="white">@user.getFirstName @user.getLastName</font></a>
                     <br><br>
+                    @if(user.getProfilePhoto == null){
+                    <a href="/user/@user.getUserId"><img src="/assets/images/Other Photos/userDefaultPhoto.png" height="150"></a>
+                    }else{
                     <a href="/user/@user.getUserId"><img src="/userProfilePhoto/@user.getUserId" height="150"></a>
+                    }
                     <div>
                         <p>&nbsp;</p>
                     </div>
@@ -42,5 +46,6 @@
             </div>
         }
     </div>
+    <script src="/assets/javascripts/search.js"></script>
 </body>
 </html>

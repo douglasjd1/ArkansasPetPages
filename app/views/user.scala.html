@@ -25,20 +25,33 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-6">
-                    <p><img src="../userProfilePhoto/@user.getUserId" height="150"></p>
+                    @if(user.getProfilePhoto == null){
+                        <p><img src="/assets/images/Other Photos/userDefaultPhoto.png" height="150"></p>
+                    }else{
+                        <p><img src="../userProfilePhoto/@user.getUserId" height="150"></p>
+                    }
+
+                    @if(user.isEmailFlag){
+                        Email: @user.getEmailAddress<br>
+                    }
+
                     <p>About @user.getFirstName:</p>
                     <p>@user.getBio</p>
                 </div>
                 <div class="col-6">
                     @if(dogs.size() == 0){
-                    <p>No dogs added yet!</p>
+                        <p>No dogs added yet!</p>
                     }else{
                     <div class="row">
                         @for(dog <- dogs){
                         <div class="col-4">
                             <a href="../userDog/@user.getUserId/@dog.getDogId"><font color="white">@dog.getDogName</font></a>
                             <br><br>
-                            <a href="../userDog/@user.getUserId/@dog.getDogId"> <img src="/dogDefaultPhoto/@dog.getDogId" height="100"></a>
+                            @if(dog.getDefaultPhotoData == null){
+                                <a href="../userDog/@user.getUserId/@dog.getDogId"><img src="/assets/images/Other Photos/dogDefaultPhoto.png" height="200"></a>
+                            }else{
+                                <a href="../userDog/@user.getUserId/@dog.getDogId"> <img src="/dogDefaultPhoto/@dog.getDogId" height="100"></a>
+                            }
                         </div>
                         }
                     </div>

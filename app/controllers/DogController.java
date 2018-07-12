@@ -567,7 +567,7 @@ public class DogController extends ApplicationController
 
         for(Personality personality : personalities)
         {
-            if(form.get(String.valueOf(personality.getPersonalityId())) != null)
+            if(form.get(personality.getPersonalityName()) != null)
             {
                 DogPersonality newDogPersonality = new DogPersonality();
 
@@ -1171,7 +1171,14 @@ public class DogController extends ApplicationController
 
         List<Dog> dogs = jpaApi.em().createQuery(dogsSql, Dog.class).getResultList();
 
-        return ok(views.html.viewdogs.render(dogs));
+        String breedSql = "SELECT NEW models.DogBreedDetail(b.breedId, d.dogId, b.breedName) " +
+                          "FROM Breed b " +
+                          "JOIN DogBreed db ON db.breedId = b.breedId " +
+                          "JOIN Dog d ON d.dogId = db.dogId";
+
+        List<DogBreedDetail> breeds = jpaApi.em().createQuery(breedSql, DogBreedDetail.class).getResultList();
+
+        return ok(views.html.viewdogs.render(dogs, breeds));
     }
 
     @Transactional(readOnly = true)
@@ -1186,7 +1193,9 @@ public class DogController extends ApplicationController
 
         System.out.println(name);
 
-        String nameSql = "SELECT d FROM Dog d WHERE d.dogName LIKE CONCAT('%', :name, '%')";
+        String nameSql = "SELECT d FROM Dog d " +
+                         "WHERE d.dogName LIKE CONCAT('%', :name, '%')" +
+                         "AND d.locationId IS NOT null";
 
         nameDogs = jpaApi.em().createQuery(nameSql, Dog.class).
                 setParameter("name", name).getResultList();
@@ -1196,9 +1205,17 @@ public class DogController extends ApplicationController
         String breedSql = "SELECT d FROM Dog d " +
                 "JOIN DogBreed db ON db.dogId = d.dogId " +
                 "JOIN Breed b ON b.breedId = db.breedId " +
-                "WHERE b.breedName LIKE CONCAT('%', :breed, '%')";
+                "WHERE b.breedName LIKE CONCAT('%', :breed, '%') " +
+                "AND d.locationId IS NOT null";
 
         breedDogs = jpaApi.em().createQuery(breedSql, Dog.class).setParameter("breed", breed).getResultList();
+
+        String dogBreedSql = "SELECT NEW models.DogBreedDetail(b.breedId, d.dogId, b.breedName) " +
+                "FROM Breed b " +
+                "JOIN DogBreed db ON db.breedId = b.breedId " +
+                "JOIN Dog d ON d.dogId = db.dogId";
+
+        List<DogBreedDetail> breeds = jpaApi.em().createQuery(dogBreedSql, DogBreedDetail.class).getResultList();
 
         List<Dog> dogs = new ArrayList<>();
 
@@ -1206,7 +1223,7 @@ public class DogController extends ApplicationController
 
         dogs.addAll(breedDogs);
 
-        return ok(views.html.viewdogs.render(dogs));
+        return ok(views.html.viewdogs.render(dogs, breeds));
     }
 
     @Transactional(readOnly = true)

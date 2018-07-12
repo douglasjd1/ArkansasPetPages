@@ -19,6 +19,7 @@
 </div>
 <div class="container">
     <div class="table table-dark bg-primary table-hover">
+        <br>
         <tbody>
         <tr>
             <td>
@@ -28,7 +29,7 @@
                     </div>
                     <div class="col-8">
                         @if(photos.size() == 0){
-                        <h2>No photos yet!</h2>
+                            <img src="/assets/images/Other Photos/dogDefaultPhoto.png" height="200">
                         }else{
                         <div class="container mt-3">
                             <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -75,15 +76,15 @@
                     <div class="col-3">
                         <h3>Breed(s): </h3>
                         @for(breed <- breeds){
-                        <p>@breed.getBreedName</p>
+                        <a href="/breed/@breed.getBreedId"><font color="white">@breed.getBreedName</font></a><br>
                         }
                     </div>
                     <div class="col-3">
                         <h3>General Traits:</h3>
                         <p>Gender: @dog.getGenderName</p>
-                        <p>Weight: @dog.getWeight</p>
-                        <p>Height: @dog.getHeight</p>
-                        <p>Age: @dog.getDogAge years old</p>
+                        <p>Weight: @dog.getWeight pounds</p>
+                        <p>Height: @dog.getHeight inches</p>
+                        <p>Age: @dog.getDogAge year(s) old</p>
                         <p>Hair length: @dog.getHairLengthName</p>
                     </div>
                     <div class="col-4">

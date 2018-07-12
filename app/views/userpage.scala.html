@@ -25,9 +25,21 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-6">
+                        @if(user.getProfilePhoto == null){
+                        <p><img src="/assets/images/Other Photos/userDefaultPhoto.png" height="150"></p>
+                        }else{
                         <p><img src="../userProfilePhoto/@user.getUserId" height="150"></p>
+                        }
                         <p>Email: @user.getEmailAddress</p>
                         <p>About you:</p>
+                        <p>
+                            Email visibility:
+                            @if(user.isEmailFlag){
+                                Visible
+                            }else{
+                                Hidden
+                            }
+                        </p>
                         <p>@user.getBio</p>
                         <p><a href="/editUser/@user.getUserId"><font color="white">Edit Information</font></a></p>
                         <p>
@@ -47,7 +59,11 @@
                                         <div class="col-4">
                                             <a href="../viewUserDog/@user.getUserId/@dog.getDogId"><font color="white">@dog.getDogName</font></a>
                                             <br><br>
-                                            <img src="/dogDefaultPhoto/@dog.getDogId" height="100">
+                                            @if(dog.getDefaultPhotoData == null){
+                                                <a href="../viewUserDog/@user.getUserId/@dog.getDogId"><img src="/assets/images/Other Photos/dogDefaultPhoto.png" height="100"></a>
+                                            }else{
+                                                <a href="../viewUserDog/@user.getUserId/@dog.getDogId"><img src="/dogDefaultPhoto/@dog.getDogId" height="100"></a>
+                                            }
                                         </div>
                                 }
                                 </div>

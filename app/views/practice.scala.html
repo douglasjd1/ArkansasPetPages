@@ -1,38 +1,57 @@
-@html5.render
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
-    <title>Log In</title>
-</head>
+    <link rel="stylesheet" href="/assets/stylesheets/search.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<nav class="navbar navbar-light navbar-expand-md bg-faded justify-content-center">
-    <a href="/" class="navbar-brand d-flex w-50 mr-auto">Navbar 3</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse w-100" id="collapsingNavbar3">
-        <ul class="navbar-nav w-100 justify-content-center">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="//codeply.com">Codeply</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Right</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Right</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Right</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+</head>
+<body>
+
+<h2>My Customers</h2>
+
+<input type="text" id="myInput"  placeholder="Search for names.." title="Type in a name">
+
+<table id="myTable">
+    <tr class="header">
+        <th style="width:60%;">Name</th>
+        <th style="width:40%;">Country</th>
+    </tr>
+    <tr>
+        <td>Alfreds Futterkiste</td>
+        <td>Germany</td>
+    </tr>
+    <tr>
+        <td>Berglunds snabbkop</td>
+        <td>Sweden</td>
+    </tr>
+    <tr>
+        <td>Island Trading</td>
+        <td>UK</td>
+    </tr>
+    <tr>
+        <td>Koniglich Essen</td>
+        <td>Germany</td>
+    </tr>
+    <tr>
+        <td>Laughing Bacchus Winecellars</td>
+        <td>Canada</td>
+    </tr>
+    <tr>
+        <td>Magazzini Alimentari Riuniti</td>
+        <td>Italy</td>
+    </tr>
+    <tr>
+        <td>North/South</td>
+        <td>UK</td>
+    </tr>
+    <tr>
+        <td>Paris specialites</td>
+        <td>France</td>
+    </tr>
+</table>
+
+<script src="/assets/javascripts/search.js"></script>
+
+</body>
+</html>

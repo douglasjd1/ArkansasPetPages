@@ -17,6 +17,7 @@ public class PetPagesUser
     private String bio;
     private byte[] userPassword;
     private byte[] salt;
+    private boolean emailFlag;
 
     public String getFirstName()
     {
@@ -91,5 +92,15 @@ public class PetPagesUser
     public void setBio(String bio)
     {
         this.bio = bio;
+    }
+
+    public boolean isEmailFlag()
+    {
+        return emailFlag;
+    }
+
+    public void setEmailFlag(boolean emailFlag)
+    {
+        this.emailFlag = emailFlag;
     }
 }

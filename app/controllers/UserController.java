@@ -49,6 +49,7 @@ public class UserController extends ApplicationController
         String password = form.get("userPassword");
         String passwordCheck = form.get("userPasswordCheck");
         String bio = form.get("bio");
+        int showEmail = Integer.parseInt(form.get("showEmail"));
 
         Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart<File> filePart = formData.getFile("profilePhoto");
@@ -60,6 +61,15 @@ public class UserController extends ApplicationController
         petPagesUser.setLastName(lastName);
         petPagesUser.setEmailAddress(emailAddress);
         petPagesUser.setBio(bio);
+
+        if(showEmail == 0)
+        {
+            petPagesUser.setEmailFlag(false);
+        }
+        else
+        {
+            petPagesUser.setEmailFlag(true);
+        }
 
         if(file.length() != 0)
         {
@@ -255,6 +265,7 @@ public class UserController extends ApplicationController
             String newEmailAddress = form.get("emailAddress");
             String password = form.get("userPassword");
             String passwordCheck = form.get("userPasswordCheck");
+            int showEmail = Integer.parseInt(form.get("showEmail"));
 
             if(firstName.equals(""))
             {
@@ -301,6 +312,15 @@ public class UserController extends ApplicationController
             petPagesUser.setLastName(form.get("lastName"));
             petPagesUser.setEmailAddress(form.get("emailAddress"));
             petPagesUser.setBio(form.get("bio"));
+
+            if(showEmail == 0)
+            {
+                petPagesUser.setEmailFlag(false);
+            }
+            else
+            {
+                petPagesUser.setEmailFlag(true);
+            }
 
             if(file.length() != 0)
             {

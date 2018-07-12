@@ -13,7 +13,7 @@
     <title>Dog</title>
 </head>
 <body>
-    @navbar("dog")
+    @navbar("account")
     <div class="container text-primary">
         <h3>@dog.getDogName</h3>
     </div>
@@ -75,7 +75,7 @@
                         <div class="col-3">
                             <h3>Breed(s): </h3>
                             @for(breed <- breeds){
-                            <p>@breed.getBreedName</p>
+                            <a href="/breed/@breed.getBreedId"><font color="white">@breed.getBreedName</font></a><br>
                             }
                         </div>
                         <div class="col-3">
