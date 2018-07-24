@@ -8,9 +8,8 @@ the project, and then use the command 'sbt run' and type 'localhost:9000/home' i
 
 Here are some screenshots, so you can get a feel for what the site is like.
 
-<img src="/assets/images/Screenshots/Home.png">
+![Alt text](/assets/images/Screenshots/Home.png?raw=true)
 
-<img src="/assets/images/Screenshots/Dogs.png">
-
+![Alt text](/assets/images/Screenshots/Dogs.png?raw=true)
 
 
