@@ -11,7 +11,7 @@ function myBreedFunction()
  div = table.getElementsByTagName("div");
 
  for (i = 0; i < div.length; i++) {
-   p=div[i].getElementsByTagName("p")[0];
+   p = div[i].getElementsByTagName("p")[0];
    if (p) {
      if (p.innerHTML.toUpperCase().indexOf(filter) > -1) {
        div[i].style.display = "";

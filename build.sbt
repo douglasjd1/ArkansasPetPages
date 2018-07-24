@@ -19,6 +19,7 @@ libraryDependencies += "org.webjars" % "bootstrap" % "4.1.0"
 libraryDependencies += "org.webjars.bowergithub.chartjs" % "chart.js" % "2.7.2"
 libraryDependencies += "org.webjars.bower" % "list.js" % "1.5.0"
 libraryDependencies += "com.amazonaws" % "aws-java-sdk" % "1.11.351"
+libraryDependencies += "org.webjars" % "font-awesome" % "5.1.0"
 
 // Test Database
 libraryDependencies += "com.h2database" % "h2" % "1.4.196"

@@ -1,16 +1,16 @@
 @(page : String)
 <div class="container">
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark fixed-top justify-content-center">
+        <i class="fas fa-home"></i>&nbsp;
         <a href="/home" class="navbar-brand d-flex w-50 mr-auto">Arkansas Pet Pages</a>
         <ul class="navbar-nav justify-content-center">
 
             @if("dogs".equals(page)){
-                <li class="nav-item active">
+            <li class="nav-item active">
                 }else{
                  <li class="nav-item">
                 }
                 <a class="nav-link" href="/viewDogs">Dogs</a>
-                </li>
 
             @if("breeds".equals(page) || "breed".equals(page)){
             <li class="nav-item active">
@@ -18,7 +18,6 @@
             <li class="nav-item">
                 }
                 <a class="nav-link" href="/breeds">Breeds</a>
-            </li>
 
             @if("shelters".equals(page) || "shelter".equals(page) || "dog".equals(page) || "dog".equals(page)){
             <li class="nav-item active">
