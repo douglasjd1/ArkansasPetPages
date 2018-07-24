@@ -10,6 +10,7 @@ Here are some screenshots, so you can get a feel for what the site is like.
 
 <img src="/assets/images/Screenshots/Home.png">
 
+<img src="/assets/images/Screenshots/Dogs.png">
 
 
 
