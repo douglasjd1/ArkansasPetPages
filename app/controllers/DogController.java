@@ -1189,7 +1189,7 @@ public class DogController extends ApplicationController
         String name = form.get("searchName");
         String breed = form.get("searchBreed");
 
-        List<Dog> nameDogs = new ArrayList<>();
+        List<Dog> nameDogs;
 
         System.out.println(name);
 
@@ -1200,7 +1200,7 @@ public class DogController extends ApplicationController
         nameDogs = jpaApi.em().createQuery(nameSql, Dog.class).
                 setParameter("name", name).getResultList();
 
-        List<Dog> breedDogs = new ArrayList<>();
+        List<Dog> breedDogs;
 
         String breedSql = "SELECT d FROM Dog d " +
                 "JOIN DogBreed db ON db.dogId = d.dogId " +

@@ -70,4 +70,19 @@ public class ApplicationController extends Controller
         return result;
     }
 
+    @Transactional
+    public boolean isUserLoggedIn(JPAApi jpaApi)
+    {
+        boolean isUser = false;
+        String sql = "SELECT ppu.emailAddress FROM PetPagesUser ppu";
+
+        List<String> userEmails = jpaApi.em().createQuery(sql, String.class).getResultList();
+
+        if(isLoggedIn() && userEmails.contains(session().get("loggedIn")))
+        {
+            isUser = true;
+        }
+
+        return isUser;
+    }
 }
