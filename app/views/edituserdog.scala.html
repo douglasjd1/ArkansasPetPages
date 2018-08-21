@@ -1,16 +1,19 @@
 @(user : PetPagesUser, dog : DogDetail, color : Color, colors : List[Color],
   dogPersonalities : List[Personality], personalities : List[Personality], dogPersonalityIds : List[Integer],
-  breeds : List[Breed], breed1 : String, breed2 : String, breed3 : String, status : String)
+  breeds : List[Breed], breed1 : String, breed2 : String, breed3 : String, status : String, photos : List[DogPhoto])
 @html5.render
 @import helper._
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/stylesheets/radio.css">
     <link rel="stylesheet" href="/assets/stylesheets/checkbox.css">
     <link rel="stylesheet" href="/assets/lib/font-awesome/css/all.css">
     <link rel="stylesheet" href="/assets/stylesheets/fontawesome.css">
+    <link rel="stylesheet" href="/assets/stylesheets/photocheckbox.css">
+
     <title>Arkansas Pet Pages</title>
 </head>
 <body>
@@ -40,6 +43,19 @@
                     <input type="file" name="dogPhoto2" id="dogPhoto2">
                     <input type="file" name="dogPhoto3" id="dogPhoto3">
                 </div>
+                <p>Select photos to delete</p>
+                <div class="row">
+                    @for(photo <- photos){
+                    <div class="col-xs-4 col-sm-3 col-md-2 nopad text-center">
+                        <label class="image-checkbox">
+                            <img class="img-responsive" src="/dogPhoto/@photo.getDogPhotoId" height="75">
+                            <input type="checkbox" name="@photo.getDogPhotoId" value="@photo.getDogPhotoId" id="@photo.getDogPhotoId">
+                        </label>
+                    </div>
+                    }
+                </div>
+
+                <br>
                 <p>Edit @dog.getDogName's Gender</p>
                 @if(dog.getGenderName == "Male"){
                     <div class="radio">
@@ -215,5 +231,8 @@
     </div>
     <br>
 </div>
+<script src="/assets/lib/jquery/jquery.min.js"></script>
+<script src="/assets/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/javascripts/photocheckbox.js"></script>
 </body>
 </html>

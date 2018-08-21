@@ -1,9 +1,4 @@
-*{
-    margin: 0;
-    padding: 0;
-
-    #map{
-        height: 200px;
-        width: 200px;
-    }
-}
+  #map {
+    height: 500px;
+    width: 500px;
+  }

@@ -489,8 +489,12 @@ public class DogController extends ApplicationController
                 breed3 = dogBreeds.get(2).getBreedName();
             }
 
+            String photoSql = "SELECT dp FROM DogPhoto dp WHERE dogId = :dogId";
+
+            List<DogPhoto> photos = jpaApi.em().createQuery(photoSql, DogPhoto.class).setParameter("dogId", dogId).getResultList();
+
             return ok(views.html.edituserdog.render(user, dog, color, colors, dogPersonalities, personalities, dogPersonalityIds,
-                                                    breeds, breed1, breed2, breed3, status));
+                                                    breeds, breed1, breed2, breed3, status, photos));
         }
         else
         {
@@ -649,6 +653,18 @@ public class DogController extends ApplicationController
             catch(Exception e)
             {
                 //do nothing
+            }
+        }
+
+        String dogPhotosSql = "SELECT dp FROM DogPhoto dp";
+
+        List<DogPhoto> allDogPhotos = jpaApi.em().createQuery(dogPhotosSql, DogPhoto.class).getResultList();
+
+        for(DogPhoto photo : allDogPhotos)
+        {
+            if(form.get(String.valueOf(photo.getDogPhotoId())) != null)
+            {
+                jpaApi.em().remove(photo);
             }
         }
         String dogBreedSql = "SELECT db FROM DogBreed db " +
